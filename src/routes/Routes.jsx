@@ -1,10 +1,12 @@
 import { createBrowserRouter, Link, Outlet } from "react-router-dom"; // Import Outlet
-import Navigation from "../components/Navigation";
+import Navigation from "../components/navbar/Navigation.jsx";
 import SignIn from "../pages/auth/SignIn.jsx";
 import SignUp from "../pages/auth/SignUp.jsx";
 import Register from "../pages/auth/Register.jsx";
 import Home from "../pages/Home.jsx";
 import Job from "../pages/job/Job.jsx";
+import Employer from "../pages/dashboard/employer/Employer.jsx";
+import EmployerProfile from "../pages/profile/EmployerProfile.jsx";
 
 const NotFound = () => {
   return (
@@ -51,6 +53,14 @@ export const router = createBrowserRouter([
         element: <SignUp />,
       },
       { path: "/register_company", element: <Register /> },
+      {
+        path: "/dashboard/employer",
+        element: <Employer />,
+      },
+      {
+        path: "/profile/employer",
+        element: <EmployerProfile />,
+      },
       {
         path: "*",
         element: <NotFound />,

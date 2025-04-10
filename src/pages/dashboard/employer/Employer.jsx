@@ -14,9 +14,6 @@ import {
   Cell,
 } from "recharts";
 
-import Sidebar from "../Sidebar";
-import Header from "../Header";
-
 const employeeData = [
   { month: "Jan", employees: 120, applications: 240 },
   { month: "Feb", employees: 130, applications: 280 },
@@ -46,9 +43,7 @@ const COLORS = ["#4b9bff", "#a3cfff"];
 function App() {
   return (
     <div className="flex h-screen bg-gray-100">
-      <Sidebar />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <Header />
         <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
             <div className="bg-white p-6 rounded-lg shadow">

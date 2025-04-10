@@ -1,6 +1,5 @@
-import Theme from "../hooks/utils/Theme";
+// import Theme from "../hooks/utils/Theme";
 import {
-  AiFillAlipayCircle,
   AiFillApi,
   AiFillApple,
   AiFillAppstore,
@@ -25,7 +24,7 @@ const SocialBar = () => {
           <NavIcon icons={<AiFillApple />} name="+959792400340" />
           {/* <NavIcon icons={<Theme />} name="ChangeTheme" /> */}
         </div>
-        <Theme />
+        {/* <Theme /> */}
       </div>
     </div>
   );

@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ThemeToggle from "./ThemeToggle";
 import Links from "./Links";
-import logo from "../assets/utils/1.png";
+import logo from "../../assets/utils/1.png";
 import { FaBars, FaTimes, FaUserCircle } from "react-icons/fa";
 
-import { useAuthMeQuery, useLogoutMutation } from "../redux/api/authApi";
+import { useAuthMeQuery, useLogoutMutation } from "../../redux/api/authApi";
 import { AiFillCode } from "react-icons/ai";
 
 const Navigation = () => {
@@ -30,24 +30,29 @@ const Navigation = () => {
   };
 
   const profileLinks = [
-    { name: "Profile", path: "/profile" },
-    { name: "Dashboard", path: "/dashboard" },
+    { name: "Profile", path: "/profile/employer" },
+    { name: "Dashboard", path: "/dashboard/employer" },
+    { name: "Create Post", path: "/post-job" },
     { name: "Settings", path: "/settings" },
   ];
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50  backdrop-blur-4xl ">
-      <div className="max-w-7xl mx-auto  px-4 sm:px-6 lg:px-8">
+      <div className=" mx-auto shadow-2xl backdrop-blur-3xl  px-4 sm:px-6 lg:px-8">
+        {/* <div className="max-w-7xl mx-auto shadow-2xl backdrop-blur-3xl  px-4 sm:px-6 lg:px-8"> */}
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div className="flex-shrink-0 border-t-2 border-cyan-900 dark:border-white border-l-2 ">
-            <Link to="/" className="flex items-baseline ">
+          <div className="flex-shrink-0 border-t-2 border-l-2 hover:border-white border-cyan-900 dark:border-white dark:hover:border-cyan-900  ">
+            <Link
+              to="/"
+              className="flex items-baseline dark:hover:text-sky-100"
+            >
               <img
                 src={logo}
                 alt="Logo"
-                className="h-8 w-auto dark:bg-white m-1"
+                className="h-8 w-auto  dark:invert-100 m-1" // bg-white remove the dark:invet-100
               />
-              <p>MicroLab</p>
+              <p>JobDiary</p>
             </Link>
           </div>
 
