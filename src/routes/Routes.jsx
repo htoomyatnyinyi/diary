@@ -7,6 +7,9 @@ import Home from "../pages/Home.jsx";
 import Job from "../pages/job/Job.jsx";
 import Employer from "../pages/dashboard/employer/Employer.jsx";
 import EmployerProfile from "../pages/profile/EmployerProfile.jsx";
+// import JobBoard from "../pages/job/JobBoard.jsx";
+// import CreateNewJob from "../pages/dashboard/employer/CreateNewJob.jsx";
+import JobDashboard from "../pages/dashboard/employer/JobDashboard.jsx";
 
 const NotFound = () => {
   return (
@@ -44,6 +47,10 @@ export const router = createBrowserRouter([
         path: "/job",
         element: <Job />,
       },
+      // {
+      //   path: "/job-board",
+      //   element: <JobBoard />,
+      // },
       {
         path: "/signin",
         element: <SignIn />,
@@ -60,6 +67,10 @@ export const router = createBrowserRouter([
       {
         path: "/profile/employer",
         element: <EmployerProfile />,
+      },
+      {
+        path: "/employer/post-job",
+        element: <JobDashboard />,
       },
       {
         path: "*",

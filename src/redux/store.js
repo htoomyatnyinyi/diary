@@ -7,7 +7,7 @@ import { jobApi } from "./api/jobApi";
 
 const store = configureStore({
   reducer: {
-    reducer: rootReducer,
+    slice: rootReducer,
     [authApi.reducerPath]: authApi.reducer,
     [employerApi.reducerPath]: employerApi.reducer,
     [jobApi.reducerPath]: jobApi.reducer,
@@ -20,19 +20,3 @@ const store = configureStore({
 });
 
 export default store;
-
-// import { configureStore } from "@reduxjs/toolkit";
-// // import rootReducer from "./rootReducer";
-// import { authApi } from "./api/authApi";
-// // import { registerApi } from "./api/registerApi";
-
-// const store = configureStore({
-//   reducer: {
-//     // reducer: rootReducer,
-//     [authApi.reducerPath]: authApi.reducer,
-//     // [registerApi.reducerPath]: registerApi.reducer, // Add RTK Query reducer
-//   },
-//   middleware: (getDefaultMiddleware) =>
-//     getDefaultMiddleware().concat(authApi.middleware),
-// });
-// export default store;

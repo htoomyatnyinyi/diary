@@ -40,38 +40,32 @@ const statisticData = [
 
 const COLORS = ["#4b9bff", "#a3cfff"];
 
-function App() {
+function Employer() {
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen ">
       <div className="flex-1 flex flex-col overflow-hidden">
-        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6">
+        <main className="flex-1 overflow-x-hidden overflow-y-auto  p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-gray-500 text-sm font-medium">
-                Total Employees
-              </h3>
-              <p className="mt-2 text-3xl font-semibold text-gray-900">150</p>
+            <div className="p-6 rounded-lg shadow">
+              <h3 className=" text-sm font-medium">Total Employees</h3>
+              <p className="mt-2 text-3xl font-semsibold">150</p>
             </div>
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-gray-500 text-sm font-medium">
-                Job Applications
-              </h3>
-              <p className="mt-2 text-3xl font-semibold text-gray-900">350</p>
+            <div className="p-6 rounded-lg shadow">
+              <h3 className=" text-sm font-medium">Job Applications</h3>
+              <p className="mt-2 text-3xl font-semibold">350</p>
             </div>
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-gray-500 text-sm font-medium">
-                Open Positions
-              </h3>
-              <p className="mt-2 text-3xl font-semibold text-gray-900">12</p>
+            <div className="p-6 rounded-lg shadow">
+              <h3 className=" text-sm font-medium">Open Positions</h3>
+              <p className="mt-2 text-3xl font-semibold">12</p>
             </div>
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-gray-500 text-sm font-medium">Departments</h3>
-              <p className="mt-2 text-3xl font-semibold text-gray-900">8</p>
+            <div className="p-6 rounded-lg shadow">
+              <h3 className=" text-sm font-medium">Departments</h3>
+              <p className="mt-2 text-3xl font-semibold">8</p>
             </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
-            <div className="bg-white p-6 rounded-lg shadow">
+            <div className="p-6 rounded-lg shadow">
               <h2 className="text-lg font-semibold mb-4">Employee Growth</h2>
               <LineChart width={400} height={300} data={employeeData}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -82,7 +76,7 @@ function App() {
                 <Line type="monotone" dataKey="employees" stroke="#8884d8" />
               </LineChart>
             </div>
-            <div className="bg-white p-6 rounded-lg shadow">
+            <div className="p-6 rounded-lg shadow">
               <h2 className="text-lg font-semibold mb-4">Job Applications</h2>
               <BarChart width={400} height={300} data={employeeData}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -96,7 +90,7 @@ function App() {
           </div>
 
           {/* Popular Jobs Section */}
-          <div className="bg-white p-6 rounded-lg shadow mt-6">
+          <div className="p-6 rounded-lg shadow mt-6">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-lg font-semibold">Popular Jobs</h2>
               <select className="border rounded p-1 text-gray-600">
@@ -109,7 +103,7 @@ function App() {
               <div className="flex items-center justify-between">
                 <div className="flex-1">
                   <p className="text-sm font-medium text-gray-700">UID</p>
-                  <p className="text-xs text-gray-500">UI Designer</p>
+                  <p className="text-xs ">UI Designer</p>
                 </div>
                 <div className="w-1/2">
                   <LineChart width={200} height={50} data={jobData}>
@@ -129,7 +123,7 @@ function App() {
               <div className="flex items-center justify-between">
                 <div className="flex-1">
                   <p className="text-sm font-medium text-gray-700">UXD</p>
-                  <p className="text-xs text-gray-500">UX Designer</p>
+                  <p className="text-xs ">UX Designer</p>
                 </div>
                 <div className="w-1/2">
                   <LineChart width={200} height={50} data={jobData}>
@@ -149,7 +143,7 @@ function App() {
               <div className="flex items-center justify-between">
                 <div className="flex-1">
                   <p className="text-sm font-medium text-gray-700">PM</p>
-                  <p className="text-xs text-gray-500">Project Manager</p>
+                  <p className="text-xs ">Project Manager</p>
                 </div>
                 <div className="w-1/2">
                   <LineChart width={200} height={50} data={jobData}>
@@ -170,12 +164,12 @@ function App() {
           </div>
 
           {/* Statistic (Donut Chart) Section */}
-          <div className="bg-white p-6 rounded-lg shadow mt-6 relative">
+          <div className="p-6 rounded-lg shadow mt-6 relative">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-lg font-semibold flex items-center">
                 Statistic
                 <svg
-                  className="w-5 h-5 ml-2 text-gray-500"
+                  className="w-5 h-5 ml-2 "
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -216,8 +210,8 @@ function App() {
                 </Pie>
               </PieChart>
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-                <p className="text-gray-500">Total</p>
-                <p className="text-2xl font-semibold text-gray-900">2574</p>
+                <p className="">Total</p>
+                <p className="text-2xl font-semibold">2574</p>
               </div>
             </div>
             <div className="flex justify-center mt-4 space-x-6">
@@ -240,7 +234,9 @@ function App() {
   );
 }
 
-export default App; // import React from "react";
+export default Employer;
+
+// import React from "react";
 // import {
 //   LineChart,
 //   Line,

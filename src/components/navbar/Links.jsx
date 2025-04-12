@@ -8,8 +8,9 @@ import {
 } from "react-icons/ai";
 
 const navLinks = [
-  { name: "Home", icon: <AiFillAccountBook />, path: "/" },
-  { name: "Job", icon: <AiFillAlipayCircle />, path: "/job" },
+  { name: "HOME", icon: <AiFillAccountBook />, path: "/" },
+  { name: "JOB", icon: <AiFillAlipayCircle />, path: "/job" },
+  { name: "JOB_BOARD", icon: <AiFillAlipayCircle />, path: "/job-board" },
   // { name: "Dashboard", icon: <AiFillAmazonSquare />, path: "/dashboard" },
   // { name: "Register Company", icon: <AiFillBulb />, path: "/register_company" },
 ];

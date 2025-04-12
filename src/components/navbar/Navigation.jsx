@@ -30,10 +30,11 @@ const Navigation = () => {
   };
 
   const profileLinks = [
-    { name: "Profile", path: "/profile/employer" },
-    { name: "Dashboard", path: "/dashboard/employer" },
-    { name: "Create Post", path: "/post-job" },
-    { name: "Settings", path: "/settings" },
+    { name: "PROFILE", path: "/profile/employer" },
+    { name: "DASHBOARD", path: "/dashboard/employer" },
+    { name: "CREATE-POST", path: "/employer/post-job" },
+    { name: "SETTINGS", path: "/settings" },
+    { name: "HMNN" },
   ];
 
   return (
@@ -87,6 +88,7 @@ const Navigation = () => {
                         {link.name}
                       </Link>
                     ))}
+
                     <button
                       onClick={handleLogout}
                       className="block w-full text-left px-4 py-2 text-sm text-red-600 bg-white hover:bg-red-400 hover:text-white"

@@ -16,8 +16,8 @@ export default function Register() {
     password: "abc",
     confirmPassword: "abc",
     brandName: "labs",
-    registeredNumber: "33333333", // Added field
-    contactPhone: "",
+    registeredNumber: "HMNN_9aflekfo83", // Added field
+    contactPhone: "0803495",
     addressLine: "",
     city: "",
     state: "",
