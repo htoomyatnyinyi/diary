@@ -1,4 +1,3 @@
-// App.jsx
 import React from "react";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./routes/Routes.jsx";
@@ -13,127 +12,127 @@ const App = () => {
 
 export default App;
 
-// // import React, { useEffect } from "react";
-// // import {
-// //   BrowserRouter as Router,
-// //   Route,
-// //   Navigate,
-// //   useLocation,
-// //   Routes,
-// // } from "react-router-dom";
-// // import { useDispatch, useSelector } from "react-redux";
-// // import { validateToken } from "./redux/slice/authSlice";
-// // import Navbar from "./components/Navbar";
-// // import Login from "./components/Login";
-// // import AdminDashboard from "./components/AdminDashboard";
-// // import EmployerDashboard from "./components/EmployerDashboard";
-// // import JobSeekerDashboard from "./components/JobSeekerDashboard";
-// // import SearchJobs from "./components/SearchJobs";
-// // import ProfilePage from "./components/ProfilePage";
-// // import Home from "./pages/Home";
-// // import EditProfilePage from "./components/EditPorfilePage";
-// // import NotFound from "./components/NotFound";
-// // import Register from "./components/Register";
+// import React, { useEffect } from "react";
+// import {
+//   BrowserRouter as Router,
+//   Route,
+//   Navigate,
+//   useLocation,
+//   Routes,
+// } from "react-router-dom";
+// import { useDispatch, useSelector } from "react-redux";
+// import { validateToken } from "./redux/slice/authSlice";
+// import Navbar from "./components/Navbar";
+// import Login from "./components/Login";
+// import AdminDashboard from "./components/AdminDashboard";
+// import EmployerDashboard from "./components/EmployerDashboard";
+// import JobSeekerDashboard from "./components/JobSeekerDashboard";
+// import SearchJobs from "./components/SearchJobs";
+// import ProfilePage from "./components/ProfilePage";
+// import Home from "./pages/Home";
+// import EditProfilePage from "./components/EditPorfilePage";
+// import NotFound from "./components/NotFound";
+// import Register from "./components/Register";
 
-// // // import SocialBar from "./pages/SocialBar";
+// // import SocialBar from "./pages/SocialBar";
 
-// // const App = () => {
-// //   const dispatch = useDispatch();
-// //   const { user, loading } = useSelector((state) => state.auth);
+// const App = () => {
+//   const dispatch = useDispatch();
+//   const { user, loading } = useSelector((state) => state.auth);
 
-// //   useEffect(() => {
-// //     dispatch(validateToken());
-// //   }, [dispatch]);
+//   useEffect(() => {
+//     dispatch(validateToken());
+//   }, [dispatch]);
 
-// //   const PrivateRoute = ({ children, role }) => {
-// //     const location = useLocation();
+//   const PrivateRoute = ({ children, role }) => {
+//     const location = useLocation();
 
-// //     if (loading) {
-// //       return <div className="text-center mt-20">Loading...</div>;
-// //     }
+//     if (loading) {
+//       return <div className="text-center mt-20">Loading...</div>;
+//     }
 
-// //     if (!user) {
-// //       return <Navigate to="/" state={{ from: location }} replace />;
-// //     }
+//     if (!user) {
+//       return <Navigate to="/" state={{ from: location }} replace />;
+//     }
 
-// //     if (user.role !== role) {
-// //       return <Navigate to="/" replace />;
-// //     }
+//     if (user.role !== role) {
+//       return <Navigate to="/" replace />;
+//     }
 
-// //     return children;
-// //   };
+//     return children;
+//   };
 
-// //   return (
-// //     <div className="min-h-screen bg-white dark:bg-cyan-950 text-cyan-900 dark:text-white">
-// //       <Router basename={import.meta.env.PUBLIC_URL}>
-// //         <Navbar />
-// //         {/* <SocialBar /> */}
-// //         <main className="pt-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-// //           <Routes>
-// //             <Route path="/home" element={<Home />} />
-// //             <Route path="/" element={<SearchJobs />} />
-// //             <Route path="/login" element={<Login />} />
-// //             <Route path="/register" element={<Register />} />
-// //             <Route
-// //               path="/:role/profile"
-// //               element={
-// //                 <PrivateRoute role={user?.role}>
-// //                   <ProfilePage />
-// //                 </PrivateRoute>
-// //               }
-// //             />
-// //             <Route
-// //               path="/admin"
-// //               element={
-// //                 <PrivateRoute role="admin">
-// //                   <AdminDashboard />
-// //                 </PrivateRoute>
-// //               }
-// //             />
-// //             <Route
-// //               path="/employer"
-// //               element={
-// //                 <PrivateRoute role="employer">
-// //                   <EmployerDashboard />
-// //                 </PrivateRoute>
-// //               }
-// //             />
-// //             <Route
-// //               path="/job_seeker"
-// //               element={
-// //                 <PrivateRoute role="job_seeker">
-// //                   <JobSeekerDashboard />
-// //                 </PrivateRoute>
-// //               }
-// //             />
-// //             <Route
-// //               path="/job_seeker/edit-profile"
-// //               element={
-// //                 <PrivateRoute role="job_seeker">
-// //                   <EditProfilePage />
-// //                 </PrivateRoute>
-// //               }
-// //             />
-// //             <Route
-// //               path="/job_seeker/search"
-// //               element={
-// //                 <PrivateRoute role="job_seeker">
-// //                   <SearchJobs />
-// //                 </PrivateRoute>
-// //               }
-// //             />
-// //             {/* <Route path="*" element={<Navigate to="/" replace />} />
-// //              */}
-// //             {/* 404 Route */}
-// //             <Route path="*" element={<NotFound />} />
-// //           </Routes>
-// //         </main>
-// //       </Router>
-// //     </div>
-// //   );
-// // };
+//   return (
+//     <div className="min-h-screen bg-white dark:bg-cyan-950 text-cyan-900 dark:text-white">
+//       <Router basename={import.meta.env.PUBLIC_URL}>
+//         <Navbar />
+//         {/* <SocialBar /> */}
+//         <main className="pt-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+//           <Routes>
+//             <Route path="/home" element={<Home />} />
+//             <Route path="/" element={<SearchJobs />} />
+//             <Route path="/login" element={<Login />} />
+//             <Route path="/register" element={<Register />} />
+//             <Route
+//               path="/:role/profile"
+//               element={
+//                 <PrivateRoute role={user?.role}>
+//                   <ProfilePage />
+//                 </PrivateRoute>
+//               }
+//             />
+//             <Route
+//               path="/admin"
+//               element={
+//                 <PrivateRoute role="admin">
+//                   <AdminDashboard />
+//                 </PrivateRoute>
+//               }
+//             />
+//             <Route
+//               path="/employer"
+//               element={
+//                 <PrivateRoute role="employer">
+//                   <EmployerDashboard />
+//                 </PrivateRoute>
+//               }
+//             />
+//             <Route
+//               path="/job_seeker"
+//               element={
+//                 <PrivateRoute role="job_seeker">
+//                   <JobSeekerDashboard />
+//                 </PrivateRoute>
+//               }
+//             />
+//             <Route
+//               path="/job_seeker/edit-profile"
+//               element={
+//                 <PrivateRoute role="job_seeker">
+//                   <EditProfilePage />
+//                 </PrivateRoute>
+//               }
+//             />
+//             <Route
+//               path="/job_seeker/search"
+//               element={
+//                 <PrivateRoute role="job_seeker">
+//                   <SearchJobs />
+//                 </PrivateRoute>
+//               }
+//             />
+//             {/* <Route path="*" element={<Navigate to="/" replace />} />
+//              */}
+//             {/* 404 Route */}
+//             <Route path="*" element={<NotFound />} />
+//           </Routes>
+//         </main>
+//       </Router>
+//     </div>
+//   );
+// };
 
-// // export default App;
+// export default App;
 
 // // // import React, { useEffect } from "react";
 // // // import {

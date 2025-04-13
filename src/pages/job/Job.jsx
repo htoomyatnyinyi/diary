@@ -95,7 +95,7 @@ const Job = () => {
       </div>
 
       {/* Render the Sidebar (conditionally) */}
-      <CreateNewJob isOpen={isSidebarOpen} onClose={closeSidebar} />
+      {/* <CreateNewJob isOpen={isSidebarOpen} onClose={closeSidebar} /> */}
     </div>
   );
 };
@@ -144,9 +144,7 @@ const JobDetails = ({ coverImg, job }) => {
   if (!job) {
     return (
       <div className="flex flex-col items-center justify-center p-6 m-2 h-full text-center rounded-lg">
-        <h2 className="text-xl font-semibold text-gray-700">
-          Select a job to view details
-        </h2>
+        <h2 className="text-xl font-semibold">Select a job to view details</h2>
         <p className="mt-2 text-gray-500">
           Or create a new job using the button above!
         </p>

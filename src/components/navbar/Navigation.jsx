@@ -14,9 +14,44 @@ const Navigation = () => {
   const navigate = useNavigate();
 
   const { data: userData, isLoading: isAuthLoading } = useAuthMeQuery(null);
-  const [logout, { isLoading: isLoggingOut }] = useLogoutMutation();
 
+  const [logout, { isLoading: isLoggingOut }] = useLogoutMutation();
+  //
   const isAuthenticated = !!userData?.user;
+  //
+  const role = userData?.user?.role;
+  const businessName = userData?.user?.email;
+
+  // console.log(userData?.user?.email.split("@")[0], userData?.user?.email);
+  //
+
+  // console.log(userData?.user?.email.split("@")[0], userData?.user?.email);
+  //
+
+  const profileLinks = [
+    {
+      name: businessName
+        ? businessName.toUpperCase().split("@")[0] + " PROFILE"
+        : "PROFILE",
+      path: role === "employer" ? "/profile/employer" : "/user/profile",
+    },
+    {
+      name: "DASHBOARD",
+      path: role === "employer" ? "/dashboard/employer" : "/user/dashboard",
+    },
+    ...(role === "employer"
+      ? [{ name: "POST-JOB", path: "/employer/post-job" }]
+      : []),
+    { name: "SETTINGS", path: "/settings" },
+  ];
+
+  // const profileLinks = [
+  //   { name: "PROFILE", path: "/profile/employer" },
+  //   { name: "DASHBOARD", path: "/dashboard/employer" },
+  //   { name: "CREATE-POST", path: "/employer/post-job" },
+  //   { name: "SETTINGS", path: "/settings" },
+  //   { name: "HMNN" },
+  // ];
 
   const handleLogout = async () => {
     try {
@@ -28,14 +63,6 @@ const Navigation = () => {
       console.error("Logout failed:", error);
     }
   };
-
-  const profileLinks = [
-    { name: "PROFILE", path: "/profile/employer" },
-    { name: "DASHBOARD", path: "/dashboard/employer" },
-    { name: "CREATE-POST", path: "/employer/post-job" },
-    { name: "SETTINGS", path: "/settings" },
-    { name: "HMNN" },
-  ];
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50  backdrop-blur-4xl ">
@@ -72,9 +99,13 @@ const Navigation = () => {
                   aria-label="Toggle profile menu"
                 >
                   <FaUserCircle size={24} />
-                  <span className="ml-2">
-                    {userData?.user?.email.split("@")[0]}
-                  </span>
+                  <span>{userData?.user?.email.split("@")[0]}</span>
+                  {/* <div className="text-sm">
+                    <p className="ml-2">
+                      {userData?.user?.email.split("@")[0]}
+                    </p>
+                    <p className="ml-2">{userData?.user?.email}</p>
+                  </div> */}
                 </button>
                 {isProfileOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-cyan-900 text-white dark:bg-white dark:text-cyan-900 shadow-lg z-10">
@@ -100,18 +131,27 @@ const Navigation = () => {
                 )}
               </div>
             ) : (
-              <Link
-                to="/signin"
-                className="p-2  hover:text-white hover:bg-cyan-900 dark:hover:text-cyan-900 dark:hover:bg-white transition-colors duration-200 border-b-2 border-r-2"
-              >
-                Sign In
-              </Link>
+              <div className="space-x-4">
+                <Link
+                  to="/signup"
+                  className="p-2 hover:text-white hover:bg-cyan-900 dark:hover:text-cyan-900 dark:hover:bg-white transition-colors duration-200 border-b-2 border-r-2"
+                >
+                  Sign Up
+                </Link>
+                <Link
+                  to="/signin"
+                  className="p-2 hover:text-white hover:bg-cyan-900 dark:hover:text-cyan-900 dark:hover:bg-white transition-colors duration-200 border-b-2 border-r-2"
+                >
+                  Sign In
+                </Link>
+              </div>
             )}
             <ThemeToggle />
 
             <div>
-              <Link to="/register_company" className="underline">
+              <Link to="/register_company" className="underline text-sm">
                 <AiFillCode />
+                {/* For Employer Register */}
               </Link>
             </div>
           </div>

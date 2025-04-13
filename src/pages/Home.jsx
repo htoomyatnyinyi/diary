@@ -1,23 +1,18 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import homeImage from "../assets/utils/Question.png";
-import { useGetJobByIdQuery } from "../redux/api/jobApi";
-import JobDashboard from "./dashboard/employer/JobDashboard";
-// import { useGetJobsQuery } from "../redux/api/jobApi";
+
+// import { useGetJobByIdQuery } from "../redux/api/jobApi";
+// import JobDashboard from "./dashboard/employer/JobDashboard";
 
 const Home = () => {
-  // const { data, isLoading } = useGetJobsQuery(null);
-  // if (isLoading) return <p>Loading...</p>;
-  // console.log(
-  //   "data",
-  //   data.data.map((e) => e.title)
-  // );
-  const [jobId, setJobId] = useState(null);
-  const { data, isLoading } = useGetJobByIdQuery(jobId, { skip: !jobId });
+  // const [jobId, setJobId] = useState(null);
+  // const { data, isLoading } = useGetJobByIdQuery(jobId, { skip: !jobId });
 
-  if (isLoading) return <h1>Loading</h1>;
+  // if (isLoading) return <h1>Loading</h1>;
   // if (!data) return <h3>No Data</h3>;
 
-  console.log(data, "jobId fetch data");
+  // console.log(data, "jobId fetch data");
 
   return (
     <div className="h-screen flex items-center justify-between p-8 md:p-16">
@@ -31,12 +26,19 @@ const Home = () => {
           first step towards a brighter future.
         </p>
         {/* Optional Call to Action Button */}
-        <button
+        {/* <button
           onClick={() => setJobId(1)}
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full"
         >
           Learn More fetch wiht id 1
-        </button>
+        </button> */}
+        <Link
+          to="/register_company"
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full"
+          // className="underline font-bold py-3 px-6 rounded-full"
+        >
+          For Employer To Register
+        </Link>
       </div>
       <div className="w-1/2 flex justify-end">
         <img
@@ -46,7 +48,7 @@ const Home = () => {
           // className="max-w-md rounded-lg"
         />
       </div>
-      <JobDashboard />
+      {/* <JobDashboard /> */}
     </div>
   );
 };

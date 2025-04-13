@@ -1,4 +1,3 @@
-// src/components/JobDashboard.jsx (or wherever you want the trigger)
 import React, { useState } from "react";
 import CreateNewJobSidebar from "./CreateNewJob"; // We'll create this next
 
