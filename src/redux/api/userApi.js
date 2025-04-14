@@ -10,11 +10,27 @@ export const userApi = createApi({
     getProfile: builder.query({
       query: () => "/user/profile",
     }),
+
     createProfile: builder.mutation({
       query: (profileData) => ({
         url: "/user/profile",
         method: "POST",
         body: profileData,
+      }),
+    }),
+
+    updateProfile: builder.mutation({
+      query: (profileData) => ({
+        url: "/user/profile",
+        method: "PUT",
+        body: profileData,
+      }),
+    }),
+
+    deleteProfile: builder.mutation({
+      query: () => ({
+        url: "/user/profile",
+        method: "DELETE",
       }),
     }),
 
@@ -35,6 +51,8 @@ export const userApi = createApi({
 export const {
   useGetProfileQuery,
   useCreateProfileMutation,
+  useUpdateProfileMutation,
+  useDeleteProfileMutation,
   useGetResumeQuery,
   useGetSavedJobsQuery,
   useGetApplicationsQuery,

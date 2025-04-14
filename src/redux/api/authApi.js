@@ -6,7 +6,9 @@ export const authApi = createApi({
     baseUrl: "http://localhost:8080/api",
     credentials: "include",
   }), // Adjust base URL as per your backend
+
   tagTypes: ["Auth"],
+
   endpoints: (builder) => ({
     authMe: builder.query({
       query: () => ({
@@ -22,6 +24,7 @@ export const authApi = createApi({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["Auth"],
     }),
 
     register: builder.mutation({
@@ -30,6 +33,7 @@ export const authApi = createApi({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["Auth"],
     }),
 
     login: builder.mutation({

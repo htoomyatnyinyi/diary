@@ -176,7 +176,7 @@ export default function EmployerProfile() {
     return (
       <div className="flex justify-between items-center">
         <p>
-          <strong>{label}:</strong>{" "}
+          <strong>{label}:</strong>
           {field === "website_url" && value ? (
             <a
               href={value}
