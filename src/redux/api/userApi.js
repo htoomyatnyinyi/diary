@@ -34,8 +34,36 @@ export const userApi = createApi({
       }),
     }),
 
+    uploadResume: builder.mutation({
+      query: (fileData) => ({
+        url: "/user/resumes",
+        method: "POST",
+        body: fileData,
+      }),
+    }),
+
+    deleteResume: builder.mutation({
+      query: (id) => ({
+        url: `/user/resumes/${id}`,
+        method: "DELETE",
+      }),
+      // invalidatesTags: ["Resume"], // if you're using tags
+    }),
+
     getResume: builder.query({
       query: () => "/user/resumes",
+    }),
+
+    previewResume: builder.query({
+      query: (filename) => ({
+        url: `/user/resumes/${filename}`, // your backend endpoint
+        method: "GET",
+        responseHandler: (response) => response.blob(), // <- this is critical!
+      }),
+      transformResponse: (response) => {
+        // Convert the blob to an object URL for react-pdf
+        return URL.createObjectURL(response);
+      },
     }),
 
     getSavedJobs: builder.query({
@@ -53,7 +81,10 @@ export const {
   useCreateProfileMutation,
   useUpdateProfileMutation,
   useDeleteProfileMutation,
+  useUploadResumeMutation,
   useGetResumeQuery,
+  usePreviewResumeQuery,
+  useDeleteResumeMutation,
   useGetSavedJobsQuery,
   useGetApplicationsQuery,
 } = userApi;

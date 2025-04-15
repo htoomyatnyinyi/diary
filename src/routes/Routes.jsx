@@ -13,6 +13,7 @@ import JobDashboard from "../pages/dashboard/employer/JobDashboard.jsx";
 import EmployerProfile from "../pages/profile/EmployerProfile.jsx";
 import UserProfile from "../pages/profile/UserProfile.jsx";
 import UserDashboard from "../pages/dashboard/user/UserDashboard.jsx";
+import Resume from "../pages/profile/Resume.jsx";
 
 const NotFound = () => {
   return (
@@ -147,6 +148,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute allowedRoles={["job_seeker"]}>
             <UserProfile /> {/* Create this component */}
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/user/resume",
+        element: (
+          <ProtectedRoute allowedRoles={["job_seeker"]}>
+            <Resume /> {/* Create this component */}
           </ProtectedRoute>
         ),
       },

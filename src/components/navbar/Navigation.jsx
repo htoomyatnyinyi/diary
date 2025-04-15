@@ -36,6 +36,12 @@ const Navigation = () => {
       path: role === "employer" ? "/profile/employer" : "/user/profile",
     },
     {
+      name: businessName
+        ? businessName.toUpperCase().split("@")[0] + " RESUME"
+        : "RESUME",
+      path: role === "employer" ? "/profile/resume" : "/user/resume",
+    },
+    {
       name: "DASHBOARD",
       path: role === "employer" ? "/dashboard/employer" : "/user/dashboard",
     },

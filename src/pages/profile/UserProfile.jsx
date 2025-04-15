@@ -271,37 +271,45 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="p-4 m-2">
-      <div className="flex justify-evenly flex-wrap">
-        <div>
-          {renderField(
-            "First Name",
-            "first_name",
-            profile?.data.first_name || "N/A"
-          )}
-          {renderField(
-            "Last Name",
-            "last_name",
-            profile?.data.last_name || "N/A"
-          )}
-          {renderField("Phone", "phone", profile?.data.phone || "N/A")}
+    <div>
+      <div className="p-4 m-1 backdrop-blur-3xl shadow-2xl">
+        <div className="flex justify-evenly flex-wrap">
+          <div>
+            {renderField(
+              "First Name",
+              "first_name",
+              profile?.data.first_name || "N/A"
+            )}
+            {renderField(
+              "Last Name",
+              "last_name",
+              profile?.data.last_name || "N/A"
+            )}
+            {renderField("Phone", "phone", profile?.data.phone || "N/A")}
+          </div>
+          <div>
+            {renderField("Gender", "gender", profile?.data.gender || "N/A")}
+            {renderField(
+              "Date of Birth",
+              "date_of_birth",
+              profile?.data.date_of_birth || "N/A"
+            )}
+            {renderField(
+              "Location",
+              "location",
+              profile?.data.location || "N/A"
+            )}
+            {renderField("Bio", "bio", profile?.data.bio || "N/A")}
+          </div>
         </div>
         <div>
-          {renderField("Gender", "gender", profile?.data.gender || "N/A")}
-          {renderField(
-            "Date of Birth",
-            "date_of_birth",
-            profile?.data.date_of_birth || "N/A"
+          {updateError && (
+            <p className="text-red-500 mt-4">
+              {updateError.data?.message || "Update failed."}
+            </p>
           )}
-          {renderField("Location", "location", profile?.data.location || "N/A")}
-          {renderField("Bio", "bio", profile?.data.bio || "N/A")}
         </div>
       </div>
-      {updateError && (
-        <p className="text-red-500 mt-4">
-          {updateError.data?.message || "Update failed."}
-        </p>
-      )}
     </div>
   );
 };
