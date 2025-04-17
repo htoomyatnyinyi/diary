@@ -122,15 +122,15 @@ const JobLists = ({ jobs, onJobSelect, selectedJobId }) => {
                         ${
                           selectedJobId === job.id
                             ? "bg-teal-100 border-teal-400"
-                            : "bg-slate-800 border-gray-200 hover:bg-gray-50 hover:border-gray-300"
+                            : "bg-sky-950 border-gray-200 hover:bg-sky-800 hover:border-gray-300"
                         }`}
         >
-          <p className="font-semibold text-gray-800">{job.title}</p>
-          <p className="text-sm text-gray-600">
+          <p className="font-semibold ">{job.title}</p>
+          <p className="text-sm ">
             {job.employment_type} - {job.location || "N/A"}
           </p>
           {(job.salary_min || job.salary_max) && ( // Show salary only if available
-            <p className="text-sm text-green-700 mt-1">
+            <p className="text-sm text-green-500 mt-1">
               ${job.salary_min || "N/A"} - ${job.salary_max || "N/A"}
             </p>
           )}
