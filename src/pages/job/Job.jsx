@@ -1,3 +1,4 @@
+// same version before edit it.
 import React, { useState } from "react"; // Import useState
 import { useDispatch, useSelector } from "react-redux";
 import coverImg from "../../assets/utils/A.png"; // Adjust path if needed
@@ -8,6 +9,7 @@ import { selectJob } from "../../redux/slice/jobSlice";
 
 // Import the sidebar component
 import CreateNewJob from "../dashboard/employer/CreateNewJob";
+import JobDetails from "./JobDetails";
 
 const Job = () => {
   const dispatch = useDispatch();
@@ -95,7 +97,7 @@ const Job = () => {
       </div>
 
       {/* Render the Sidebar (conditionally) */}
-      {/* <CreateNewJob isOpen={isSidebarOpen} onClose={closeSidebar} /> */}
+      <CreateNewJob isOpen={isSidebarOpen} onClose={closeSidebar} />
     </div>
   );
 };
@@ -116,19 +118,19 @@ const JobLists = ({ jobs, onJobSelect, selectedJobId }) => {
         <div
           key={job.id}
           onClick={() => onJobSelect(job.id)} // Apply onClick here
-          className={`p-4 m-2 rounded-md border cursor-pointer transition-colors duration-150 ease-in-out
+          className={`p-3 m-2 rounded-md border cursor-pointer transition-colors duration-150 ease-in-out
                         ${
                           selectedJobId === job.id
-                            ? " border-teal-400"
-                            : " border-gray-200  hover:border-gray-300 bg-white text-blue-900 dark:bg-cyan-900 dark:text-white"
+                            ? "bg-teal-100 border-teal-400"
+                            : "bg-slate-800 border-gray-200 hover:bg-gray-50 hover:border-gray-300"
                         }`}
         >
-          <p className="font-semibold ">{job.title}</p>
-          <p className="text-sm ">
+          <p className="font-semibold text-gray-800">{job.title}</p>
+          <p className="text-sm text-gray-600">
             {job.employment_type} - {job.location || "N/A"}
           </p>
           {(job.salary_min || job.salary_max) && ( // Show salary only if available
-            <p className="text-sm text-green-500 mt-1">
+            <p className="text-sm text-green-700 mt-1">
               ${job.salary_min || "N/A"} - ${job.salary_max || "N/A"}
             </p>
           )}
@@ -138,113 +140,116 @@ const JobLists = ({ jobs, onJobSelect, selectedJobId }) => {
   );
 };
 
-// --- JobDetails Component --- (Updated to show requirements/responsibilities)
-const JobDetails = ({ coverImg, job }) => {
-  // Initial state when no job is selected
-  if (!job) {
-    return (
-      <div className="flex flex-col items-center justify-center p-6 m-2 h-full text-center rounded-lg">
-        <h2 className="text-xl font-semibold">Select a job to view details</h2>
-        <p className="mt-2 text-gray-500">
-          Or create a new job using the button above!
-        </p>
-        {/* You can place ads or other content here */}
-      </div>
-    );
-  }
+// // --- JobDetails Component --- (Updated to show requirements/responsibilities)
+// const JobDetails = ({ coverImg, job }) => {
+//   // Initial state when no job is selected
+//   if (!job) {
+//     return (
+//       <div className="flex flex-col items-center justify-center p-6 m-2 h-full text-center rounded-lg">
+//         <h2 className="text-xl font-semibold text-gray-700">
+//           Select a job to view details
+//         </h2>
+//         <p className="mt-2 text-gray-500">
+//           Or create a new job using the button above!
+//         </p>
+//         {/* You can place ads or other content here */}
+//       </div>
+//     );
+//   }
 
-  // Display selected job details
-  return (
-    <div className="p-6 m-2  rounded-lg shadow overflow-y-auto h-screen">
-      {/* Display job image if available */}
-      {job.post_image_url ? (
-        <img
-          src={job.post_image_url}
-          alt={job.title}
-          className="w-full h-48 object-cover rounded-md mb-4"
-        />
-      ) : (
-        <img
-          src={coverImg}
-          alt="Default cover"
-          className="w-full h-48 object-cover object-top  rounded-md mb-4 dark:invert-100"
-          // className="w-full h-48 object-cover rounded-md mb-4 dark:invert-100"
-        /> // Fallback image
-      )}
+//   // Display selected job details
+//   return (
+//     <div className="p-6 m-2 bg-white  rounded-lg shadow overflow-y-auto h-screen">
+//       {/* Display job image if available */}
+//       {job.post_image_url ? (
+//         <img
+//           src={job.post_image_url}
+//           alt={job.title}
+//           className="w-full h-48 object-cover rounded-md mb-4"
+//         />
+//       ) : (
+//         <img
+//           src={coverImg}
+//           alt="Default cover"
+//           className="w-full h-48 object-cover rounded-md mb-4"
+//         /> // Fallback image
+//       )}
 
-      <h1 className="text-2xl font-bold  mb-2">{job.title}</h1>
-      <p className="text-sm  mb-1">
-        <strong>Location:</strong> {job.location || "N/A"}
-      </p>
-      {job.address && (
-        <p className="text-sm  mb-1">
-          <strong>Address:</strong> {job.address}
-        </p>
-      )}
-      <p className="text-sm  mb-1">
-        <strong>Type:</strong> {job.employment_type}
-      </p>
-      {(job.salary_min || job.salary_max) && (
-        <p className="text-sm  mb-1">
-          <strong>Salary:</strong> ${job.salary_min || "N/A"} - $
-          {job.salary_max || "N/A"}
-        </p>
-      )}
-      {job.application_deadline && (
-        <p className="text-sm text-red-600 mb-4">
-          <strong>Apply by:</strong>{" "}
-          {new Date(job.application_deadline).toLocaleDateString()}
-        </p>
-      )}
+//       <h1 className="text-2xl font-bold text-teal-700 mb-2">{job.title}</h1>
+//       <p className="text-sm text-gray-500 mb-1">
+//         <strong>Location:</strong> {job.location || "N/A"}
+//       </p>
+//       {job.address && (
+//         <p className="text-sm text-gray-500 mb-1">
+//           <strong>Address:</strong> {job.address}
+//         </p>
+//       )}
+//       <p className="text-sm text-gray-500 mb-1">
+//         <strong>Type:</strong> {job.employment_type}
+//       </p>
+//       {(job.salary_min || job.salary_max) && (
+//         <p className="text-sm text-gray-500 mb-1">
+//           <strong>Salary:</strong> ${job.salary_min || "N/A"} - $
+//           {job.salary_max || "N/A"}
+//         </p>
+//       )}
+//       {job.application_deadline && (
+//         <p className="text-sm text-red-600 mb-4">
+//           <strong>Apply by:</strong>{" "}
+//           {new Date(job.application_deadline).toLocaleDateString()}
+//         </p>
+//       )}
 
-      <h2 className="text-lg font-semibold  mt-4 mb-2 border-t pt-3">
-        Description
-      </h2>
-      {/* Use whitespace-pre-wrap to respect formatting from backend */}
-      <p className="text-gray-700 whitespace-pre-wrap">{job.description}</p>
+//       <h2 className="text-lg font-semibold text-gray-800 mt-4 mb-2 border-t pt-3">
+//         Description
+//       </h2>
+//       {/* Use whitespace-pre-wrap to respect formatting from backend */}
+//       <p className="text-gray-700 whitespace-pre-wrap">{job.description}</p>
 
-      {/* Display Requirements (Assuming they are fetched with job details) */}
-      {job.requirements && job.requirements.length > 0 && (
-        <>
-          <h2 className="text-lg font-semibold  mt-4 mb-2 border-t pt-3">
-            Requirements
-          </h2>
-          <ul className="list-disc list-inside space-y-1 pl-4">
-            {/* Check if requirements is an array, otherwise show raw data for debugging */}
-            {Array.isArray(job.requirements) ? (
-              job.requirements.map((req, index) => (
-                <li key={`req-${index}`}>{req}</li>
-              ))
-            ) : (
-              <li>{job.requirements}</li> // Fallback if not an array
-            )}
-          </ul>
-        </>
-      )}
+//       {/* Display Requirements (Assuming they are fetched with job details) */}
+//       {job.requirements && job.requirements.length > 0 && (
+//         <>
+//           <h2 className="text-lg font-semibold text-gray-800 mt-4 mb-2 border-t pt-3">
+//             Requirements
+//           </h2>
+//           <ul className="list-disc list-inside space-y-1 text-gray-700 pl-4">
+//             {/* Check if requirements is an array, otherwise show raw data for debugging */}
+//             {Array.isArray(job.requirements) ? (
+//               job.requirements.map((req, index) => (
+//                 <li key={`req-${index}`}>{req}</li>
+//               ))
+//             ) : (
+//               <li>{job.requirements}</li> // Fallback if not an array
+//             )}
+//           </ul>
+//         </>
+//       )}
 
-      {/* Display Responsibilities (Assuming they are fetched with job details) */}
-      {job.responsibilities && job.responsibilities.length > 0 && (
-        <>
-          <h2 className="text-lg font-semibold  mt-4 mb-2 border-t pt-3">
-            Responsibilities
-          </h2>
-          <ul className="list-disc list-inside space-y-1  pl-4">
-            {/* Check if responsibilities is an array */}
-            {Array.isArray(job.responsibilities) ? (
-              job.responsibilities.map((resp, index) => (
-                <li key={`resp-${index}`}>{resp}</li>
-              ))
-            ) : (
-              <li>{job.responsibilities}</li> // Fallback if not an array
-            )}
-          </ul>
-        </>
-      )}
-    </div>
-  );
-};
+//       {/* Display Responsibilities (Assuming they are fetched with job details) */}
+//       {job.responsibilities && job.responsibilities.length > 0 && (
+//         <>
+//           <h2 className="text-lg font-semibold text-gray-800 mt-4 mb-2 border-t pt-3">
+//             Responsibilities
+//           </h2>
+//           <ul className="list-disc list-inside space-y-1 text-gray-700 pl-4">
+//             {/* Check if responsibilities is an array */}
+//             {Array.isArray(job.responsibilities) ? (
+//               job.responsibilities.map((resp, index) => (
+//                 <li key={`resp-${index}`}>{resp}</li>
+//               ))
+//             ) : (
+//               <li>{job.responsibilities}</li> // Fallback if not an array
+//             )}
+//           </ul>
+//         </>
+//       )}
+//     </div>
+//   );
+// };
 
-// same version before edit it.
+// မပြင်ရသေးပါ
+// //
+
 // import React, { useState } from "react"; // Import useState
 // import { useDispatch, useSelector } from "react-redux";
 // import coverImg from "../../assets/utils/A.png"; // Adjust path if needed
@@ -342,7 +347,7 @@ const JobDetails = ({ coverImg, job }) => {
 //       </div>
 
 //       {/* Render the Sidebar (conditionally) */}
-//       <CreateNewJob isOpen={isSidebarOpen} onClose={closeSidebar} />
+//       {/* <CreateNewJob isOpen={isSidebarOpen} onClose={closeSidebar} /> */}
 //     </div>
 //   );
 // };
@@ -363,19 +368,19 @@ const JobDetails = ({ coverImg, job }) => {
 //         <div
 //           key={job.id}
 //           onClick={() => onJobSelect(job.id)} // Apply onClick here
-//           className={`p-3 m-2 rounded-md border cursor-pointer transition-colors duration-150 ease-in-out
+//           className={`p-4 m-2 rounded-md border cursor-pointer transition-colors duration-150 ease-in-out
 //                         ${
 //                           selectedJobId === job.id
-//                             ? "bg-teal-100 border-teal-400"
-//                             : "bg-white border-gray-200 hover:bg-gray-50 hover:border-gray-300"
+//                             ? " border-teal-400"
+//                             : " border-gray-200  hover:border-gray-300 bg-white text-blue-900 dark:bg-cyan-900 dark:text-white"
 //                         }`}
 //         >
-//           <p className="font-semibold text-gray-800">{job.title}</p>
-//           <p className="text-sm text-gray-600">
+//           <p className="font-semibold ">{job.title}</p>
+//           <p className="text-sm ">
 //             {job.employment_type} - {job.location || "N/A"}
 //           </p>
 //           {(job.salary_min || job.salary_max) && ( // Show salary only if available
-//             <p className="text-sm text-green-700 mt-1">
+//             <p className="text-sm text-green-500 mt-1">
 //               ${job.salary_min || "N/A"} - ${job.salary_max || "N/A"}
 //             </p>
 //           )}
@@ -391,9 +396,7 @@ const JobDetails = ({ coverImg, job }) => {
 //   if (!job) {
 //     return (
 //       <div className="flex flex-col items-center justify-center p-6 m-2 h-full text-center rounded-lg">
-//         <h2 className="text-xl font-semibold text-gray-700">
-//           Select a job to view details
-//         </h2>
+//         <h2 className="text-xl font-semibold">Select a job to view details</h2>
 //         <p className="mt-2 text-gray-500">
 //           Or create a new job using the button above!
 //         </p>
@@ -404,7 +407,7 @@ const JobDetails = ({ coverImg, job }) => {
 
 //   // Display selected job details
 //   return (
-//     <div className="p-6 m-2 bg-white  rounded-lg shadow overflow-y-auto h-screen">
+//     <div className="p-6 m-2  rounded-lg shadow overflow-y-auto h-screen">
 //       {/* Display job image if available */}
 //       {job.post_image_url ? (
 //         <img
@@ -416,24 +419,25 @@ const JobDetails = ({ coverImg, job }) => {
 //         <img
 //           src={coverImg}
 //           alt="Default cover"
-//           className="w-full h-48 object-cover rounded-md mb-4"
+//           className="w-full h-48 object-cover object-top  rounded-md mb-4 dark:invert-100"
+//           // className="w-full h-48 object-cover rounded-md mb-4 dark:invert-100"
 //         /> // Fallback image
 //       )}
 
-//       <h1 className="text-2xl font-bold text-teal-700 mb-2">{job.title}</h1>
-//       <p className="text-sm text-gray-500 mb-1">
+//       <h1 className="text-2xl font-bold  mb-2">{job.title}</h1>
+//       <p className="text-sm  mb-1">
 //         <strong>Location:</strong> {job.location || "N/A"}
 //       </p>
 //       {job.address && (
-//         <p className="text-sm text-gray-500 mb-1">
+//         <p className="text-sm  mb-1">
 //           <strong>Address:</strong> {job.address}
 //         </p>
 //       )}
-//       <p className="text-sm text-gray-500 mb-1">
+//       <p className="text-sm  mb-1">
 //         <strong>Type:</strong> {job.employment_type}
 //       </p>
 //       {(job.salary_min || job.salary_max) && (
-//         <p className="text-sm text-gray-500 mb-1">
+//         <p className="text-sm  mb-1">
 //           <strong>Salary:</strong> ${job.salary_min || "N/A"} - $
 //           {job.salary_max || "N/A"}
 //         </p>
@@ -445,7 +449,7 @@ const JobDetails = ({ coverImg, job }) => {
 //         </p>
 //       )}
 
-//       <h2 className="text-lg font-semibold text-gray-800 mt-4 mb-2 border-t pt-3">
+//       <h2 className="text-lg font-semibold  mt-4 mb-2 border-t pt-3">
 //         Description
 //       </h2>
 //       {/* Use whitespace-pre-wrap to respect formatting from backend */}
@@ -454,10 +458,10 @@ const JobDetails = ({ coverImg, job }) => {
 //       {/* Display Requirements (Assuming they are fetched with job details) */}
 //       {job.requirements && job.requirements.length > 0 && (
 //         <>
-//           <h2 className="text-lg font-semibold text-gray-800 mt-4 mb-2 border-t pt-3">
+//           <h2 className="text-lg font-semibold  mt-4 mb-2 border-t pt-3">
 //             Requirements
 //           </h2>
-//           <ul className="list-disc list-inside space-y-1 text-gray-700 pl-4">
+//           <ul className="list-disc list-inside space-y-1 pl-4">
 //             {/* Check if requirements is an array, otherwise show raw data for debugging */}
 //             {Array.isArray(job.requirements) ? (
 //               job.requirements.map((req, index) => (
@@ -473,10 +477,10 @@ const JobDetails = ({ coverImg, job }) => {
 //       {/* Display Responsibilities (Assuming they are fetched with job details) */}
 //       {job.responsibilities && job.responsibilities.length > 0 && (
 //         <>
-//           <h2 className="text-lg font-semibold text-gray-800 mt-4 mb-2 border-t pt-3">
+//           <h2 className="text-lg font-semibold  mt-4 mb-2 border-t pt-3">
 //             Responsibilities
 //           </h2>
-//           <ul className="list-disc list-inside space-y-1 text-gray-700 pl-4">
+//           <ul className="list-disc list-inside space-y-1  pl-4">
 //             {/* Check if responsibilities is an array */}
 //             {Array.isArray(job.responsibilities) ? (
 //               job.responsibilities.map((resp, index) => (
