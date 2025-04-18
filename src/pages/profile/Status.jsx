@@ -1,5 +1,15 @@
 import React from "react";
 import {
+  LineChart,
+  Line,
+  PieChart,
+  CartesianGrid,
+  Tooltip,
+  YAxis,
+  XAxis,
+} from "recharts";
+
+import {
   useGetApplicationsQuery,
   useGetSavedJobsQuery,
   useDeleteApplicationMutation,
@@ -7,13 +17,53 @@ import {
   useGetAnalyticsQuery,
 } from "../../redux/api/userApi";
 
+const jobData = [
+  { day: "Mon", UID: 4000, UXD: 2400, PM: 1300 },
+  { day: "Tue", UID: 3000, UXD: 2000, PM: 1100 },
+  { day: "Wed", UID: 4500, UXD: 2600, PM: 1400 },
+  { day: "Thu", UID: 3200, UXD: 2200, PM: 1200 },
+  { day: "Fri", UID: 3800, UXD: 2500, PM: 1350 },
+  { day: "Sat", UID: 3600, UXD: 2300, PM: 1250 },
+  { day: "Sun", UID: 3837, UXD: 2345, PM: 1345 },
+];
+
+const statisticData = [
+  { name: "Job Booster", value: 2300 },
+  { name: "Job Alert", value: 274 },
+];
+
+const COLORS = ["#4b9bff", "#a3cfff"];
+
 const Status = () => {
   const { data: analytic, isLoading: isAnalyticLoading } =
     useGetAnalyticsQuery();
 
   // if (isAnalyticLoading) return <p>Loading ..</p>;
 
-  // console.log(analytic, "check");
+  console.log(analytic?.data, "check");
+  const savedJobTrendData = analytic?.data?.savedJobTrend || [];
+
+  console.log(savedJobTrendData);
+  const individualData = [
+    { name: "Users", value: analytic?.data?.total_users },
+    { name: "Jobs", value: analytic?.data?.total_jobs },
+    { name: "Applications", value: analytic?.data?.total_applications },
+    { name: "Saved Jobs", value: analytic?.data?.total_savedJobs },
+    { name: "Applied Jobs", value: analytic?.data?.total_appliedJobs },
+    { name: "Resumes", value: analytic?.data?.total_uploadedResumes },
+  ];
+
+  const combinedData = [
+    {
+      // name: "Status",
+      Users: analytic?.data?.total_users,
+      Jobs: analytic?.data?.total_jobs,
+      Applications: analytic?.data?.total_applications,
+      SavedJobs: analytic?.data?.total_savedJobs,
+      AppliedJobs: analytic?.data?.total_appliedJobs,
+      Resumes: analytic?.data?.total_uploadedResumes,
+    },
+  ];
 
   const {
     data: SavedJobs,
@@ -70,9 +120,79 @@ const Status = () => {
             </div>
           ) : (
             <div className="flex  p-2 m-1  justify-around items-center">
-              <h1> Users: {analytic.data.total_users}</h1>
+              <div>
+                <h1> Total SavedJobs: {analytic?.data.total_savedJobs}</h1>
+                <h1>Total Applied Jobs : {analytic?.data.total_appliedJobs}</h1>
+                <h1>Total Resumes : {analytic?.data.total_uploadedResumes}</h1>
+                <div>
+                  <div>
+                    <div className="grid grid-cols-2 gap-4">
+                      {individualData.map((item, idx) => (
+                        <div key={idx} className="border p-2 rounded">
+                          <h2 className="text-sm text-gray-700 mb-1">
+                            {item.name}
+                          </h2>
+                          <LineChart
+                            width={200}
+                            height={50}
+                            data={[{ name: item.name, value: item.value }]}
+                          >
+                            <Line
+                              type="monotone"
+                              dataKey="value"
+                              stroke="#4b9bff"
+                              dot={false}
+                            />
+                            <YAxis />
+                          </LineChart>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <LineChart width={200} height={50} data={jobData}>
+                    <Line
+                      type="monotone"
+                      dataKey="UID"
+                      stroke="#ff6b6b"
+                      dot={false}
+                    />
+                  </LineChart>
+                  <div className="mt-4 border p-2 rounded">
+                    <h2 className="text-sm text-gray-700 mb-1">
+                      Combined Status
+                    </h2>
+                    <LineChart width={600} height={200} data={combinedData}>
+                      <XAxis dataKey="name" />
+                      <YAxis />
+                      <Line type="monotone" dataKey="Users" stroke="#8884d8" />
+                      <Line type="monotone" dataKey="Jobs" stroke="#82ca9d" />
+                      <Line
+                        type="monotone"
+                        dataKey="Applications"
+                        stroke="#ffc658"
+                      />
+                      <Line
+                        type="monotone"
+                        dataKey="SavedJobs"
+                        stroke="#ff7300"
+                      />
+                      <Line
+                        type="monotone"
+                        dataKey="AppliedJobs"
+                        stroke="#00c49f"
+                      />
+                      <Line
+                        type="monotone"
+                        dataKey="Resumes"
+                        stroke="#0088fe"
+                      />
+                    </LineChart>
+                  </div>
+                </div>
+              </div>
+              {/* <h1> Users: {analytic.data.total_users}</h1>
               <h1>Jobs : {analytic.data.total_jobs}</h1>
-              <h1>Applications : {analytic.data.total_applications}</h1>
+              <h1>Applications : {analytic.data.total_applications}</h1> */}
               {/* {analytic?.data.map((e) => (
                 <div>
                   <h1>{e.total_users}</h1>
@@ -108,15 +228,15 @@ const Status = () => {
           {isApplicationLoading ? (
             <p className="bg-pink-500 h-96 w-auto">Loading Application</p>
           ) : (
-            <div className="bg-blue-500 text-white h-96 w-auto">
+            <div className="bg-blue-500 h-96 w-auto overflow-scroll">
               {Applications?.data?.map((e) => (
-                <div key={e.id} className="bg-white text-black m-1">
+                <div key={e.id} className="bg-slate-400 text-black m-1">
                   <h1>{e.title}</h1>
                   <p>{e.status}</p>
                   <button
                     onClick={() => handleDeleteApplication(e.id)}
                     disabled={isDeleting}
-                    className="bg-pink-500 p-2 m-1"
+                    className="bg-green-500 p-2 m-1"
                   >
                     Delete Application
                   </button>

@@ -1,4 +1,326 @@
-// import React, { useState } from "react";
+import React from "react";
+
+import {
+  useGetAppliedJobsQuery,
+  useUpdateApplicationStatusMutation,
+} from "../../../redux/api/employerApi"; // Assuming correct path
+const JobDashboard = () => {
+  return (
+    <div>
+      <JobUpdateStatus />
+    </div>
+  );
+};
+
+export default JobDashboard;
+
+// --- JobDashboard component remains the same ---
+// const JobDashboard = () => {
+//   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+//   const openSidebar = () => setIsSidebarOpen(true);
+//   const closeSidebar = () => setIsSidebarOpen(false);
+
+//   return (
+//     <div>
+//       <div className="p-6">
+//         <h1 className="text-3xl font-bold mb-6">Job Management</h1>
+//         {/* Add other dashboard content here, like a list of existing jobs */}
+//         <button
+//           onClick={openSidebar}
+//           className="bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded text-white" // Added rounded, text-white
+//         >
+//           Create New Job Posting
+//         </button>
+//         {/* Make sure CreateNewJobSidebar component exists and path is correct */}
+//         {/* <CreateNewJobSidebar isOpen={isSidebarOpen} onClose={closeSidebar} /> */}
+//       </div>
+//       <JobUpdateStatus />
+//     </div>
+//   );
+// };
+// export default JobDashboard;
+// --- End JobDashboard ---
+
+const JobUpdateStatus = () => {
+  const {
+    data: getAppliedJobsResponse, // Renamed for clarity to avoid conflict with inner 'data' property
+    isLoading: isGetAppliedJobLoading,
+    isError: isGetAppliedJobError,
+    // You might want to add 'refetch' if you want to refresh the list after an update
+    // refetch: refetchAppliedJobs,
+  } = useGetAppliedJobsQuery();
+
+  const [
+    updateApplicationStatus,
+    {
+      isLoading: isUpdateApplicationStatusLoading,
+      isError: isUpdateApplicationStatusError,
+      error: errorUpdateApplicationStatus,
+      // You might want 'reset' to clear error states manually
+      // reset: resetUpdateStatus,
+    },
+  ] = useUpdateApplicationStatusMutation();
+
+  // --- Handler function for status change ---
+  const handleStatusChange = async (applicationId, newStatus) => {
+    console.log(`Updating application ${applicationId} to status ${newStatus}`);
+    try {
+      // Call the mutation provided by RTK Query
+      await updateApplicationStatus({
+        id: applicationId, // This matches the 'id' expected in the RTK query definition
+        statusData: { status: newStatus }, // This matches the 'statusData' and the backend's req.body expectation
+      }).unwrap(); // .unwrap() gives you a promise that rejects on error, making try/catch easier
+
+      console.log("Update successful for application:", applicationId);
+      // Optional: Show a success message (e.g., using a toast library)
+      // Optional: Refetch the list to confirm the update visually
+      // refetchAppliedJobs();
+    } catch (err) {
+      console.error("Failed to update status:", err);
+      // Optional: Show an error message (e.g., using a toast library)
+      // You can access specific error details from 'err' or 'errorUpdateApplicationStatus'
+    }
+  };
+
+  // --- Render Logic ---
+
+  if (isGetAppliedJobError) {
+    // Consider showing a more specific error if available
+    return (
+      <div>
+        <h1>Error loading applied job data.</h1>
+      </div>
+    );
+  }
+
+  if (isGetAppliedJobLoading) {
+    return (
+      <div>
+        <h1>Loading Applied Jobs...</h1>
+      </div>
+    );
+  }
+
+  // Check if the response structure is as expected before mapping
+  if (!getAppliedJobsResponse || !Array.isArray(getAppliedJobsResponse.data)) {
+    console.error(
+      "Unexpected data structure for applied jobs:",
+      getAppliedJobsResponse
+    );
+    return (
+      <div>
+        <h1>Could not load job data or no jobs found.</h1>
+      </div>
+    );
+  }
+
+  if (getAppliedJobsResponse.data.length === 0) {
+    return (
+      <div>
+        <h1>No one has applied to your posted jobs yet.</h1>
+      </div>
+    );
+  }
+
+  return (
+    <div className="p-4 m-2 border rounded-lg shadow-md">
+      {" "}
+      {/* Added container styling */}
+      <h2 className="text-2xl font-semibold mb-4">
+        Manage Job Applications
+      </h2>{" "}
+      {/* Added title */}
+      {getAppliedJobsResponse.data.map(
+        (
+          job // Renamed 'e' to 'job' for clarity
+        ) => (
+          <div
+            key={job.id}
+            className="m-1 p-4 border rounded mb-6 bg-gray-50 dark:bg-gray-800"
+          >
+            {" "}
+            {/* Improved job card styling */}
+            {/* --- Job Details --- */}
+            <div className="mb-4 pb-4 border-b border-gray-300 dark:border-gray-600">
+              <h3 className="text-xl font-bold text-blue-600 dark:text-blue-400 underline">
+                {job.title}
+              </h3>
+              <p className="text-gray-700 dark:text-gray-300">
+                {job.description}
+              </p>
+              <p>
+                <span className="font-semibold">Salary Range:</span> $
+                {job.salary_min} - ${job.salary_max}
+              </p>
+              <p>
+                <span className="font-semibold">Category:</span> {job.category}
+              </p>
+              <p>
+                <span className="font-semibold">Type:</span>{" "}
+                {job.employment_type}
+              </p>
+              <p>
+                <span className="font-semibold">Location:</span> {job.location}
+              </p>
+              <div className="mt-2">
+                <div className="text-pink-600 dark:text-pink-400">
+                  <strong>Total Applications: </strong>
+                  {job.application_count ?? 0} {/* Use nullish coalescing */}
+                </div>
+                <p className="text-red-600 dark:text-red-400">
+                  <strong>Deadline: </strong>
+                  {/* Format date for better readability */}
+                  {job.application_deadline
+                    ? new Date(job.application_deadline).toLocaleDateString()
+                    : "N/A"}
+                </p>
+              </div>
+            </div>
+            {/* --- Applications List for this Job --- */}
+            <div className="mt-4">
+              <h4 className="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">
+                Applications Received:
+              </h4>
+              {/* Check if applications array exists and is not empty */}
+              {job.applications && job.applications.length > 0 ? (
+                job.applications.map(
+                  (
+                    application // Renamed 'a' to 'application'
+                  ) => (
+                    <div
+                      key={application.id}
+                      className="bg-white text-cyan-900 dark:bg-gray-700 dark:text-white p-3 m-2 border rounded shadow-sm" // Slightly adjusted styling
+                    >
+                      {/* --- Application Details --- */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3">
+                        {" "}
+                        {/* Use grid for layout */}
+                        <p>
+                          <strong className="font-semibold">App ID:</strong>{" "}
+                          {application.id}
+                        </p>
+                        <p>
+                          <strong className="font-semibold">
+                            Applicant ID:
+                          </strong>{" "}
+                          {application.user_id}
+                        </p>
+                        <p>
+                          <strong className="font-semibold">Applied:</strong>{" "}
+                          {application.applied_at
+                            ? new Date(application.applied_at).toLocaleString()
+                            : "N/A"}
+                        </p>
+                        <p>
+                          <strong className="font-semibold">Resume ID:</strong>{" "}
+                          {application.resume_id || "N/A"}
+                        </p>
+                        <p>
+                          <strong className="font-semibold">Status:</strong>{" "}
+                          <span className="font-bold">
+                            {application.status}
+                          </span>
+                        </p>
+                        <p>
+                          <strong className="font-semibold">Updated:</strong>{" "}
+                          {application.updated_at
+                            ? new Date(application.updated_at).toLocaleString()
+                            : "N/A"}
+                        </p>
+                      </div>
+
+                      {/* --- Action Buttons/Links --- */}
+                      <div className="flex flex-wrap items-center gap-4 mb-3">
+                        <div>
+                          {/* Add actual profile viewing logic here */}
+                          <button
+                            onClick={() =>
+                              console.log(
+                                "View Profile For User ID:",
+                                application.user_id
+                              )
+                            }
+                            className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-700 text-sm"
+                          >
+                            View Profile
+                          </button>
+                        </div>
+                        {/* Add resume download link/button if possible */}
+                        {application.resume_id && (
+                          <div>
+                            <button
+                              onClick={() =>
+                                console.log(
+                                  "Download Resume ID:",
+                                  application.resume_id
+                                )
+                              }
+                              className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700 text-sm"
+                            >
+                              View Resume
+                            </button>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* --- Status Update Dropdown --- */}
+                      <div className="mt-2 flex items-center gap-2">
+                        <label
+                          htmlFor={`status-select-${application.id}`}
+                          className="font-semibold text-sm"
+                        >
+                          Change Status:
+                        </label>
+                        <select
+                          id={`status-select-${application.id}`} // Add unique ID for accessibility
+                          className="bg-gray-100 dark:bg-gray-600 dark:text-white hover:bg-gray-200 text-black p-2 border rounded" // Adjusted styling
+                          value={application.status} // Set current value - Controlled component
+                          onChange={(e) =>
+                            handleStatusChange(application.id, e.target.value)
+                          } // Call handler on change
+                          // Disable the select element while ANY update is loading (simplification)
+                          // For per-item loading indication, more complex state management would be needed
+                          disabled={isUpdateApplicationStatusLoading}
+                        >
+                          {/* Ensure these values match EXACTLY what the backend expects */}
+                          <option value="pending">Pending</option>
+                          <option value="reviewed">Reviewed</option>
+                          <option value="interviewed">Interviewed</option>
+                          <option value="offered">Offered</option>
+                          <option value="rejected">Rejected</option>
+                          <option value="withdrawn">Withdrawn</option>
+                        </select>
+                        {/* Simple loading indicator next to the dropdown */}
+                        {isUpdateApplicationStatusLoading && (
+                          <span className="text-sm italic">Updating...</span>
+                        )}
+                      </div>
+
+                      {/* Display specific error for this update if needed */}
+                      {isUpdateApplicationStatusError &&
+                        errorUpdateApplicationStatus && (
+                          <p className="text-red-500 text-sm mt-1">
+                            Update Error:{" "}
+                            {errorUpdateApplicationStatus?.data?.message ||
+                              "An error occurred"}
+                          </p>
+                        )}
+                    </div>
+                  )
+                )
+              ) : (
+                <p className="text-gray-600 dark:text-gray-400 italic">
+                  No applications received for this job yet.
+                </p>
+              )}
+            </div>
+          </div>
+        )
+      )}
+    </div>
+  );
+};// import React, { useState } from "react";
 
 // const steps = ["Account", "Company", "Contact", "Description", "Review"];
 
