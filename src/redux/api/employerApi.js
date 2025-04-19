@@ -99,12 +99,9 @@ export const employerApi = createApi({
 
     updateApplicationStatus: builder.mutation({
       query: ({ id, statusData }) => ({
-        // Ensure your backend route matches this: expects application ID in the URL
-        url: `/employer/applications/${id}/status`, // Adjusted URL assuming :id is application ID
-        // Or if your original URL was correct and `id` was meant to be job_post_id:
-        // url: `/employer/${the_correct_job_post_id}/status`, // Needs adjustment if id wasn't application id
+        url: `/employer/applications/${id}/status`,
         method: "PUT",
-        body: statusData, // Sends { status: 'newStatus' }
+        body: statusData,
       }),
       // 3. Specify that this mutation invalidates 'AppliedJobs' data
       //    When an application status changes, the list of applied jobs should be refreshed.
@@ -116,24 +113,13 @@ export const employerApi = createApi({
       ],
     }),
 
-    // Haven't Apply Tag Type Cache Management Logics
-    // getAppliedJobs: builder.query({
-    //   query: () => ({
-    //     url: "/employer/applied-jobs",
-    //   }),
-    //   validatesTags: ["Status"],
-    // }),
-
-    // updateApplicationStatus: builder.mutation({
-    //   query: ({ id, statusData }) => ({
-    //     url: `/employer/applications/${id}/status`,
-    //     method: "PUT",
-    //     body: statusData,
-    //   }),
-    //   invalidatesTags: ["Status"],
-    // }),
+    getAppliedUserProfileById: builder.query({
+      query: (id) => ({
+        url: `/employer/applied-user-profile/${id}`,
+        method: "GET",
+      }),
+    }),
   }),
-  // tagTypes: ["EmployerProfile", "Status"], // Define tag for cache management
 });
 
 export const {
@@ -143,63 +129,5 @@ export const {
   useUpdateEmployerProfileMutation,
   useGetAppliedJobsQuery,
   useUpdateApplicationStatusMutation,
+  useGetAppliedUserProfileByIdQuery,
 } = employerApi;
-
-// import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-// export const employerApi = createApi({
-//   reducerPath: "employer",
-//   baseQuery: fetchBaseQuery({
-//     baseUrl: "http://localhost:8080/api",
-//     credentials: "include",
-//   }),
-//   tagTypes: ["EmployerProfile"],
-//   endpoints: (builder) => ({
-//     registerEmployer: builder.mutation({
-//       query: (employerData) => ({
-//         url: "/auth/register_employer",
-//         method: "POST",
-//         body: employerData,
-//       }),
-//     }),
-
-//     createEmployerProfile: builder.mutation({
-//       query: (profileData) => ({
-//         url: "/employer/profile",
-//         method: "POST",
-//         body: profileData,
-//       }),
-//     }),
-
-//     getEmployerProfile: builder.query({
-//       query: () => ({
-//         url: "/employer/profile",
-//         method: "GET",
-//       }),
-//       providesTags: ["EmployerProfile"], // Added to enable cache invalidation
-//       transformResponse: (response) => {
-//         console.log("Fetched profile:", response);
-//         return response;
-//       },
-//     }),
-//     updateEmployerProfile: builder.mutation({
-//       query: (profileData) => ({
-//         url: "/employer/profile",
-//         method: "PUT",
-//         body: profileData,
-//       }),
-//       invalidatesTags: ["EmployerProfile"],
-//       transformResponse: (response) => {
-//         console.log("Update response:", response);
-//         return response;
-//       },
-//     }),
-//   }),
-// });
-
-// export const {
-//   useGetEmployerProfileQuery,
-//   useRegisterEmployerMutation,
-//   useCreateEmployerProfileMutation,
-//   useUpdateEmployerProfileMutation,
-// } = employerApi;

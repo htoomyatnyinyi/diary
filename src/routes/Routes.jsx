@@ -25,7 +25,7 @@ const NotFound = () => {
 };
 
 const ProtectedRoute = ({ allowedRoles, children }) => {
-  const { data, isLoading, isError } = useAuthMeQuery();
+  const { data, isLoading, isError } = useAuthMeQuery(null);
 
   if (isLoading) return <div>Loading...</div>;
 

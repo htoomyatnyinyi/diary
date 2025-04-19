@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import CreateNewJobSidebar from "./CreateNewJob"; // We'll create this next
 import {
   useGetAppliedJobsQuery,
+  useGetAppliedUserProfileByIdQuery,
   useUpdateApplicationStatusMutation,
 } from "../../../redux/api/employerApi";
 
@@ -32,13 +33,15 @@ const JobDashboard = () => {
 export default JobDashboard;
 
 const JobUpdateStatus = () => {
+  // const [appliedProfileId, setAppliedProfileId] = useState(null);
+
   const {
     data: getAppliedJobs,
     isLoading: isGetAppliedJobLoading,
     isError: isGetAppliedJobError,
     // You might want to add 'refetch' if you want to refresh the list after an update
     // refetch: refetchAppliedJobs,
-  } = useGetAppliedJobsQuery();
+  } = useGetAppliedJobsQuery(null);
 
   const [
     updateApplicationStatus,
@@ -50,10 +53,6 @@ const JobUpdateStatus = () => {
       // reset: resetUpdateStatus,
     },
   ] = useUpdateApplicationStatusMutation();
-
-  // const handleStatusChange = (applicationId, newStatus) => {
-  //   console.log("Hi", applicationId, newStatus);
-  // };
 
   // --- Handler function for status change ---
   const handleStatusChange = async (applicationId, newStatus) => {
@@ -76,27 +75,6 @@ const JobUpdateStatus = () => {
     }
   };
 
-  // // Check if the response structure is as expected before mapping
-  // if (!getAppliedJobs || !Array.isArray(getAppliedJobs.data)) {
-  //   console.error(
-  //     "Unexpected data structure for applied jobs:",
-  //     getAppliedJobs
-  //   );
-  //   return (
-  //     <div>
-  //       <h1>Could not load job data or no jobs found.</h1>
-  //     </div>
-  //   );
-  // }
-
-  // if (getAppliedJob.data.length === 0) {
-  //   return (
-  //     <div>
-  //       <h1>No one has applied to your posted jobs yet.</h1>
-  //     </div>
-  //   );
-  // }
-
   return (
     <div className=" p-2 m-1 ">
       <div>
@@ -113,114 +91,44 @@ const JobUpdateStatus = () => {
             ) : (
               <div>
                 <h1>This is Get Applied Job List</h1>
-                {getAppliedJobs.data.map((e) => (
-                  <div key={e.id} className="m-1 p-2 outline">
+                {getAppliedJobs.data.map((job) => (
+                  <div key={job.id} className="m-1 p-2 outline">
                     <div className="text-green-500">
-                      <p className="text-3xl underline">{e.title}</p>
-                      <p>{e.description}</p>
-                      <p>{e.min_salary}</p>
-                      <p>{e.category}</p>
-                      <p>{e.employment_type}</p>
-                      <p>{e.location}</p>
-                      <p>{e.salary_min}</p>
-                      <p>{e.salary_max}</p>
+                      <p className="text-3xl underline">{job.title}</p>
+                      <p>{job.description}</p>
+                      <p>{job.min_salary}</p>
+                      <p>{job.category}</p>
+                      <p>{job.employment_type}</p>
+                      <p>{job.location}</p>
+                      <p>{job.salary_min}</p>
+                      <p>{job.salary_max}</p>
                       <div className="mt-2">
-                        <div className="text-pink-600 dark:text-pink-400">
-                          <strong>Total Applications: </strong>
-                          {e.application_count ?? 0}{" "}
-                          {/* Use nullish coalescing */}
+                        <div className="text-pink-500">
+                          <strong>Total User Application Count :: </strong>
+                          {job.application_count ?? 0}
                         </div>
-                        <p className="text-red-600 dark:text-red-400">
+                        <div className="text-red-600 dark:text-red-400">
                           <strong>Deadline: </strong>
                           {/* Format date for better readability */}
-                          {e.application_deadline
+                          {job.application_deadline
                             ? new Date(
-                                e.application_deadline
+                                job.application_deadline
                               ).toLocaleDateString()
                             : "N/A"}
-                        </p>
+                          <p>{job.application_deadline}</p>
+                        </div>
                       </div>
-                      {/* <div>
-                        <div className="text-pink-500">
-                          <strong>Total User Application Count</strong>
-                          {e.application_count}
-                        </div>
-                        <p className="text-red-300">
-                          Application Close After This Day ::
-                          {e.application_deadline}
-                        </p>
-                      </div> */}
                     </div>
-
-                    {/* --- Applications List for this Job --- */}
-                    <div className="mt-4">
-                      <h4 className="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">
-                        Applications Received:
-                      </h4>
-                      {e.applications.map((a) => (
-                        <div
-                          key={a.id}
-                          className="bg-white text-cyan-900 dark:bg-cyan-900 dark:text-white p-2 m-1"
-                        >
-                          <div>
-                            <p>
-                              <label>Job Application ID :</label>
-                              {a.id}
-                            </p>
-                            <div>
-                              <label>
-                                Click Here to Get Applied Profile Info
-                              </label>
-                              <button
-                                onClick={() =>
-                                  console.log("View Profile Funtion")
-                                }
-                                className="bg-green-500 p-2 m-1 hover:bg-green-900"
-                              >
-                                View Profile
-                              </button>
-                            </div>
-                          </div>
-                          <p>
-                            <strong>Applied User ID :: </strong>
-                            {a.user_id}
-                          </p>
-                          <p>
-                            <strong>Applied Time :: </strong>
-                            {a.applied_at}
-                          </p>
-                          <p>
-                            <strong>Resume Attachment ID :: </strong>
-                            {a.resume_id}
-                          </p>
-                          <p>
-                            <strong>Job Status to Applications :: </strong>
-                            {a.status}
-                          </p>
-                          <p>
-                            <strong>Status Update Time :: </strong>
-                            {a.updated_at}
-                          </p>
-                          {/* // edit reamin from here */}
-                          <label>Change The Job Status Here :: </label>
-                          <select
-                            // id={`status-select-${a.id}`}
-                            // id={a.id}
-                            value={a.status}
-                            onChange={(e) =>
-                              handleStatusChange(a.id, e.target.value)
-                            }
-                            disabled={isUpdateApplicationStatusLoading}
-                            className="bg-white hover:bg-green-400 text-black p-2 m-1"
-                          >
-                            <option value="pending">Pending</option>
-                            <option value="reviewed">Reviewed</option>
-                            <option value="interviewed">Interview</option>
-                            <option value="offered">Offered</option>
-                            <option value="rejected">Rejected</option>
-                            <option value="withdraw">WithDraw</option>
-                          </select>
-                        </div>
+                    <div>
+                      <h1>Application Received:: </h1>
+                      {job.applications.map((app) => (
+                        <ApplicationCard
+                          key={app.id}
+                          application={app}
+                          handleStatusChange={handleStatusChange}
+                          isLoading={isUpdateApplicationStatusLoading}
+                          error={errorUpdateApplicationStatus}
+                        />
                       ))}
                     </div>
                   </div>
@@ -233,3 +141,396 @@ const JobUpdateStatus = () => {
     </div>
   );
 };
+
+const ApplicationCard = ({
+  application,
+  handleStatusChange,
+  isLoading,
+  error,
+}) => {
+  const [showProfile, setShowProfile] = useState(false);
+  const {
+    data: userProfile,
+    isLoading: isProfileLoading,
+    isError: isProfileError,
+  } = useGetAppliedUserProfileByIdQuery(application.user_id, {
+    skip: !showProfile,
+  });
+
+  return (
+    <div className="bg-white text-cyan-900 dark:bg-cyan-900 dark:text-white p-2 m-1">
+      <div>
+        <p>
+          <strong>Application ID: </strong> {application.id}
+        </p>
+        <p>
+          <strong>User ID: </strong> {application.user_id || "NULL"}
+        </p>
+        <p>
+          <strong>Applied At: </strong> {application.applied_at}
+        </p>
+        <p>
+          <strong>Resume ID: </strong> {application.resume_id}
+        </p>
+        <p>
+          <strong>Status: </strong> {application.status}
+        </p>
+        <p>
+          <strong>Status Updated At: </strong> {application.updated_at}
+        </p>
+
+        <div className="my-2">
+          <label className="block">Change Job Application Status:</label>
+          <select
+            value={application.status || ""}
+            onChange={(e) => handleStatusChange(application.id, e.target.value)}
+            disabled={isLoading}
+            className="bg-white text-black p-2 mt-1"
+          >
+            <option value="pending">Pending</option>
+            <option value="reviewed">Reviewed</option>
+            <option value="interviewed">Interview</option>
+            <option value="offered">Offered</option>
+            <option value="rejected">Rejected</option>
+            <option value="withdrawn">Withdrawn</option>
+          </select>
+          {error && (
+            <p className="text-red-500 text-sm mt-1">
+              Failed to update status. Please try again.
+            </p>
+          )}
+        </div>
+
+        <button
+          onClick={() => setShowProfile((prev) => !prev)}
+          className="bg-yellow-500 p-2 mt-2 hover:bg-yellow-700"
+        >
+          {showProfile ? "Hide Profile" : "View Profile"}
+        </button>
+
+        {showProfile && (
+          <div className="mt-2 p-2 bg-gray-100 dark:bg-gray-800 rounded">
+            {isProfileLoading ? (
+              <p>Loading profile...</p>
+            ) : isProfileError ? (
+              <p className="text-red-500">Error fetching profile</p>
+            ) : userProfile ? (
+              <div>
+                <p>
+                  <strong>First Name: </strong>
+                  {userProfile.data.first_name}
+                </p>
+                <p>
+                  <strong>Last Name: </strong>
+                  {userProfile.data.last_name}
+                </p>
+                <p>
+                  <strong>Email: </strong>
+                  {userProfile.data.email}
+                </p>
+                {/* Add more fields as needed */}
+              </div>
+            ) : (
+              <p>No profile data found.</p>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// backup before edit
+// import React, { useState } from "react";
+// import CreateNewJobSidebar from "./CreateNewJob"; // We'll create this next
+// import {
+//   useGetAppliedJobsQuery,
+//   useGetAppliedUserProfileByIdQuery,
+//   useUpdateApplicationStatusMutation,
+// } from "../../../redux/api/employerApi";
+
+// const JobDashboard = () => {
+//   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+//   const openSidebar = () => setIsSidebarOpen(true);
+//   const closeSidebar = () => setIsSidebarOpen(false);
+
+//   return (
+//     <div>
+//       <div className="p-6">
+//         <h1 className="text-3xl font-bold mb-6">Job Management</h1>
+//         {/* Add other dashboard content here, like a list of existing jobs */}
+//         <button
+//           onClick={openSidebar}
+//           className="bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 "
+//         >
+//           Create New Job Posting
+//         </button>
+//         <CreateNewJobSidebar isOpen={isSidebarOpen} onClose={closeSidebar} />
+//       </div>
+//       <JobUpdateStatus />
+//     </div>
+//   );
+// };
+
+// export default JobDashboard;
+
+// const JobUpdateStatus = () => {
+//   const [appliedProfileId, setAppliedProfileId] = useState(null);
+
+//   const {
+//     data: getAppliedJobs,
+//     isLoading: isGetAppliedJobLoading,
+//     isError: isGetAppliedJobError,
+//     // You might want to add 'refetch' if you want to refresh the list after an update
+//     // refetch: refetchAppliedJobs,
+//   } = useGetAppliedJobsQuery(null);
+
+//   const [
+//     updateApplicationStatus,
+//     {
+//       isLoading: isUpdateApplicationStatusLoading,
+//       isError: isUpdateApplicationStatusError,
+//       error: errorUpdateApplicationStatus,
+//       // You might want 'reset' to clear error states manually
+//       // reset: resetUpdateStatus,
+//     },
+//   ] = useUpdateApplicationStatusMutation();
+
+//   const {
+//     data: getAppliedUserProfileByIdResponse,
+//     isLoading: isAppliedUserProfileByIdLoading,
+//   } = useGetAppliedUserProfileByIdQuery(appliedProfileId, {
+//     skip: !appliedProfileId,
+//   });
+
+//   if (isAppliedUserProfileByIdLoading) return <p>Loaidng</p>;
+
+//   console.log(
+//     getAppliedUserProfileByIdResponse?.data,
+//     "check profile status and "
+//   );
+
+//   // --- Handler function for status change ---
+//   const handleStatusChange = async (applicationId, newStatus) => {
+//     console.log(`Updating application ${applicationId} to status ${newStatus}`);
+//     try {
+//       // Call the mutation provided by RTK Query
+//       await updateApplicationStatus({
+//         id: applicationId, // This matches the 'id' expected in the RTK query definition
+//         statusData: { status: newStatus }, // This matches the 'statusData' and the backend's req.body expectation
+//       }).unwrap(); // .unwrap() gives you a promise that rejects on error, making try/catch easier
+
+//       console.log("Update successful for application:", applicationId);
+//       // Optional: Show a success message (e.g., using a toast library)
+//       // Optional: Refetch the list to confirm the update visually
+//       // refetchAppliedJobs();
+//     } catch (err) {
+//       console.error("Failed to update status:", err);
+//       // Optional: Show an error message (e.g., using a toast library)
+//       // You can access specific error details from 'err' or 'errorUpdateApplicationStatus'
+//     }
+//   };
+
+//   return (
+//     <div className=" p-2 m-1 ">
+//       <div>
+//         {isGetAppliedJobError ? (
+//           <div>
+//             <h1>Erro at Get AppliedJob</h1>
+//           </div>
+//         ) : (
+//           <div>
+//             {isGetAppliedJobLoading ? (
+//               <div>
+//                 <h1>Loading ...</h1>
+//               </div>
+//             ) : (
+//               <div>
+//                 <h1>This is Get Applied Job List</h1>
+//                 {getAppliedJobs.data.map((e) => (
+//                   <div key={e.id} className="m-1 p-2 outline">
+//                     <div className="text-green-500">
+//                       <p className="text-3xl underline">{e.title}</p>
+//                       <p>{e.description}</p>
+//                       <p>{e.min_salary}</p>
+//                       <p>{e.category}</p>
+//                       <p>{e.employment_type}</p>
+//                       <p>{e.location}</p>
+//                       <p>{e.salary_min}</p>
+//                       <p>{e.salary_max}</p>
+//                       <div className="mt-2">
+//                         <div className="text-pink-500">
+//                           <strong>Total User Application Count :: </strong>
+//                           {e.application_count ?? 0}
+//                         </div>
+//                         <div className="text-red-600 dark:text-red-400">
+//                           <strong>Deadline: </strong>
+//                           {/* Format date for better readability */}
+//                           {e.application_deadline
+//                             ? new Date(
+//                                 e.application_deadline
+//                               ).toLocaleDateString()
+//                             : "N/A"}
+//                           <p>{e.application_deadline}</p>
+//                         </div>
+//                       </div>
+//                     </div>
+
+//                     {/* --- Applications List for this Job --- */}
+//                     <div className="mt-4">
+//                       <h4 className="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">
+//                         Applications Received:
+//                       </h4>
+//                       {e.applications.map((a) => (
+//                         <div
+//                           key={a.id}
+//                           className="bg-white text-cyan-900 dark:bg-cyan-900 dark:text-white p-2 m-1"
+//                         >
+//                           {a.id ? (
+//                             <div>
+//                               <div>
+//                                 <p>
+//                                   <label>Job Application ID :</label>
+//                                   {a.id}
+//                                 </p>
+//                                 <div>
+//                                   <label>
+//                                     Click Here to Get Applied Profile Info
+//                                   </label>
+//                                   {/* <button
+//                                     onClick={() =>
+//                                       console.log(
+//                                         "View Profile Funtion",
+//                                         a.user_id
+//                                       )
+//                                     }
+//                                     className="bg-green-500 p-2 m-1 hover:bg-green-900"
+//                                   >
+//                                     View Profile
+//                                   </button> */}
+//                                   <button
+//                                     onClick={() =>
+//                                       setAppliedProfileId(a.user_id)
+//                                     }
+//                                     className="bg-yellow-500 p-2 m-1 hover:bg-green-900"
+//                                   >
+//                                     View Profile
+//                                   </button>
+//                                 </div>
+//                               </div>
+//                               <p>
+//                                 <strong>Applied User ID :: </strong>
+//                                 {a.user_id || "NULL"}
+//                               </p>
+//                               <p>
+//                                 <strong>Applied Time :: </strong>
+//                                 {a.applied_at}
+//                               </p>
+//                               <p>
+//                                 <strong>Resume Attachment ID :: </strong>
+//                                 {a.resume_id}
+//                               </p>
+//                               <p>
+//                                 <strong>Job Status to Applications :: </strong>
+//                                 {a.status}
+//                               </p>
+//                               <p>
+//                                 <strong>Status Update Time :: </strong>
+//                                 {a.updated_at}
+//                               </p>
+//                               {/* // edit reamin from here */}
+//                               <label>Change The Job Status Here :: </label>
+//                               {errorUpdateApplicationStatus ? (
+//                                 <div>
+//                                   <h1 className="text-pink-500">
+//                                     Error Update Application Status
+//                                   </h1>
+//                                 </div>
+//                               ) : (
+//                                 <div>
+//                                   {isUpdateApplicationStatusLoading ? (
+//                                     <div className="text-blue-500">
+//                                       Update Application STatus Loading
+//                                     </div>
+//                                   ) : (
+//                                     <div>
+//                                       <select
+//                                         // id={`status-select-${a.id}`}
+//                                         // id={a.id}
+//                                         value={a.status || ""}
+//                                         onChange={(e) =>
+//                                           handleStatusChange(
+//                                             a.id,
+//                                             e.target.value
+//                                           )
+//                                         }
+//                                         disabled={
+//                                           isUpdateApplicationStatusLoading
+//                                         }
+//                                         className="bg-white hover:bg-green-400 text-black p-2 m-1"
+//                                       >
+//                                         <option value="pending">Pending</option>
+//                                         <option value="reviewed">
+//                                           Reviewed
+//                                         </option>
+//                                         <option value="interviewed">
+//                                           Interview
+//                                         </option>
+//                                         <option value="offered">Offered</option>
+//                                         <option value="rejected">
+//                                           Rejected
+//                                         </option>
+//                                         <option value="withdrawn">
+//                                           WithDrawn
+//                                         </option>
+//                                       </select>
+//                                     </div>
+//                                   )}
+//                                 </div>
+//                               )}
+//                             </div>
+//                           ) : (
+//                             <div>There is No More Application Yet.</div>
+//                           )}
+//                         </div>
+//                       ))}
+//                     </div>
+//                     <div>
+//                       {isAppliedUserProfileByIdLoading ? (
+//                         <div>Loading AppliedUser Profile By Id </div>
+//                       ) : (
+//                         <div className="bg-sky-400">
+//                           <p>
+//                             {getAppliedUserProfileByIdResponse?.data.first_name}
+//                           </p>
+//                           <p>
+//                             {getAppliedUserProfileByIdResponse?.data.last_name}
+//                           </p>
+//                           <p>
+//                             {getAppliedUserProfileByIdResponse?.data.gender}
+//                           </p>
+//                           <p>{getAppliedUserProfileByIdResponse?.data.bio}</p>
+//                           <p>
+//                             {
+//                               getAppliedUserProfileByIdResponse?.data
+//                                 .date_of_birth
+//                             }
+//                           </p>
+//                           <p>{getAppliedUserProfileByIdResponse?.data.phone}</p>
+//                           <p>
+//                             {getAppliedUserProfileByIdResponse?.data.location}
+//                           </p>
+//                         </div>
+//                       )}
+//                     </div>
+//                   </div>
+//                 ))}
+//               </div>
+//             )}
+//           </div>
+//         )}
+//       </div>
+//     </div>
+//   );
+// };

@@ -273,6 +273,14 @@ const UserProfile = () => {
 
   return (
     <div>
+      <div>
+        <div className="flex flex-nowrap justify-around items-center">
+          <li className="block p-8 m-1 shadow-2xs hover:bg-white bg-slate-500"></li>
+          <li className="block p-8 m-1 shadow-2xs hover:bg-white bg-slate-500 "></li>
+          <li className="block p-8 m-1 shadow-2xs hover:bg-white bg-slate-500 "></li>
+          <li className="block p-8 m-1 shadow-2xs hover:bg-white bg-slate-500 "></li>
+        </div>
+      </div>
       <div className="p-4 m-1 backdrop-blur-3xl shadow-2xl">
         <div className="flex justify-evenly flex-wrap">
           <div>
