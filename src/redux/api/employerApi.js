@@ -119,6 +119,15 @@ export const employerApi = createApi({
         method: "GET",
       }),
     }),
+
+    getAppliedUserResumeById: builder.query({
+      query: (id) => ({
+        url: `/employer/applied-user-resume/${id}`,
+        method: "GET",
+        responseHandler: (response) => response.blob(),
+      }),
+      transformResponse: (response) => URL.createObjectURL(response),
+    }),
   }),
 });
 
@@ -130,4 +139,5 @@ export const {
   useGetAppliedJobsQuery,
   useUpdateApplicationStatusMutation,
   useGetAppliedUserProfileByIdQuery,
+  useGetAppliedUserResumeByIdQuery,
 } = employerApi;

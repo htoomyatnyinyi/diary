@@ -6,6 +6,8 @@ import {
   usePreviewResumeQuery,
   useUploadResumeMutation,
 } from "../../redux/api/userApi";
+import "react-pdf/dist/Page/AnnotationLayer.css";
+import "react-pdf/dist/Page/TextLayer.css"; // Also recommended for text selection
 
 // Set workerSrc for react-pdf
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
@@ -87,6 +89,17 @@ const Resume = () => {
                   >
                     Click Preview
                   </button>
+                  {/* --- Download Button --- */}
+                  {/* Using a standard <a> tag with download attribute */}
+                  <a
+                    // IMPORTANT: Replace '/api/user/resume/download/' with your actual backend path
+                    href={`/api/user/resume/download/${resume.file_name}`}
+                    download={resume.file_name} // Suggests the filename to the browser
+                    className="bg-blue-500 hover:bg-blue-600 text-white p-2 m-1 inline-block" // Use inline-block to apply padding like a button
+                  >
+                    Download
+                  </a>
+                  {/* --- End Download Button --- */}
                   <button
                     // onClick={() =>
                     //   deleteResume(resume.id).then(() => refetch())
@@ -103,32 +116,24 @@ const Resume = () => {
                   >
                     {isDeleting ? "Deleting..." : "Delete"}
                   </button>
-
-                  {/* <button
-                    onClick={handleDelete}
-                    className={`p-2 m-1 ${
-                      isDeleting || !deleteFile ? "bg-red-500" : "bg-green-500"
-                    }`}
-                  >
-                    {isDeleting ? "Deleting" : "Delete"}
-                  </button> */}
                 </div>
-                {isFileURLLoading ? (
-                  <>
-                    <p className="bg-green-500 h-screen">Loading....FILE </p>
-                  </>
-                ) : (
-                  <div className="max-h-screen max-w-10">
-                    <Document
-                      file={fileURL}
-                      onLoadError={(error) =>
-                        console.error("PDF load error:", error)
-                      }
-                    >
-                      <Page pageNumber={1} width={600} />
-                    </Document>
-                  </div>
-                )}
+                {filenamePreview === resume.file_name &&
+                  (isFileURLLoading ? (
+                    <>
+                      <p className="bg-green-500 h-screen">Loading....FILE </p>
+                    </>
+                  ) : (
+                    <div className="max-h-screen max-w-10">
+                      <Document
+                        file={fileURL}
+                        onLoadError={(error) =>
+                          console.error("PDF load error:", error)
+                        }
+                      >
+                        <Page pageNumber={1} width={600} />
+                      </Document>
+                    </div>
+                  ))}
               </div>
             ))}
           </div>

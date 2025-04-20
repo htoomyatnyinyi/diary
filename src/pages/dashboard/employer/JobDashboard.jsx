@@ -1,10 +1,19 @@
 import React, { useState } from "react";
-import CreateNewJobSidebar from "./CreateNewJob"; // We'll create this next
+import { Document, Page, pdfjs } from "react-pdf";
+
 import {
   useGetAppliedJobsQuery,
   useGetAppliedUserProfileByIdQuery,
+  useGetAppliedUserResumeByIdQuery,
   useUpdateApplicationStatusMutation,
 } from "../../../redux/api/employerApi";
+import CreateNewJobSidebar from "./CreateNewJob"; // We'll create this next
+
+import "react-pdf/dist/Page/AnnotationLayer.css";
+import "react-pdf/dist/Page/TextLayer.css"; // Also recommended for text selection
+
+// Set workerSrc for react-pdf
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 const JobDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -120,16 +129,27 @@ const JobUpdateStatus = () => {
                       </div>
                     </div>
                     <div>
-                      <h1>Application Received:: </h1>
-                      {job.applications.map((app) => (
-                        <ApplicationCard
-                          key={app.id}
-                          application={app}
-                          handleStatusChange={handleStatusChange}
-                          isLoading={isUpdateApplicationStatusLoading}
-                          error={errorUpdateApplicationStatus}
-                        />
-                      ))}
+                      {/* Logic  */}
+                      {job.application_count === 0 ? (
+                        <div>
+                          <h1 className="bg-yellow-500 p-2 m-1">
+                            There is no applications for this post yet.!
+                          </h1>
+                        </div>
+                      ) : (
+                        <div>
+                          <h1>Application Received:: </h1>
+                          {job.applications.map((app) => (
+                            <ApplicationCard
+                              key={app.id}
+                              application={app}
+                              handleStatusChange={handleStatusChange}
+                              isLoading={isUpdateApplicationStatusLoading}
+                              error={errorUpdateApplicationStatus}
+                            />
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -149,6 +169,7 @@ const ApplicationCard = ({
   error,
 }) => {
   const [showProfile, setShowProfile] = useState(false);
+  const [showResume, setShowResume] = useState(false); // resume get already temp
   const {
     data: userProfile,
     isLoading: isProfileLoading,
@@ -156,7 +177,23 @@ const ApplicationCard = ({
   } = useGetAppliedUserProfileByIdQuery(application.user_id, {
     skip: !showProfile,
   });
+  // pending
+  // const {
+  //   data: userResumeResponse,
+  //   isLoading: isResumeLoading,
+  //   isError: isResumeError,
+  // } = useGetAppliedUserResumeByIdQuery(application.resume_id, {
+  //   skip: !application.resume_id,
+  // });
+  const {
+    data: userResumeResponse,
+    isLoading: isResumeLoading,
+    isError: isResumeError,
+  } = useGetAppliedUserResumeByIdQuery(showResume, { skip: !showResume });
 
+  if (isResumeLoading) return <p>Loading</p>;
+
+  // console.log(userResumeResponse?.data, "resume info", application.resume_id);
   return (
     <div className="bg-white text-cyan-900 dark:bg-cyan-900 dark:text-white p-2 m-1">
       <div>
@@ -207,6 +244,12 @@ const ApplicationCard = ({
         >
           {showProfile ? "Hide Profile" : "View Profile"}
         </button>
+        <button
+          onClick={() => setShowResume(application.resume_id)}
+          className="bg-green-500 p-2 m-1"
+        >
+          Show Resume
+        </button>
 
         {showProfile && (
           <div className="mt-2 p-2 bg-gray-100 dark:bg-gray-800 rounded">
@@ -232,6 +275,27 @@ const ApplicationCard = ({
               </div>
             ) : (
               <p>No profile data found.</p>
+            )}
+          </div>
+        )}
+        {showResume && (
+          <div>
+            {isResumeLoading ? (
+              <div>
+                <p> Resume Loading ...</p>
+              </div>
+            ) : (
+              <div>
+                <Document
+                  file={userResumeResponse}
+                  onLoadError={(error) =>
+                    console.error("PDF load error", error)
+                  }
+                  className="bg-amber-300 p-2 m-1"
+                >
+                  <Page pageNumber={1} width={300} />
+                </Document>
+              </div>
             )}
           </div>
         )}

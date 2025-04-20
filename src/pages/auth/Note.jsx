@@ -218,7 +218,6 @@ const ApplicationCard = ({
   );
 };
 
-
 // import React from "react";
 
 // import {
