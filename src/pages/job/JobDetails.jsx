@@ -176,7 +176,7 @@ const JobDetails = ({ job }) => {
   }
 
   return (
-    <div className="p-6 m-2 rounded-lg shadow overflow-y-auto h-screen">
+    <div className="p-6 m-4 rounded bg-slate-900 scrollbar-hide text-white hover:border-1 shadow overflow-y-auto h-screen">
       {/* Job Image */}
       {job.post_image_url ? (
         <img
@@ -191,38 +191,41 @@ const JobDetails = ({ job }) => {
           className="w-full h-48 object-cover object-top rounded-md mb-4 dark:invert-100"
         />
       )}
+      <div className="p-2 m-1">
+        <h1 className="text-3xl font-bold p-2 m-1">{job.title}</h1>
 
-      <h1 className="text-2xl font-bold mb-2">{job.title}</h1>
-      <p className="text-sm mb-1">
-        <strong>Location:</strong> {job.location || "N/A"}
-      </p>
-      {job.address && (
-        <p className="text-sm mb-1">
-          <strong>Address:</strong> {job.address}
+        <br />
+        <p className="m-1 p-2 ">
+          <strong>Location:</strong> {job.location || "N/A"}
         </p>
-      )}
-      <p className="text-sm mb-1">
-        <strong>Type:</strong> {job.employment_type}
-      </p>
-      {(job.salary_min || job.salary_max) && (
-        <p className="text-sm mb-1">
-          <strong>Salary:</strong> ${job.salary_min || "N/A"} - $
-          {job.salary_max || "N/A"}
+        {job.address && (
+          <p className="m-1 p-2 ">
+            <strong>Address:</strong> {job.address}
+          </p>
+        )}
+        <p className="m-1 p-2 ">
+          <strong>Type:</strong> {job.employment_type}
         </p>
-      )}
-      {job.application_deadline && (
-        <p className="text-sm text-red-600 mb-4">
-          <strong>Apply by:</strong>{" "}
-          {new Date(job.application_deadline).toLocaleDateString()}
-        </p>
-      )}
+        {(job.salary_min || job.salary_max) && (
+          <p className="m-1 p-2 ">
+            <strong>Salary:</strong> ${job.salary_min || "N/A"} - $
+            {job.salary_max || "N/A"}
+          </p>
+        )}
+        {job.application_deadline && (
+          <p className="text-xl m-1 p-2 text-red-600 mb-4">
+            <strong>Apply by:</strong>{" "}
+            {new Date(job.application_deadline).toLocaleDateString()}
+          </p>
+        )}
+      </div>
 
       {/* Action Buttons */}
-      <div className="flex space-x-4 mb-4">
+      <div className="flex space-x-4 m-4 justify-around ">
         <button
           onClick={handleSaveJob}
           disabled={isSaving || isJobSaved}
-          className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${
+          className={`bg-blue-500 hover:bg-blue-700 w-1/2 text-white font-bold py-2 px-4 rounded ${
             isSaving || isJobSaved ? "opacity-50 cursor-not-allowed" : ""
           }`}
         >
@@ -231,7 +234,7 @@ const JobDetails = ({ job }) => {
         <button
           onClick={openResumeModal}
           disabled={isApplying || isJobApplied}
-          className={`bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded ${
+          className={`bg-cyan-500 hover:bg-cyan-700 w-1/2 text-white font-bold py-2 px-4 rounded ${
             isApplying || isJobApplied ? "opacity-50 cursor-not-allowed" : ""
           }`}
         >
@@ -239,18 +242,18 @@ const JobDetails = ({ job }) => {
         </button>
       </div>
 
-      <h2 className="text-lg font-semibold mt-4 mb-2 border-t pt-3">
-        Description
-      </h2>
-      <p className="text-green-500 whitespace-pre-wrap">{job.description}</p>
+      <h2 className="text-xl font-semibold p-4 m-2 border-t">Description</h2>
+      <p className="text-green-500 p-4 m-2 whitespace-pre-wrap">
+        {job.description}
+      </p>
 
       {/* Requirements */}
       {job.requirements && job.requirements.length > 0 && (
         <>
-          <h2 className="text-lg font-semibold mt-4 mb-2 border-t pt-3">
+          <h2 className="text-xl font-semibold mt-4 mb-2 border-t pt-3">
             Requirements
           </h2>
-          <ul className="list-disc list-inside space-y-1 pl-4">
+          <ul className="list-disc list-inside space-y-4 p-4">
             {Array.isArray(job.requirements) ? (
               job.requirements.map((req, index) => (
                 <li key={`req-${index}`}>{req}</li>
@@ -268,7 +271,7 @@ const JobDetails = ({ job }) => {
           <h2 className="text-lg font-semibold mt-4 mb-2 border-t pt-3">
             Responsibilities
           </h2>
-          <ul className="list-disc list-inside space-y-1 pl-4">
+          <ul className="list-disc list-inside space-y-4 p-4">
             {Array.isArray(job.responsibilities) ? (
               job.responsibilities.map((resp, index) => (
                 <li key={`resp-${index}`}>{resp}</li>
@@ -282,8 +285,8 @@ const JobDetails = ({ job }) => {
 
       {/* Resume Selection Modal */}
       {isResumeModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+        <div className="fixed inset-0 backdrop-blur-lg bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-slate-900 p-6 rounded-lg shadow-lg max-w-md w-full">
             <h2 className="text-xl font-semibold mb-4">Select a Resume</h2>
             {isResumesLoading ? (
               <p>Loading resumes...</p>
@@ -292,7 +295,7 @@ const JobDetails = ({ job }) => {
             ) : (
               <div className="space-y-2">
                 {resumes.data.map((resume) => (
-                  <div key={resume.id} className="flex items-center">
+                  <div key={resume.id} className="flex items-center ">
                     <input
                       type="radio"
                       name="resume"

@@ -1,4 +1,3 @@
-// same version before edit it.
 import React, { useState } from "react"; // Import useState
 import { useDispatch, useSelector } from "react-redux";
 import coverImg from "../../assets/utils/A.png"; // Adjust path if needed
@@ -112,25 +111,29 @@ const JobLists = ({ jobs, onJobSelect, selectedJobId }) => {
 
   return (
     // Consider fixed height for scroll if needed, or let parent handle layout
-    <div className="h-screen overflow-y-auto scrollbar-hide border-r border-gray-200 ">
+    <div className="h-screen overflow-y-auto scrollbar-hide border-r borde-cyan-900 ">
       {jobs.map((job) => (
         // Using div instead of button for better structure, apply onClick to div
         <div
           key={job.id}
           onClick={() => onJobSelect(job.id)} // Apply onClick here
-          className={`p-3 m-2 rounded-md border cursor-pointer transition-colors duration-150 ease-in-out
+          className={`p-6 m-4 rounded cursor-pointer transition-colors duration-150 ease-in-out
                         ${
                           selectedJobId === job.id
-                            ? "bg-teal-100 border-teal-400"
-                            : "bg-sky-950 border-gray-200 hover:bg-sky-800 hover:border-gray-300"
+                            ? " border-4  dark:text-white text-cyan-900"
+                            : "bg-slate-900  hover:bg-black text-white "
                         }`}
         >
           <p className="font-semibold ">{job.title}</p>
+          <h1>Micro Labs</h1>
+          <p>{job.description}</p>
+          <br />
           <p className="text-sm ">
             {job.employment_type} - {job.location || "N/A"}
           </p>
+          <p>{job.address}</p>
           {(job.salary_min || job.salary_max) && ( // Show salary only if available
-            <p className="text-sm text-green-500 mt-1">
+            <p className="text-sm text-green-500 p-2 m-1">
               ${job.salary_min || "N/A"} - ${job.salary_max || "N/A"}
             </p>
           )}

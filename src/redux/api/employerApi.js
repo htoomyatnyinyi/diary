@@ -31,6 +31,14 @@ export const employerApi = createApi({
       }),
       // invalidatesTags: ['EmployerProfile'],
     }),
+    createNewEmployerProfile: builder.mutation({
+      query: (profileData) => ({
+        url: "/employer/create-profile",
+        method: "POST",
+        body: profileData,
+      }),
+      // invalidatesTags: ['EmployerProfile'],
+    }),
 
     getEmployerProfile: builder.query({
       query: () => ({
@@ -140,4 +148,5 @@ export const {
   useUpdateApplicationStatusMutation,
   useGetAppliedUserProfileByIdQuery,
   useGetAppliedUserResumeByIdQuery,
+  useCreateNewEmployerProfileMutation,
 } = employerApi;

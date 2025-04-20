@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import homeImage from "../assets/utils/Question.png";
+import CreateEmployerProfile from "./profile/CreateEmployerProfile";
 
 // import { useGetJobByIdQuery } from "../redux/api/jobApi";
 // import JobDashboard from "./dashboard/employer/JobDashboard";
@@ -20,6 +21,7 @@ const Home = () => {
         <h1 className="text-4xl font-bold  mb-4">
           Unlock Your Potential Today!
         </h1>
+        <CreateEmployerProfile />
         <p className="text-lg mb-8">
           Join thousands of satisfied users who have transformed their lives
           with our innovative solutions. Experience the difference and take the

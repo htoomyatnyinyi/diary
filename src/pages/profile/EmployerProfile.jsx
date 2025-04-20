@@ -3,6 +3,7 @@ import {
   useGetEmployerProfileQuery,
   useUpdateEmployerProfileMutation,
 } from "../../redux/api/employerApi";
+import CreateEmployerProfile from "./CreateEmployerProfile";
 
 export default function EmployerProfile() {
   const {
@@ -27,6 +28,9 @@ export default function EmployerProfile() {
     return (
       <div className="text-center p-6 text-red-500">
         Error loading profile: {error.data?.message || "Something went wrong."}
+        <p className="text-cyan-900 dark:text-white">
+          <CreateEmployerProfile />
+        </p>
       </div>
     );
   }
