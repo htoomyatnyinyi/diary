@@ -11,13 +11,13 @@ export default function Register() {
   const [userId, setUserId] = useState(null);
 
   const [formData, setFormData] = useState({
-    username: "ef",
-    employerEmail: "a@mail.com",
-    password: "abc",
-    confirmPassword: "abc",
-    brandName: "labs",
-    registeredNumber: "HMNN_9aflekfo83", // Added field
-    contactPhone: "0803495",
+    username: "",
+    employerEmail: "",
+    password: "",
+    confirmPassword: "",
+    brandName: "",
+    registeredNumber: "", // Added field
+    contactPhone: "",
     addressLine: "",
     city: "",
     state: "",

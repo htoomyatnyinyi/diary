@@ -9,8 +9,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    {/* <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}> */}
-    <GoogleOAuthProvider clientId="420918966550-ugaeijflrille6p1lf876712jivomgh9.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_APP_GOOGLE_CLIENT_ID}>
       <Provider store={store}>
         <App />
       </Provider>
@@ -18,22 +17,22 @@ createRoot(document.getElementById("root")).render(
   </StrictMode>
 );
 
-// import { StrictMode } from "react";
-// import { createRoot } from "react-dom/client";
-// import "./index.css";
-// import App from "./App.jsx";
+// // import { StrictMode } from "react";
+// // import { createRoot } from "react-dom/client";
+// // import "./index.css";
+// // import App from "./App.jsx";
 
-// import { Provider } from "react-redux";
-// import store from "./redux/store.js";
-// // import { PersistGate } from "redux-persist/integration/react";
-// // import { store, persistor } from "./redux/store.js";
+// // import { Provider } from "react-redux";
+// // import store from "./redux/store.js";
+// // // import { PersistGate } from "redux-persist/integration/react";
+// // // import { store, persistor } from "./redux/store.js";
 
-// createRoot(document.getElementById("root")).render(
-//   <StrictMode>
-//     <Provider store={store}>
-//       {/* <PersistGate loading={null} persistor={persistor}>
-//       </PersistGate> */}
-//       <App />
-//     </Provider>
-//   </StrictMode>
-// );
+// // createRoot(document.getElementById("root")).render(
+// //   <StrictMode>
+// //     <Provider store={store}>
+// //       {/* <PersistGate loading={null} persistor={persistor}>
+// //       </PersistGate> */}
+// //       <App />
+// //     </Provider>
+// //   </StrictMode>
+// // );

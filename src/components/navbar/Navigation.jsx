@@ -16,48 +16,65 @@ const Navigation = () => {
   const { data: userData, isLoading: isAuthLoading } = useAuthMeQuery(null);
 
   const [logout, { isLoading: isLoggingOut }] = useLogoutMutation();
-  //
+
   const isAuthenticated = !!userData?.user;
-  //
+
   const role = userData?.user?.role;
-  const businessName = userData?.user?.email;
+  // const businessName = userData?.user?.email;
 
   // console.log(userData?.user?.email.split("@")[0], userData?.user?.email);
   //
 
   // console.log(userData?.user?.email.split("@")[0], userData?.user?.email);
   //
+  // const profileLinks = [
+  //   {
+  //     name: businessName
+  //       ? businessName.toUpperCase().split("@")[0] + " PROFILE"
+  //       : "PROFILE",
+  //     path: role === "employer" ? "/profile/employer" : "/user/profile",
+  //   },
+  //   {
+  //     name: businessName
+  //       ? businessName.toUpperCase().split("@")[0] + " RESUME"
+  //       : "RESUME",
+  //     path: role === "employer" ? "/profile/resume" : "/user/resume",
+  //   },
+  //   {
+  //     name: "DASHBOARD",
+  //     path: role === "employer" ? "/dashboard/employer" : "/user/dashboard",
+  //   },
+  //   ...(role === "employer"
+  //     ? [{ name: "POST-JOB", path: "/employer/post-job" }]
+  //     : []),
+  //   { name: "SETTINGS", path: "/settings" },
+  // ];
 
   const profileLinks = [
     {
-      name: businessName
-        ? businessName.toUpperCase().split("@")[0] + " PROFILE"
-        : "PROFILE",
+      name: "PROFILE",
       path: role === "employer" ? "/profile/employer" : "/user/profile",
     },
-    {
-      name: businessName
-        ? businessName.toUpperCase().split("@")[0] + " RESUME"
-        : "RESUME",
-      path: role === "employer" ? "/profile/resume" : "/user/resume",
-    },
+    ...(role === "job_seeker"
+      ? [{ name: "RESUME", path: "/user/resume" }]
+      : []),
+
+    // {
+    //   name: businessName
+    //     ? businessName.toUpperCase().split("@")[0] + " RESUME"
+    //     : "RESUME",
+    //   path: role === "employer" ? "/profile/resume" : "/user/resume",
+    // },
+
     {
       name: "DASHBOARD",
       path: role === "employer" ? "/dashboard/employer" : "/user/dashboard",
     },
     ...(role === "employer"
-      ? [{ name: "POST-JOB", path: "/employer/post-job" }]
+      ? [{ name: "MANAGEMENT", path: "/employer/post-job" }]
       : []),
     { name: "SETTINGS", path: "/settings" },
   ];
-
-  // const profileLinks = [
-  //   { name: "PROFILE", path: "/profile/employer" },
-  //   { name: "DASHBOARD", path: "/dashboard/employer" },
-  //   { name: "CREATE-POST", path: "/employer/post-job" },
-  //   { name: "SETTINGS", path: "/settings" },
-  //   { name: "HMNN" },
-  // ];
 
   const handleLogout = async () => {
     try {
@@ -81,6 +98,7 @@ const Navigation = () => {
               to="/"
               className="flex items-baseline dark:hover:text-sky-100"
             >
+              <p className="text-[5px] rotate-270  hover:text-white">HMNN</p>
               <img
                 src={logo}
                 alt="Logo"
@@ -98,14 +116,25 @@ const Navigation = () => {
           {/* Right Section (Profile + Theme Toggle) */}
           <div className="hidden md:flex items-center space-x-4 ">
             {isAuthenticated ? (
-              <div className="relative hover:text-white hover:bg-cyan-900 dark:hover:text-cyan-900 dark:hover:bg-white border-b-2 border-r-2">
+              <div
+                className="relative hover:text-white hover:bg-cyan-900 
+              dark:hover:text-cyan-900 dark:hover:bg-white border-b-2 border-r-2"
+              >
                 <button
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
-                  className="flex items-center p-2  hover:text-cyan-300 transition-colors duration-200"
+                  className="flex items-center p-2 space-x-1   
+                  transition-colors hover:scale-100 duration-200"
                   aria-label="Toggle profile menu"
                 >
                   <FaUserCircle size={24} />
-                  <span>{userData?.user?.email.split("@")[0]}</span>
+                  <div className="">
+                    <span className="text-[10px] flex self-baseline">
+                      {userData?.user?.email.split("@")[0]}
+                    </span>
+                    <span className="text-[5px] flex self-end">
+                      {userData?.user?.role}
+                    </span>
+                  </div>
                   {/* <div className="text-sm">
                     <p className="ml-2">
                       {userData?.user?.email.split("@")[0]}
@@ -176,7 +205,7 @@ const Navigation = () => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden bg-white shadow-md px-4 py-2">
+          <div className="md:hidden  shadow-md px-4 py-2">
             <Links />
             <div className="flex flex-col space-y-2 mt-2">
               {isAuthenticated ? (
