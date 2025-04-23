@@ -7,6 +7,46 @@
     {
       "src": "/job",
       "dest": "/"
+    },
+    {
+      "src": "/signin",
+      "dest": "/"
+    },
+    {
+      "src": "/signup",
+      "dest": "/"
+    },
+    {
+      "src": "/register_company",
+      "dest": "/"
+    },
+    {
+      "src": "/dashboard/employer",
+      "dest": "/"
+    },
+    {
+      "src": "/profile/employer",
+      "dest": "/"
+    },
+    {
+      "src": "/employer/post-job",
+      "dest": "/"
+    },
+    {
+      "src": "/user/dashboard",
+      "dest": "/"
+    },
+    {
+      "src": "/user/profile",
+      "dest": "/"
+    },
+    {
+      "src": "/user/resume",
+      "dest": "/"
+    },
+    {
+      "src": "/*",
+      "dest": "/"
     }
   ]
 }
