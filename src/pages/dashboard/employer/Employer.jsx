@@ -7,84 +7,15 @@ const Employer = () => {
   return (
     <div>
       <h1>Hi</h1>
-      <EmployerProfile
+      {/* <EmployerProfile
         employerName="Htoo Myat Nyi Nyi"
         description="Too Muh Knowledge Make A Fools"
-      />
+      /> */}
+      <h1>Employer Graph are shown here with logs</h1>
     </div>
   );
 };
 export default Employer;
-
-const EmployerProfile = ({
-  employerName,
-  description,
-  coverImageUrl = defaultCover, // Use provided URL or default
-  profileImageUrl = defaultProfile, // Use provided URL or default
-  // location,
-  // industry,
-}) => {
-  return (
-    // Outer container for shadow, rounded corners, and max width
-    <div className=" mx-auto  shadow-lg rounded-lg overflow-hidden my-4">
-      {/* --- Cover Image Section --- */}
-      <div
-        className="h-96 bg-cover bg-center bg-gray-300" // Added placeholder bg color
-        style={{ backgroundImage: `url(${coverImageUrl})` }}
-        role="img" // Accessibility
-        aria-label={`${employerName} cover image`}
-      >
-        <p className="text-sm ">Develop By Htoo Myat Nyi Nyi</p>
-        {/* Optionally add elements over the cover image here */}
-      </div>
-
-      {/* --- Profile Content Area --- */}
-      <div className="relative p-6 ">
-        {/* Relative positioning context for the profile image */}
-        {/* --- Profile Picture/Logo --- */}
-        {/* Positioned to overlap the bottom of the cover image */}
-        <div className="absolute left-16 mt-16 sm:-mt-20">
-          {/* Adjust negative margin as needed */}
-          <img
-            src={profileImageUrl}
-            alt={`${employerName} profile`}
-            // Styling for the profile image: size, circle, border
-            className="h-24 w-24 sm:h-32 sm:w-32 rounded-full border-4 border-white bg-gray-200 shadow-md" // Added placeholder bg and shadow
-          />
-        </div>
-        {/* --- Text Content --- */}
-        {/* Add padding/margin to the left to clear the profile picture */}
-        <div className="pt-8 sm:pt-4 pl-0 sm:pl-40 min-h-20 ">
-          {/* Adjust left padding (sm:pl-40) based on profile image size + spacing */}
-          <h1 className="text-2xl sm:text-3xl font-bold  mb-1">
-            {employerName}
-          </h1>
-          {/* Optional: Add more details like location or industry */}
-          {/* {location && <p className="text-sm text-gray-500 mb-1">{location}</p>} */}
-          {/* {industry && <p className="text-sm text-gray-500 mb-3">{industry}</p>} */}
-          <p className="text-sm sm:text-base mt-2">{description}</p>
-        </div>
-        {/* --- Optional: Action Buttons or Links --- */}
-        {/* Example: Buttons positioned below the main text */}
-        <div className="mt-4 pl-0 sm:pl-40 flex flex-wrap gap-2">
-          <button className="px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700">
-            View Jobs
-          </button>
-          <button className="px-4 py-2 bg-gray-200 text-gray-800 text-sm rounded-md hover:bg-gray-300">
-            Follow
-          </button>
-        </div>
-      </div>
-      <div className="bg-amber-300 h-10 w-auto flex space-x-5 justify-around">
-        <button className="bg-sky-400">Hi</button>
-        <button className="bg-sky-400">Hi</button>
-        <button className="bg-sky-400">Hi</button>
-        <button className="bg-sky-400">Hi</button>
-      </div>
-      <div className="h-screen"></div>
-    </div>
-  );
-};
 
 // --- How to Use Example (in another component) ---
 /*

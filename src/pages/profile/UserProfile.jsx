@@ -7,7 +7,9 @@ import {
   useCreateProfileMutation,
   useUpdateProfileMutation,
 } from "../../redux/api/userApi";
-
+import Resume from "./Resume";
+import defaultCover from "../../assets/utils/A.png";
+import defaultProfile from "../../assets/utils/B.png";
 const UserProfile = () => {
   const [formData, setFormData] = useState({});
   const [editingField, setEditingField] = useState(null);
@@ -273,14 +275,10 @@ const UserProfile = () => {
 
   return (
     <div>
-      <div>
-        <div className="flex flex-nowrap justify-around items-center">
-          <li className="block p-8 m-1 shadow-xl dark:bg-white hover:bg-white"></li>
-          <li className="block p-8 m-1 shadow-2xs hover:bg-white"></li>
-          <li className="block p-8 m-1 shadow-2xs hover:bg-white"></li>
-          <li className="block p-8 m-1 shadow-2xs hover:bg-white"></li>
-        </div>
-      </div>
+      <UserProfileWall
+        userName={profile?.data.first_name}
+        userBios={profile?.data.bio}
+      />
       <div className="p-4 m-1 backdrop-blur-3xl shadow-2xl">
         <div className="flex justify-evenly flex-wrap">
           <div>
@@ -319,8 +317,70 @@ const UserProfile = () => {
           )}
         </div>
       </div>
+      <Resume />
     </div>
   );
 };
 
 export default UserProfile;
+
+const UserProfileWall = ({
+  userName,
+  userBios,
+  coverImageUrl = defaultCover, // Use provided URL or default
+  profileImageUrl = defaultProfile, // Use provided URL or default
+  // location,
+  // industry,
+}) => {
+  return (
+    // Outer container for shadow, rounded corners, and max width
+    <div className=" mx-auto  shadow-lg rounded-lg overflow-hidden my-4">
+      {/* --- Cover Image Section --- */}
+      <div
+        className="h-96 bg-cover bg-center bg-gray-300" // Added placeholder bg color
+        style={{ backgroundImage: `url(${coverImageUrl})` }}
+        role="img" // Accessibility
+        aria-label={`${userName} cover image`}
+      >
+        <p className="text-sm ">Develop By Htoo Myat Nyi Nyi</p>
+        {/* Optionally add elements over the cover image here */}
+      </div>
+
+      {/* --- Profile Content Area --- */}
+      <div className="relative p-6 ">
+        {/* Relative positioning context for the profile image */}
+        {/* --- Profile Picture/Logo --- */}
+        {/* Positioned to overlap the bottom of the cover image */}
+        <div className="absolute left-16 mt-16 sm:-mt-20">
+          {/* Adjust negative margin as needed */}
+          <img
+            src={profileImageUrl}
+            alt={`${userName} profile`}
+            // Styling for the profile image: size, circle, border
+            className="h-24 w-24 sm:h-32 sm:w-32 rounded-full border-4 border-white bg-gray-200 shadow-md" // Added placeholder bg and shadow
+          />
+        </div>
+        {/* --- Text Content --- */}
+        {/* Add padding/margin to the left to clear the profile picture */}
+        <div className="pt-8 sm:pt-4 pl-0 sm:pl-40 min-h-20 ">
+          {/* Adjust left padding (sm:pl-40) based on profile image size + spacing */}
+          <h1 className="text-2xl sm:text-3xl font-bold  mb-1">{userName}</h1>
+          {/* Optional: Add more details like location or industry */}
+          {/* {location && <p className="text-sm text-gray-500 mb-1">{location}</p>} */}
+          {/* {industry && <p className="text-sm text-gray-500 mb-3">{industry}</p>} */}
+          <p className="text-sm sm:text-base mt-2">{userBios}</p>
+        </div>
+        {/* --- Optional: Action Buttons or Links --- */}
+        {/* Example: Buttons positioned below the main text */}
+        <div className="mt-4 pl-0 sm:pl-40 flex flex-wrap gap-2">
+          <button className="px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700">
+            View Jobs
+          </button>
+          <button className="px-4 py-2 bg-gray-200 text-gray-800 text-sm rounded-md hover:bg-gray-300">
+            Follow
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};

@@ -113,12 +113,13 @@ const SignIn = () => {
   if (isLoginSuccess || isGoogleLoginSuccess) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <p className="text-center text-lg text-green-600 animate-fade-in">
+        <p className="text-center text-lg text-cyan-600 animate-fade-in">
           Successfully logged in! Redirecting...
         </p>
       </div>
     );
   }
+
   if (isLoginError) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -133,7 +134,7 @@ const SignIn = () => {
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="flex flex-col md:flex-row w-full max-w-4xl  shadow-lg rounded-lg overflow-hidden transform transition-all hover:shadow-2xl">
         {/* Left Section - Description */}
-        <div className="w-full md:w-1/2 bg-gradient-to-br from-lime-400 to-lime-600 p-8 flex flex-col justify-center text-white">
+        <div className="w-full md:w-1/2 bg-gradient-to-br from-cyan-400 to-cyan-600 p-8 flex flex-col justify-center text-white">
           <h1 className="text-3xl font-bold mb-4 animate-fade-in">
             Welcome Back
           </h1>
@@ -144,7 +145,7 @@ const SignIn = () => {
         </div>
 
         {/* Right Section - Form */}
-        <div className="w-full md:w-1/2 p-8 bg-white ">
+        <div className="w-full md:w-1/2 p-8 bg-white text-cyan-900">
           <h1 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
             Company Sign In
           </h1>
@@ -186,13 +187,11 @@ const SignIn = () => {
                 </div>
               )}
             </div>
-            <div className="text-center text-gray-500 text-sm">OR</div>
+
+            <div className="text-center">OR</div>
 
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
+              <label htmlFor="email" className="block mb-1">
                 Email
               </label>
               <input
@@ -210,10 +209,7 @@ const SignIn = () => {
               />
             </div>
             <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
+              <label htmlFor="password" className="block mb-1">
                 Password
               </label>
               <input
@@ -226,15 +222,17 @@ const SignIn = () => {
                 className={`w-full p-3 border ${
                   formError.includes("Password")
                     ? "border-red-500 focus:ring-red-500"
-                    : "border-gray-300 focus:ring-lime-500"
+                    : "border-slate-900 focus:ring-lime-500"
                 } rounded-md focus:outline-none focus:ring-2 transition`}
               />
             </div>
+
             {formError && (
               <p className="text-red-500 text-sm text-center animate-pulse">
                 {formError}
               </p>
             )}
+
             <button
               type="submit"
               disabled={isLogin}

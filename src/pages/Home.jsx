@@ -16,41 +16,43 @@ const Home = () => {
   // console.log(data, "jobId fetch data");
 
   return (
-    <div className="h-screen flex items-center justify-between p-8 md:p-16">
-      <div className="w-1/2 ">
-        <h1 className="text-4xl font-bold  mb-4">
-          Unlock Your Potential Today!
-        </h1>
-        <CreateEmployerProfile />
-        <p className="text-lg mb-8">
-          Join thousands of satisfied users who have transformed their lives
-          with our innovative solutions. Experience the difference and take the
-          first step towards a brighter future.
-        </p>
-        {/* Optional Call to Action Button */}
-        {/* <button
+    <div>
+      <div className="h-screen flex items-center justify-between p-8 md:p-16">
+        <div className="w-1/2 ">
+          <h1 className="text-4xl font-bold  mb-4">
+            Unlock Your Potential Today!
+          </h1>
+          <p className="text-lg mb-8">
+            Join thousands of satisfied users who have transformed their lives
+            with our innovative solutions. Experience the difference and take
+            the first step towards a brighter future.
+          </p>
+          {/* Optional Call to Action Button */}
+          {/* <button
           onClick={() => setJobId(1)}
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full"
-        >
+          >
           Learn More fetch wiht id 1
-        </button> */}
-        <Link
-          to="/register_company"
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full"
-          // className="underline font-bold py-3 px-6 rounded-full"
-        >
-          For Employer To Register
-        </Link>
+          </button> */}
+          <Link
+            to="/register_company"
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full"
+            // className="underline font-bold py-3 px-6 rounded-full"
+          >
+            For Employer To Register
+          </Link>
+        </div>
+        <div className="w-1/2 flex justify-end">
+          <img
+            src={homeImage}
+            alt="homeImage"
+            className=" dark:invert-100 "
+            // className="max-w-md rounded-lg"
+          />
+        </div>
+        {/* <JobDashboard /> */}
       </div>
-      <div className="w-1/2 flex justify-end">
-        <img
-          src={homeImage}
-          alt="homeImage"
-          className=" dark:invert-100 "
-          // className="max-w-md rounded-lg"
-        />
-      </div>
-      {/* <JobDashboard /> */}
+      <CreateEmployerProfile />
     </div>
   );
 };

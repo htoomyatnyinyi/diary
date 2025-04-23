@@ -20,6 +20,7 @@ const Navigation = () => {
   const isAuthenticated = !!userData?.user;
 
   const role = userData?.user?.role;
+
   // const businessName = userData?.user?.email;
 
   // console.log(userData?.user?.email.split("@")[0], userData?.user?.email);
@@ -93,7 +94,7 @@ const Navigation = () => {
         {/* <div className="max-w-7xl mx-auto shadow-2xl backdrop-blur-3xl  px-4 sm:px-6 lg:px-8"> */}
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div className="flex-shrink-0 border-t-2 border-l-2 hover:border-white border-cyan-900 dark:border-white dark:hover:border-cyan-900  ">
+          {/* <div className="flex-shrink-0 border-t-2 border-l-2 hover:border-white border-cyan-900 dark:border-white dark:hover:border-cyan-900  ">
             <Link
               to="/"
               className="flex items-baseline dark:hover:text-sky-100"
@@ -106,7 +107,7 @@ const Navigation = () => {
               />
               <p>JobDiary</p>
             </Link>
-          </div>
+          </div> */}
 
           {/* Desktop Links */}
           <div className="hidden md:flex items-center space-x-4">
@@ -186,7 +187,7 @@ const Navigation = () => {
             <div>
               <Link to="/register_company" className="underline text-sm">
                 <AiFillCode />
-                {/* For Employer Register */}
+                Employer Register
               </Link>
             </div>
           </div>

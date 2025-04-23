@@ -79,8 +79,8 @@ const Resume = () => {
         ) : (
           <div>
             {getResume?.data.map((resume) => (
-              <div key={resume.id} className="bg-cyan-500 p-2 m-1">
-                <div className="bg-sky-500 p-2 m-1">
+              <div key={resume.id} className=" p-2 m-1">
+                <div className=" p-2 m-1">
                   <h1>{resume.file_name}</h1>
                   <p>{resume.uploaded_at}</p>
                   <button
