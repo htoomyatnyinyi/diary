@@ -3,7 +3,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const employerApi = createApi({
   reducerPath: "employerApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8080/api",
+    // baseUrl: "http://localhost:8080/api",
+    baseUrl: import.meta.env.VITE_APP_API_URL || "http://localhost:8000",
     credentials: "include",
   }), // Adjust base URL as needed
   // keepUnusedDataFor: 20,
@@ -14,7 +15,7 @@ export const employerApi = createApi({
   endpoints: (builder) => ({
     registerEmployer: builder.mutation({
       query: (employerData) => ({
-        url: "/auth/register_employer",
+        url: "/api/auth/register_employer",
         method: "POST",
         body: employerData,
       }),
@@ -25,7 +26,7 @@ export const employerApi = createApi({
 
     createEmployerProfile: builder.mutation({
       query: (profileData) => ({
-        url: "/employer/profile",
+        url: "/api/employer/profile",
         method: "POST",
         body: profileData,
       }),
@@ -33,7 +34,7 @@ export const employerApi = createApi({
     }),
     createNewEmployerProfile: builder.mutation({
       query: (profileData) => ({
-        url: "/employer/create-profile",
+        url: "/api/employer/create-profile",
         method: "POST",
         body: profileData,
       }),
@@ -42,7 +43,7 @@ export const employerApi = createApi({
 
     getEmployerProfile: builder.query({
       query: () => ({
-        url: "/employer/profile",
+        url: "/api/employer/profile",
         // keepUnusedDataFor: 20,
         method: "GET",
       }),
@@ -63,7 +64,7 @@ export const employerApi = createApi({
 
     updateEmployerProfile: builder.mutation({
       query: (profileData) => ({
-        url: "/employer/profile",
+        url: "/api/employer/profile",
         method: "PUT",
         body: profileData,
       }),
@@ -76,7 +77,7 @@ export const employerApi = createApi({
 
     getAppliedJobs: builder.query({
       query: () => ({
-        url: "/employer/applied-jobs",
+        url: "/api/employer/applied-jobs",
       }),
       // 2. Specify that this query provides 'AppliedJobs' data
       //    - Provide a general tag for the whole list.
@@ -107,7 +108,7 @@ export const employerApi = createApi({
 
     updateApplicationStatus: builder.mutation({
       query: ({ id, statusData }) => ({
-        url: `/employer/applications/${id}/status`,
+        url: `/api/employer/applications/${id}/status`,
         method: "PUT",
         body: statusData,
       }),
@@ -123,14 +124,14 @@ export const employerApi = createApi({
 
     getAppliedUserProfileById: builder.query({
       query: (id) => ({
-        url: `/employer/applied-user-profile/${id}`,
+        url: `/api/employer/applied-user-profile/${id}`,
         method: "GET",
       }),
     }),
 
     getAppliedUserResumeById: builder.query({
       query: (id) => ({
-        url: `/employer/applied-user-resume/${id}`,
+        url: `/api/employer/applied-user-resume/${id}`,
         method: "GET",
         responseHandler: (response) => response.blob(),
       }),

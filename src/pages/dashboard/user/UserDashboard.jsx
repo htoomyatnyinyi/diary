@@ -141,7 +141,7 @@ const Status = () => {
           <p className="text-gray-500">Loading analytics...</p>
         ) : analyticError ? (
           <p className="text-red-500">
-            Error loading analytics:{" "}
+            Error loading analytics:
             {analyticError.data?.message || "Unknown error"}
           </p>
         ) : !chartData.length ? (
@@ -284,7 +284,9 @@ const Status = () => {
       </section>
     </div>
   );
-}; // import React from "react";
+};
+
+// import React from "react";
 // import {
 //   LineChart,
 //   Line,

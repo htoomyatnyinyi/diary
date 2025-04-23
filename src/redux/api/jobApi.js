@@ -3,7 +3,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const jobApi = createApi({
   reducerPath: "job",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8080/api",
+    // baseUrl: "http://localhost:8080/api",
+    baseUrl: import.meta.env.VITE_APP_API_URL || "http://localhost:8000",
     credentials: "include",
   }), // Adjust base URL as needed
 
@@ -16,7 +17,7 @@ export const jobApi = createApi({
   endpoints: (builder) => ({
     getJobs: builder.query({
       query: () => ({
-        url: "/job-posts",
+        url: "/api/job-posts",
         method: "GET",
         // keepUnusedDataFor: 20,
       }),
@@ -25,7 +26,7 @@ export const jobApi = createApi({
 
     getJobById: builder.query({
       query: (id) => ({
-        url: `/job-posts/${id}`,
+        url: `/api/job-posts/${id}`,
         method: "GET",
         // keepUnusedDataFor: 20,
       }),
@@ -34,7 +35,7 @@ export const jobApi = createApi({
 
     createNewJob: builder.mutation({
       query: (formData) => ({
-        url: "/employer/jobs",
+        url: "/api/employer/jobs",
         method: "POST",
         body: formData,
       }),

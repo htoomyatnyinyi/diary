@@ -138,7 +138,7 @@ export const router = createBrowserRouter([
       {
         path: "/user/dashboard",
         element: (
-          <ProtectedRoute allowedRoles={["job_seeker"]}>
+          <ProtectedRoute allowedRoles={["user"]}>
             <UserDashboard /> {/* Create this component */}
           </ProtectedRoute>
         ),
@@ -146,7 +146,7 @@ export const router = createBrowserRouter([
       {
         path: "/user/profile",
         element: (
-          <ProtectedRoute allowedRoles={["job_seeker"]}>
+          <ProtectedRoute allowedRoles={["user"]}>
             <UserProfile /> {/* Create this component */}
           </ProtectedRoute>
         ),
@@ -154,7 +154,7 @@ export const router = createBrowserRouter([
       {
         path: "/user/resume",
         element: (
-          <ProtectedRoute allowedRoles={["job_seeker"]}>
+          <ProtectedRoute allowedRoles={["user"]}>
             <Resume /> {/* Create this component */}
           </ProtectedRoute>
         ),

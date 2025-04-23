@@ -3,23 +3,24 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const userApi = createApi({
   reducerPath: "user",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8080/api",
+    // baseUrl: "http://localhost:8080/api",
+    baseUrl: import.meta.env.VITE_APP_API_URL || "http://localhost:8000",
     credentials: "include",
   }),
   tagTypes: ["Profile", "Resume", "SavedJobs", "Applications"], // Added for cache invalidation
   endpoints: (builder) => ({
     getAnalytics: builder.query({
-      query: () => "/user/analytics",
+      query: () => "/api/user/analytics",
     }),
 
     getProfile: builder.query({
-      query: () => "/user/profile",
+      query: () => "/api/user/profile",
       providesTags: ["Profile"],
     }),
 
     createProfile: builder.mutation({
       query: (profileData) => ({
-        url: "/user/profile",
+        url: "/api/user/profile",
         method: "POST",
         body: profileData,
       }),
@@ -28,7 +29,7 @@ export const userApi = createApi({
 
     updateProfile: builder.mutation({
       query: (profileData) => ({
-        url: "/user/profile",
+        url: "/api/user/profile",
         method: "PUT",
         body: profileData,
       }),
@@ -37,7 +38,7 @@ export const userApi = createApi({
 
     deleteProfile: builder.mutation({
       query: () => ({
-        url: "/user/profile",
+        url: "/api/user/profile",
         method: "DELETE",
       }),
       invalidatesTags: ["Profile"],
@@ -45,7 +46,7 @@ export const userApi = createApi({
 
     uploadResume: builder.mutation({
       query: (fileData) => ({
-        url: "/user/resumes",
+        url: "/api/user/resumes",
         method: "POST",
         body: fileData,
       }),
@@ -54,20 +55,20 @@ export const userApi = createApi({
 
     deleteResume: builder.mutation({
       query: (id) => ({
-        url: `/user/resumes/${id}`,
+        url: `/api/user/resumes/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Resume"],
     }),
 
     getResume: builder.query({
-      query: () => "/user/resumes",
+      query: () => "/api/user/resumes",
       providesTags: ["Resume"],
     }),
 
     previewResume: builder.query({
       query: (filename) => ({
-        url: `/user/resumes/${filename}`,
+        url: `/api/user/resumes/${filename}`,
         method: "GET",
         responseHandler: (response) => response.blob(),
       }),
@@ -75,13 +76,13 @@ export const userApi = createApi({
     }),
 
     getSavedJobs: builder.query({
-      query: () => "/user/saved-jobs",
+      query: () => "/api/user/saved-jobs",
       providesTags: ["SavedJobs"],
     }),
 
     saveJob: builder.mutation({
       query: (job_post_id) => ({
-        url: "/user/saved-jobs",
+        url: "/api/user/saved-jobs",
         method: "POST",
         body: { job_post_id }, // Added jobId in the body
       }),
@@ -90,19 +91,19 @@ export const userApi = createApi({
 
     deleteSavedJob: builder.mutation({
       query: (id) => ({
-        url: `/user/saved-jobs/${id}`,
+        url: `/api/user/saved-jobs/${id}`,
         method: "DELETE",
       }),
     }),
 
     getApplications: builder.query({
-      query: () => "/user/applications",
+      query: () => "/api/user/applications",
       providesTags: ["Applications"],
     }),
 
     jobApplication: builder.mutation({
       query: ({ jobId, resumeId }) => ({
-        url: "/user/applications", // Fixed typo
+        url: "/api/user/applications", // Fixed typo
         method: "POST",
         body: { jobId, resumeId }, // Added jobId and resumeId in the body
       }),
@@ -111,7 +112,7 @@ export const userApi = createApi({
 
     deleteApplication: builder.mutation({
       query: (id) => ({
-        url: `/user/applications/${id}`,
+        url: `/api/user/applications/${id}`,
         method: "DELETE",
       }),
     }),
