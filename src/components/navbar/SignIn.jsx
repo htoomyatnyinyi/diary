@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-// import useToggleDropdown from "./useToggleDropdown";
-// import useToggleDropdown from "../../hooks/useToggleDropdown";
 import useToggleDropdown from "../../hooks/useToggleDropdown";
+import { useLoginMutation } from "../../redux/api/authApi";
 
 const SignIn = () => {
+  const [
+    login,
+    { isLoading: isLoginLoading, isError: isLoginError, error: loginError },
+  ] = useLoginMutation();
+
   const { isOpen, toggle, close, dropdownRef } = useToggleDropdown();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,6 +17,7 @@ const SignIn = () => {
     e.preventDefault();
     // Add your sign-in logic here (e.g., dispatch an auth action)
     console.log("Sign In:", { email, password });
+    login({ email, password });
     close(); // Close dropdown after submission
   };
 

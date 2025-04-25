@@ -111,7 +111,7 @@ export default function Register() {
     try {
       await createEmployerProfile(profileData).unwrap();
       alert("Profile saved successfully!");
-      window.location.href = "/dashboard";
+      window.location.href = "/user/dashboard";
     } catch (error) {
       console.error("Profile save failed:", error);
     }

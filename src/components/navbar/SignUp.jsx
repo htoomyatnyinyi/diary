@@ -1,17 +1,29 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import useToggleDropdown from "../../hooks/useToggleDropdown";
+import { useRegisterMutation } from "../../redux/api/authApi";
 
 const SignUp = () => {
+  const [
+    register,
+    {
+      isLoading: isRegisterLoading,
+      isError: isRegisterError,
+      error: registerError,
+    },
+  ] = useRegisterMutation();
+
   const { isOpen, toggle, close, dropdownRef } = useToggleDropdown();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  const [username, setUsername] = useState("xyz");
+  const [email, setEmail] = useState("xyz@mail.com");
+  const [password, setPassword] = useState("abc");
+  const [confirmPassword, setConfirmPassword] = useState("abc");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Add your sign-up logic here (e.g., dispatch an auth action)
-    console.log("Sign Up:", { name, email, password });
+    console.log("Sign Up:", { username, email, password, confirmPassword });
+    register({ username, email, password, confirmPassword });
     close(); // Close dropdown after submission
   };
 
@@ -39,9 +51,9 @@ const SignUp = () => {
               </label>
               <input
                 type="text"
-                id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 className="w-full p-2 border rounded dark:bg-gray-100 dark:text-black"
                 required
               />
@@ -68,6 +80,19 @@ const SignUp = () => {
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                className="w-full p-2 border rounded dark:bg-gray-100 dark:text-black"
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="confirmPassword" className="block text-sm">
+                confirmPassword
+              </label>
+              <input
+                type="password"
+                id="confirmPassword"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 className="w-full p-2 border rounded dark:bg-gray-100 dark:text-black"
                 required
               />

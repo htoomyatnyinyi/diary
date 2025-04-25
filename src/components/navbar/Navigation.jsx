@@ -14,6 +14,7 @@ const Navigation = () => {
   const navigate = useNavigate();
   const { isMobileMenuOpen, toggleMobileMenu, closeMobileMenu } =
     useMobileMenu();
+
   const { data: userData, isLoading: isAuthLoading } = useAuthMeQuery(null);
   const [logout, { isLoading: isLoggingOut }] = useLogoutMutation();
 
@@ -63,9 +64,7 @@ const Navigation = () => {
       name: "PROFILE",
       path: role === "employer" ? "/profile/employer" : "/user/profile",
     },
-    ...(role === "job_seeker"
-      ? [{ name: "RESUME", path: "/user/resume" }]
-      : []),
+    ...(role === "user" ? [{ name: "RESUME", path: "/user/resume" }] : []),
     {
       name: "DASHBOARD",
       path: role === "employer" ? "/dashboard/employer" : "/user/dashboard",
@@ -116,6 +115,7 @@ const Navigation = () => {
               </Link>
             </div>
           </div>
+
           {/* Desktop Right Section */}
           <div className="hidden md:flex items-center space-x-4">
             {isAuthenticated ? (
@@ -146,7 +146,10 @@ const Navigation = () => {
             )}
             <div className="flex items-center">
               <ThemeToggle />
-              <Link to="/" className="border-r-2 border-t-2 p-2 m-1">
+              <Link
+                to="/register_company"
+                className="border-r-2 border-t-2 p-2 m-1"
+              >
                 <AiFillGift size={24} />
               </Link>
             </div>
@@ -162,6 +165,7 @@ const Navigation = () => {
             </button>
           </div>
         </div>
+
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <div className="md:hidden shadow-md px-4 py-2">
