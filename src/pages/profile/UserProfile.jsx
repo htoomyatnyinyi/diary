@@ -6,10 +6,13 @@ import {
   useGetApplicationsQuery,
   useCreateProfileMutation,
   useUpdateProfileMutation,
+  useUploadProfileImageMutation,
 } from "../../redux/api/userApi";
+
 import Resume from "./Resume";
 import defaultCover from "../../assets/utils/A.png";
 import defaultProfile from "../../assets/utils/B.png";
+
 const UserProfile = () => {
   const [formData, setFormData] = useState({});
   const [editingField, setEditingField] = useState(null);
@@ -22,6 +25,10 @@ const UserProfile = () => {
     location: "",
     bio: "",
   });
+
+  const [uploadProfileImage, { isLoading: isUploadProfileImageLoading }] =
+    useUploadProfileImageMutation();
+  if (isUploadProfileImageLoading) return <p>Loading Upload Image Profile</p>;
 
   const {
     data: profile,

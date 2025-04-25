@@ -85,8 +85,8 @@ const SignUp = () => {
     }
   };
 
-  if (isRegister) return <p>Loading...</p>;
-  if (isRegisterSuccess) return <p>Successfully logged in!</p>;
+  // if (isRegister) return <p>Loading...</p>;
+  // if (isRegisterSuccess) return <p>Successfully logged in!</p>;
   if (isRegisterError)
     return (
       <p>

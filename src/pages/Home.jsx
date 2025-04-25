@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import homeImage from "../assets/utils/Question.png";
 import CreateEmployerProfile from "./profile/CreateEmployerProfile";
+import Upload from "../components/Upload";
 
 // import { useGetJobByIdQuery } from "../redux/api/jobApi";
 // import JobDashboard from "./dashboard/employer/JobDashboard";
@@ -34,13 +35,13 @@ const Home = () => {
           >
           Learn More fetch wiht id 1
           </button> */}
-          <Link
+          {/* <Link
             to="/register_company"
             className="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full"
             // className="underline font-bold py-3 px-6 rounded-full"
           >
             For Employer To Register
-          </Link>
+          </Link> */}
         </div>
         <div className="w-1/2 flex justify-end">
           <img
@@ -52,7 +53,8 @@ const Home = () => {
         </div>
         {/* <JobDashboard /> */}
       </div>
-      <CreateEmployerProfile />
+      {/* <Upload />
+      <CreateEmployerProfile /> */}
     </div>
   );
 };

@@ -1,3 +1,50 @@
+/*
+  // State for managing the sidebar visibility
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  
+  // Functions to control sidebar
+  const openSidebar = () => setIsSidebarOpen(true);
+  const closeSidebar = () => setIsSidebarOpen(false);
+      
+  
+  <CreateNewJob isOpen={isSidebarOpen} onClose={closeSidebar} />
+*/
+
+/*
+import React, { useEffect } from "react";
+
+const CreateNewJob = ({ isOpen, onClose }) => {
+  // Reset form when sidebar closes or on successful submission
+  useEffect(() => {
+    if (!isOpen) {
+      // Optionally delay reset slightly for closing animation
+      console.log("Hi ");
+    }
+  }, [isOpen]);
+  return (
+    <div className="h-screen bg-slate-900">
+      {" "}
+
+      <div
+        className={`pt-16 fixed inset-0 backdrop-blur-xl z-50 transition-opacity duration-300 ${
+          isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={onClose} // Close sidebar when clicking overlay
+      ></div>
+
+      <div
+        className={`fixed inset-y-0 right-0 w-full md:w-1/2 lg:w-2/5  shadow-xl z-50 transform transition-transform duration-300 ease-in-out ${
+          isOpen ? "translate-x-0" : "translate-x-full"
+        } overflow-y-auto`} // Added overflow-y-auto
+      >
+        <h1 className="h-96 w-72 ">This is Testing Page</h1>
+      </div>
+    </div>
+  );
+};
+
+export default CreateNewJob;
+*/
 import React, { useState, useEffect } from "react";
 import { useCreateNewJobMutation } from "../../../redux/api/jobApi";
 
@@ -213,7 +260,7 @@ const CreateNewJob = ({ isOpen, onClose }) => {
     <>
       {/* Overlay */}
       <div
-        className={`pt-16 fixed inset-0 backdrop-blur-3xl  z-40 transition-opacity duration-300 ${
+        className={`pt-16 fixed inset-0 backdrop-blur-xl z-50 transition-opacity duration-300 ${
           isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
         onClick={onClose} // Close sidebar when clicking overlay

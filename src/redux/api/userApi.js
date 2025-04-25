@@ -116,6 +116,13 @@ export const userApi = createApi({
         method: "DELETE",
       }),
     }),
+    uploadProfileImage: builder.mutation({
+      query: (imageData) => ({
+        url: `/api/upload/img`,
+        method: "POST",
+        body: imageData,
+      }),
+    }),
   }),
 });
 
@@ -135,6 +142,7 @@ export const {
   useGetApplicationsQuery,
   useJobApplicationMutation,
   useDeleteApplicationMutation,
+  useUploadProfileImageMutation,
 } = userApi;
 
 // import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";

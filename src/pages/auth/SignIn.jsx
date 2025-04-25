@@ -110,25 +110,25 @@ const SignIn = () => {
       </div>
     );
   }
-  if (isLoginSuccess || isGoogleLoginSuccess) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <p className="text-center text-lg text-cyan-600 animate-fade-in">
-          Successfully logged in! Redirecting...
-        </p>
-      </div>
-    );
-  }
+  // if (isLoginSuccess || isGoogleLoginSuccess) {
+  //   return (
+  //     <div className="min-h-screen flex items-center justify-center bg-gray-100">
+  //       <p className="text-center text-lg text-cyan-600 animate-fade-in">
+  //         Successfully logged in! Redirecting...
+  //       </p>
+  //     </div>
+  //   );
+  // }
 
-  if (isLoginError) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <p className="text-center text-lg text-red-600">
-          Login failed. {loginError?.data?.message || "Please try again."}
-        </p>
-      </div>
-    );
-  }
+  // if (isLoginError) {
+  //   return (
+  //     <div className="min-h-screen flex items-center justify-center bg-gray-100">
+  //       <p className="text-center text-lg text-red-600">
+  //         Login failed. {loginError?.data?.message || "Please try again."}
+  //       </p>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">

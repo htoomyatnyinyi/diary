@@ -1,55 +1,62 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { FaBars, FaTimes } from "react-icons/fa";
+import { AiFillGift, AiFillProject } from "react-icons/ai";
 import ThemeToggle from "./ThemeToggle";
-import Links from "./Links";
 import logo from "../../assets/utils/1.png";
-import { FaBars, FaTimes, FaUserCircle } from "react-icons/fa";
-
 import { useAuthMeQuery, useLogoutMutation } from "../../redux/api/authApi";
-import { AiFillCode } from "react-icons/ai";
+import useMobileMenu from "../../hooks/useMobileMenu";
+import MenuProfile from "./MenuProfile";
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
 
 const Navigation = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const navigate = useNavigate();
-
+  const { isMobileMenuOpen, toggleMobileMenu, closeMobileMenu } =
+    useMobileMenu();
   const { data: userData, isLoading: isAuthLoading } = useAuthMeQuery(null);
-
   const [logout, { isLoading: isLoggingOut }] = useLogoutMutation();
 
   const isAuthenticated = !!userData?.user;
-
   const role = userData?.user?.role;
 
-  // const businessName = userData?.user?.email;
+  // Manage dropdown states
+  const [activeDropdown, setActiveDropdown] = useState(null); // null, "profile", "signin", "signup"
+  const profileRef = useRef(null);
+  const signInRef = useRef(null);
+  const signUpRef = useRef(null);
 
-  // console.log(userData?.user?.email.split("@")[0], userData?.user?.email);
-  //
+  const openDropdown = (dropdown) => setActiveDropdown(dropdown);
+  const closeDropdown = () => setActiveDropdown(null);
 
-  // console.log(userData?.user?.email.split("@")[0], userData?.user?.email);
-  //
-  // const profileLinks = [
-  //   {
-  //     name: businessName
-  //       ? businessName.toUpperCase().split("@")[0] + " PROFILE"
-  //       : "PROFILE",
-  //     path: role === "employer" ? "/profile/employer" : "/user/profile",
-  //   },
-  //   {
-  //     name: businessName
-  //       ? businessName.toUpperCase().split("@")[0] + " RESUME"
-  //       : "RESUME",
-  //     path: role === "employer" ? "/profile/resume" : "/user/resume",
-  //   },
-  //   {
-  //     name: "DASHBOARD",
-  //     path: role === "employer" ? "/dashboard/employer" : "/user/dashboard",
-  //   },
-  //   ...(role === "employer"
-  //     ? [{ name: "POST-JOB", path: "/employer/post-job" }]
-  //     : []),
-  //   { name: "SETTINGS", path: "/settings" },
-  // ];
+  // Close dropdown on outside click
+  React.useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        profileRef.current &&
+        !profileRef.current.contains(event.target) &&
+        signInRef.current &&
+        !signInRef.current.contains(event.target) &&
+        signUpRef.current &&
+        !signUpRef.current.contains(event.target)
+      ) {
+        closeDropdown();
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Close dropdown on Escape key
+  React.useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        closeDropdown();
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const profileLinks = [
     {
@@ -59,14 +66,6 @@ const Navigation = () => {
     ...(role === "job_seeker"
       ? [{ name: "RESUME", path: "/user/resume" }]
       : []),
-
-    // {
-    //   name: businessName
-    //     ? businessName.toUpperCase().split("@")[0] + " RESUME"
-    //     : "RESUME",
-    //   path: role === "employer" ? "/profile/resume" : "/user/resume",
-    // },
-
     {
       name: "DASHBOARD",
       path: role === "employer" ? "/dashboard/employer" : "/user/dashboard",
@@ -80,8 +79,8 @@ const Navigation = () => {
   const handleLogout = async () => {
     try {
       await logout().unwrap();
-      setIsProfileOpen(false); // Close dropdown
-      setIsMobileMenuOpen(false); // Close mobile menu
+      closeDropdown();
+      closeMobileMenu();
       navigate("/signin");
     } catch (error) {
       console.error("Logout failed:", error);
@@ -89,113 +88,73 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50  backdrop-blur-4xl ">
-      <div className=" mx-auto shadow-2xl backdrop-blur-3xl  px-4 sm:px-6 lg:px-8">
-        {/* <div className="max-w-7xl mx-auto shadow-2xl backdrop-blur-3xl  px-4 sm:px-6 lg:px-8"> */}
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          {/* <div className="flex-shrink-0 border-t-2 border-l-2 hover:border-white border-cyan-900 dark:border-white dark:hover:border-cyan-900  ">
-            <Link
-              to="/"
-              className="flex items-baseline dark:hover:text-sky-100"
-            >
-              <p className="text-[5px] rotate-270  hover:text-white">HMNN</p>
-              <img
-                src={logo}
-                alt="Logo"
-                className="h-8 w-auto  dark:invert-100 m-1" // bg-white remove the dark:invet-100
-              />
-              <p>JobDiary</p>
-            </Link>
-          </div> */}
-
+    <nav className="fixed top-0 left-0 w-full z-30 backdrop-blur-xl shadow-2xl">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
           {/* Desktop Links */}
-          <div className="hidden md:flex items-center space-x-4">
-            <Links />
-          </div>
-
-          {/* Right Section (Profile + Theme Toggle) */}
-          <div className="hidden md:flex items-center space-x-4 ">
-            {isAuthenticated ? (
-              <div
-                className="relative hover:text-white hover:bg-cyan-900 
-              dark:hover:text-cyan-900 dark:hover:bg-white border-b-2 border-r-2"
-              >
-                <button
-                  onClick={() => setIsProfileOpen(!isProfileOpen)}
-                  className="flex items-center p-2 space-x-1   
-                  transition-colors hover:scale-100 duration-200"
-                  aria-label="Toggle profile menu"
-                >
-                  <FaUserCircle size={24} />
-                  <div className="">
-                    <span className="text-[10px] flex self-baseline">
-                      {userData?.user?.email.split("@")[0]}
-                    </span>
-                    <span className="text-[5px] flex self-end">
-                      {userData?.user?.role}
-                    </span>
-                  </div>
-                  {/* <div className="text-sm">
-                    <p className="ml-2">
-                      {userData?.user?.email.split("@")[0]}
-                    </p>
-                    <p className="ml-2">{userData?.user?.email}</p>
-                  </div> */}
-                </button>
-                {isProfileOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-cyan-900 text-white dark:bg-white dark:text-cyan-900 shadow-lg z-10">
-                    {profileLinks.map((link) => (
-                      <Link
-                        key={link.path}
-                        to={link.path}
-                        className="block px-4 py-2 text-sm  hover:bg-white hover:text-cyan-900 dark:bg-cyan-900 dark:text-white"
-                        onClick={() => setIsProfileOpen(false)}
-                      >
-                        {link.name}
-                      </Link>
-                    ))}
-
-                    <button
-                      onClick={handleLogout}
-                      className="block w-full text-left px-4 py-2 text-sm text-red-600 bg-white hover:bg-red-400 hover:text-white"
-                      disabled={isLoggingOut}
-                    >
-                      {isLoggingOut ? "Logging out..." : "Logout"}
-                    </button>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div className="space-x-4">
-                <Link
-                  to="/signup"
-                  className="p-2 hover:text-white hover:bg-cyan-900 dark:hover:text-cyan-900 dark:hover:bg-white transition-colors duration-200 border-b-2 border-r-2"
-                >
-                  Sign Up
-                </Link>
-                <Link
-                  to="/signin"
-                  className="p-2 hover:text-white hover:bg-cyan-900 dark:hover:text-cyan-900 dark:hover:bg-white transition-colors duration-200 border-b-2 border-r-2"
-                >
-                  Sign In
-                </Link>
-              </div>
-            )}
-            <ThemeToggle />
-
+          <div className="flex items-center space-x-10">
             <div>
-              <Link to="/register_company" className="underline text-sm">
-                <AiFillCode />
-                Employer Register
+              <Link
+                to="/"
+                className="flex items-baseline border-l-2 border-t-2"
+              >
+                <img
+                  src={logo}
+                  alt="Logo"
+                  className="h-8 w-auto dark:invert-100 m-1"
+                />
+                <p className="sm:block hidden">JobDiary</p>
+              </Link>
+            </div>
+            <div>
+              <Link
+                to="/job"
+                className="md:flex hidden items-center space-x-2 p-2 m-1 border-r-2 border-b-2"
+              >
+                <AiFillProject size={24} />
+                <p>JOB LIST</p>
               </Link>
             </div>
           </div>
-
+          {/* Desktop Right Section */}
+          <div className="hidden md:flex items-center space-x-4">
+            {isAuthenticated ? (
+              <MenuProfile
+                profileLinks={profileLinks}
+                onLogout={handleLogout}
+                isLoggingOut={isLoggingOut}
+                isOpen={activeDropdown === "profile"}
+                onOpen={() => openDropdown("profile")}
+                onClose={closeDropdown}
+                dropdownRef={profileRef}
+              />
+            ) : (
+              <div className="flex space-x-4">
+                <SignIn
+                  isOpen={activeDropdown === "signin"}
+                  onOpen={() => openDropdown("signin")}
+                  onClose={closeDropdown}
+                  dropdownRef={signInRef}
+                />
+                <SignUp
+                  isOpen={activeDropdown === "signup"}
+                  onOpen={() => openDropdown("signup")}
+                  onClose={closeDropdown}
+                  dropdownRef={signUpRef}
+                />
+              </div>
+            )}
+            <div className="flex items-center">
+              <ThemeToggle />
+              <Link to="/" className="border-r-2 border-t-2 p-2 m-1">
+                <AiFillGift size={24} />
+              </Link>
+            </div>
+          </div>
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center">
             <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              onClick={toggleMobileMenu}
               className="p-2 text-gray-700 hover:text-sky-900 focus:outline-none"
               aria-label="Toggle mobile menu"
             >
@@ -203,12 +162,17 @@ const Navigation = () => {
             </button>
           </div>
         </div>
-
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden  shadow-md px-4 py-2">
-            <Links />
-            <div className="flex flex-col space-y-2 mt-2">
+          <div className="md:hidden shadow-md px-4 py-2">
+            <div className="flex flex-col space-y-2">
+              <Link
+                to="/job"
+                className="p-2 text-gray-700 hover:bg-sky-100 hover:text-sky-900 rounded-md"
+                onClick={closeMobileMenu}
+              >
+                JOB LIST
+              </Link>
               {isAuthenticated ? (
                 <>
                   {profileLinks.map((link) => (
@@ -216,7 +180,7 @@ const Navigation = () => {
                       key={link.path}
                       to={link.path}
                       className="p-2 text-gray-700 hover:bg-sky-100 hover:text-sky-900 rounded-md"
-                      onClick={() => setIsMobileMenuOpen(false)}
+                      onClick={closeMobileMenu}
                     >
                       {link.name}
                     </Link>
@@ -230,13 +194,22 @@ const Navigation = () => {
                   </button>
                 </>
               ) : (
-                <Link
-                  to="/signin"
-                  className="p-2 text-gray-700 hover:bg-sky-100 hover:text-sky-900 rounded-md"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Sign In
-                </Link>
+                <>
+                  <Link
+                    to="/signin"
+                    className="p-2 text-gray-700 hover:bg-sky-100 hover:text-sky-900 rounded-md"
+                    onClick={closeMobileMenu}
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    to="/signup"
+                    className="p-2 text-gray-700 hover:bg-sky-100 hover:text-sky-900 rounded-md"
+                    onClick={closeMobileMenu}
+                  >
+                    Sign Up
+                  </Link>
+                </>
               )}
               <div className="py-2">
                 <ThemeToggle />
