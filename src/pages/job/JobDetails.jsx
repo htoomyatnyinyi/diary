@@ -8,7 +8,6 @@ import {
 } from "../../redux/api/userApi";
 import coverImg from "../../assets/utils/B.png";
 import { toast } from "react-toastify";
-// Typically in App.js or index.js
 import "react-toastify/dist/ReactToastify.css";
 
 const JobDetails = ({ job }) => {

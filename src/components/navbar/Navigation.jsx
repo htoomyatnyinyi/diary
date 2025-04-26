@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { AiFillGift, AiFillProject } from "react-icons/ai";
+import { AiFillGift, AiFillProject, AiOutlineSearch } from "react-icons/ai";
 import ThemeToggle from "./ThemeToggle";
 import logo from "../../assets/utils/1.png";
 import { useAuthMeQuery, useLogoutMutation } from "../../redux/api/authApi";
@@ -18,7 +18,8 @@ const Navigation = () => {
   const { data: userData, isLoading: isAuthLoading } = useAuthMeQuery(null);
   const [logout, { isLoading: isLoggingOut }] = useLogoutMutation();
 
-  const isAuthenticated = !!userData?.user;
+  // const isAuthenticated = !!userData?.user;
+  const isAuthenticated = userData?.success;
   const role = userData?.user?.role;
 
   // Manage dropdown states
@@ -89,7 +90,7 @@ const Navigation = () => {
   return (
     <nav className="fixed top-0 left-0 w-full z-30 backdrop-blur-xl shadow-2xl">
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between md:justify-around h-16">
           {/* Desktop Links */}
           <div className="flex items-center space-x-10">
             <div>
@@ -115,6 +116,17 @@ const Navigation = () => {
               </Link>
             </div>
           </div>
+          {/* <div className="flex items-center justify-center">
+            <input
+              type="search"
+              placeholder="Input Search"
+              className="hidden sm:block bg-slate-50 rounded-2xl p-2 dark:text-cyan-900"
+            />
+            <button className="flex outline-sky-400 rounded-2xl bg-slate-50 p-2 dark:text-cyan-900">
+              <AiOutlineSearch size={24} />
+              Search
+            </button>
+          </div> */}
 
           {/* Desktop Right Section */}
           <div className="hidden md:flex items-center space-x-4">
