@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import homeImage from "../assets/utils/Question.png";
-import CreateEmployerProfile from "./profile/CreateEmployerProfile";
-import Upload from "../components/Upload";
+// import CreateEmployerProfile from "./profile/CreateEmployerProfile";
+// import Upload from "../components/Upload";
 
 // import { useGetJobByIdQuery } from "../redux/api/jobApi";
 // import JobDashboard from "./dashboard/employer/JobDashboard";

@@ -22,6 +22,7 @@ import "react-pdf/dist/Page/TextLayer.css";
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 import pic_img from "../../assets/utils/A.png";
+import ProfileManager from "./ProfileManager";
 
 // Mock useUpdateProfileMutation (replace with actual API mutation in your app)
 const useUpdateProfileMutation = () => {
@@ -30,7 +31,7 @@ const useUpdateProfileMutation = () => {
     console.log("Mock API call to update profile:", data);
     return { data: { success: true } };
   };
-  
+
   return [mockUpdate, { isLoading }];
 };
 
@@ -156,10 +157,10 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4 sm:p-6">
+    <div className="min-h-screen  p-4 sm:p-6">
       {/* Profile Section */}
-      indoor{" "}
-      <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-4 sm:p-6 mb-6">
+      <ProfileManager />
+      <div className="max-w-4xl mx-auto  rounded-xl shadow-lg p-4 sm:p-6 mb-6">
         {/* Cover Image */}
         <div className="h-40 bg-gray-200 rounded-t-xl">
           {userGetProfileResponse?.data.cover_image_url ? (
@@ -185,51 +186,57 @@ const UserProfile = () => {
               />
             </div>
             {/* Profile Details */}
-            <div className="flex-1 text-center sm:text-left">
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
+            <div className="flex-1 pt-10 mt-10 text-center sm:text-left">
+              <h1 className="text-2xl sm:text-3xl font-bold ">
                 {userGetProfileResponse?.data.first_name}{" "}
                 {userGetProfileResponse?.data.last_name}
               </h1>
-              <div className="mt-2 sm:mt-4 space-y-2 text-sm sm:text-base">
-                <div className="flex justify-center sm:justify-start items-center gap-2 text-gray-600">
-                  <AiFillHome size={20} />
-                  <p>
-                    {userGetProfileResponse?.data.location ||
-                      "Location not provided"}
-                  </p>
+              <div className="flex pt-4 justify-center sm:justify-start items-center gap-2 ">
+                <AiOutlineInfoCircle size={20} />
+                <p>{userGetProfileResponse?.data.bio || "Bio not provided"}</p>
+              </div>
+              <div
+                className="
+             md:flex mt-2 sm:mt-4 space-y-2 spac text-sm sm:text-base"
+              >
+                <div>
+                  <div className="flex justify-center sm:justify-start items-center gap-2 ">
+                    <AiFillHome size={20} />
+                    <p>
+                      {userGetProfileResponse?.data.location ||
+                        "Location not provided"}
+                    </p>
+                  </div>
+                  <div className="flex justify-center sm:justify-start items-center gap-2 ">
+                    <AiTwotoneMail size={20} />
+                    <p>{authMeResponse?.user.email || "Email not provided"}</p>
+                  </div>
+                  <div className="flex justify-center sm:justify-start items-center gap-2 ">
+                    <AiFillPhone size={20} />
+                    <p>
+                      {userGetProfileResponse?.data.phone ||
+                        "Phone not provided"}
+                    </p>
+                  </div>
                 </div>
-                <div className="flex justify-center sm:justify-start items-center gap-2 text-gray-600">
-                  <AiTwotoneMail size={20} />
-                  <p>{authMeResponse?.user.email || "Email not provided"}</p>
-                </div>
-                <div className="flex justify-center sm:justify-start items-center gap-2 text-gray-600">
-                  <AiFillPhone size={20} />
-                  <p>
-                    {userGetProfileResponse?.data.phone || "Phone not provided"}
-                  </p>
-                </div>
-                <div className="flex justify-center sm:justify-start items-center gap-2 text-gray-600">
-                  <AiOutlineUser size={20} />
-                  <p>
-                    {userGetProfileResponse?.data.gender ||
-                      "Gender not provided"}
-                  </p>
-                </div>
-                <div className="flex justify-center sm:justify-start items-center gap-2 text-gray-600">
-                  <AiOutlineCalendar size={20} />
-                  <p>
-                    {userGetProfileResponse?.data.date_of_birth
-                      ? new Date(
-                          userGetProfileResponse.data.date_of_birth
-                        ).toLocaleDateString()
-                      : "Date of birth not provided"}
-                  </p>
-                </div>
-                <div className="flex justify-center sm:justify-start items-center gap-2 text-gray-600">
-                  <AiOutlineInfoCircle size={20} />
-                  <p>
-                    {userGetProfileResponse?.data.bio || "Bio not provided"}
-                  </p>
+                <div>
+                  <div className="flex justify-center sm:justify-start items-center gap-2 ">
+                    <AiOutlineUser size={20} />
+                    <p>
+                      {userGetProfileResponse?.data.gender ||
+                        "Gender not provided"}
+                    </p>
+                  </div>
+                  <div className="flex justify-center sm:justify-start items-center gap-2 ">
+                    <AiOutlineCalendar size={20} />
+                    <p>
+                      {userGetProfileResponse?.data.date_of_birth
+                        ? new Date(
+                            userGetProfileResponse.data.date_of_birth
+                          ).toLocaleDateString()
+                        : "Date of birth not provided"}
+                    </p>
+                  </div>
                 </div>
                 <div className="text-gray-500 text-xs sm:text-sm">
                   <p>

@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const userApi = createApi({
   reducerPath: "user",
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_APP_API_URL || "http://localhost:8000",
+    baseUrl: import.meta.env.VITE_APP_API_URL || "http://localhost:8080",
     credentials: "include",
   }),
   tagTypes: ["Profile", "Resume", "SavedJobs", "Applications"], // Added for cache invalidation
