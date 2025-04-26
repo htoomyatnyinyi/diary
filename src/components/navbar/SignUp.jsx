@@ -38,7 +38,7 @@ const SignUp = () => {
       {isOpen && <div className="fixed inset-0 z-30" onClick={close}></div>}
       <div
         ref={dropdownRef}
-        className={`fixed right-10 top-16 shadow-2xl z-40 bg-cyan-900 text-white dark:bg-white dark:text-cyan-900 transition-transform duration-300 ${
+        className={`fixed right-0 top-14 shadow-2xl z-40 bg-cyan-900 text-white dark:bg-white dark:text-cyan-900 transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -105,7 +105,7 @@ const SignUp = () => {
             </button>
           </form>
           <p className="mt-4 text-sm">
-            Already have an account?{" "}
+            Already have an account?
             <Link to="/signin" className="underline" onClick={close}>
               Sign In
             </Link>
