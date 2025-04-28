@@ -221,7 +221,7 @@ const Status = () => {
                 {applications.data.map((app) => (
                   <tr key={app.id} className="hover:bg-gray-50">
                     <td className="py-3 px-4">{app.title}</td>
-                    <td className="py-3 px-4">{app.status}</td>
+                    <td className="py-3 px-4 text-green-500">{app.status}</td>
                     <td className="py-3 px-4 text-right">
                       <button
                         onClick={() => handleDeleteApplication(app.id)}

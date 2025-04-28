@@ -22,7 +22,6 @@ import "react-pdf/dist/Page/TextLayer.css";
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 import pic_img from "../../assets/utils/A.png";
-import ProfileManager from "./ProfileManager";
 
 // Mock useUpdateProfileMutation (replace with actual API mutation in your app)
 const useUpdateProfileMutation = () => {
@@ -159,7 +158,6 @@ const UserProfile = () => {
   return (
     <div className="min-h-screen  p-4 sm:p-6">
       {/* Profile Section */}
-      <ProfileManager />
       <div className="max-w-4xl mx-auto  rounded-xl shadow-lg p-4 sm:p-6 mb-6">
         {/* Cover Image */}
         <div className="h-40 bg-gray-200 rounded-t-xl">
@@ -197,9 +195,9 @@ const UserProfile = () => {
               </div>
               <div
                 className="
-             md:flex mt-2 sm:mt-4 space-y-2 spac text-sm sm:text-base"
+             md:flex mt-2 sm:mt-4 space-y-5 space-x-5 text-sm sm:text-base"
               >
-                <div>
+                <div className="space-y-5">
                   <div className="flex justify-center sm:justify-start items-center gap-2 ">
                     <AiFillHome size={20} />
                     <p>
@@ -219,7 +217,7 @@ const UserProfile = () => {
                     </p>
                   </div>
                 </div>
-                <div>
+                <div className="space-y-5">
                   <div className="flex justify-center sm:justify-start items-center gap-2 ">
                     <AiOutlineUser size={20} />
                     <p>
@@ -238,7 +236,7 @@ const UserProfile = () => {
                     </p>
                   </div>
                 </div>
-                <div className="text-gray-500 text-xs sm:text-sm">
+                <div className="text-cyan-500 space-y-5 text-xs sm:text-sm">
                   <p>
                     Profile created:{" "}
                     {new Date(
@@ -264,7 +262,7 @@ const UserProfile = () => {
         </div>
       </div>
       {/* Summary Section */}
-      <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-4 sm:p-6 mb-6">
+      {/* <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-4 sm:p-6 mb-6">
         <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-4">
           Personal Summary
         </h2>
@@ -274,7 +272,7 @@ const UserProfile = () => {
           Management Systems (BMS) including Electrical, HVAC systems, and
           kitchen facilities and machinery, across the building premises.
         </p>
-      </div>
+      </div> */}
       {/* Resume Section */}
       <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-4 sm:p-6">
         <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-4">
