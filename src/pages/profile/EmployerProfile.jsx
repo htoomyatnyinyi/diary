@@ -6,22 +6,34 @@ import {
   useGetEmployerProfileQuery,
   useUpdateEmployerProfileMutation,
 } from "../../redux/api/employerApi";
+import CreateEmployerProfile from "./CreateEmployerProfile";
 
 const EmployerProfile = () => {
   const { data: profile, isLoading, error } = useGetEmployerProfileQuery();
 
   if (isLoading)
     return <div className="text-center p-6">Loading profile...</div>;
-  if (error)
+
+  // if (error)
+  //   return (
+  //     <div className="text-center p-6 text-red-500">
+  //       Error: {error.data?.message || "Something went wrong."}
+  //       <button className="bg-green-500 p-2" onClick={() => console.log("Hi")}>
+  //         Link to Create Employer
+  //       </button>
+  //     </div>
+  //   );
+
+  if (!profile)
     return (
-      <div className="text-center p-6 text-red-500">
-        Error: {error.data?.message || "Something went wrong."}
+      <div className="text-center p-6">
+        <CreateEmployerProfile />
       </div>
     );
-  if (!profile) return <div className="text-center p-6">No profile found.</div>;
 
   return (
     <div>
+      {/* {!profile ? <p>Thers is no profile</p> : <p>There is a profile</p>} */}
       <EmployerProfileWall
         employerName={profile.data.company_name}
         description={profile.data.company_description}
@@ -332,6 +344,7 @@ const ProfileInfo = () => {
     </div>
   );
 };
+
 // // // Both Code is working but different design
 // // import React, { useState } from "react";
 // // import {

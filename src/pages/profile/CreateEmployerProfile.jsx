@@ -149,7 +149,6 @@ const CreateEmployerProfile = () => {
   );
 };
 
-// // Step 1 Component
 // const Step1 = ({
 //   formData,
 //   setFormData,

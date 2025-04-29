@@ -15,7 +15,9 @@ GET http://localhost:8080/api/employer/applied-jobs
 ###
 GET http://localhost:8080/api/employer/applied-user-profile/1
 ###
-GET http://localhost:8080/api/employer/applied-user-resume/2
+GET http://localhost:8080/api/employer/applied-user-resume/3
 ###
 GET http://localhost:8080/api/employer/analytics
 ###
+
+# https://diary-server-u9na.onrender.com/api/employer/applied-user-resume/5
