@@ -115,6 +115,7 @@ export const userApi = createApi({
         method: "DELETE",
       }),
     }),
+
     uploadProfileImage: builder.mutation({
       query: (imageData) => ({
         url: `/api/upload/img`,

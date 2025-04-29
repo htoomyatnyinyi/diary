@@ -110,19 +110,19 @@ const JobUpdateStatus = () => {
                 <strong>Location:</strong> {job.location || "N/A"}
               </p>
               <p>
-                <strong>Salary:</strong>{" "}
+                <strong>Salary:</strong>
                 {job.salary_min
                   ? `${job.salary_min} - ${job.salary_max}`
                   : "N/A"}
               </p>
               <p>
-                <strong>Deadline:</strong>{" "}
+                <strong>Deadline:</strong>
                 {job.application_deadline
                   ? new Date(job.application_deadline).toLocaleDateString()
                   : "N/A"}
               </p>
               <p className="text-pink-500">
-                <strong>Total Applications:</strong>{" "}
+                <strong>Total Applications:</strong>
                 {job.application_count ?? 0}
               </p>
             </div>
@@ -159,6 +159,7 @@ const ApplicationCard = ({
   isLoading,
   error,
 }) => {
+
   const [showProfile, setShowProfile] = useState(false);
   const [showResume, setShowResume] = useState(false);
 
@@ -188,14 +189,14 @@ const ApplicationCard = ({
           <strong>User ID:</strong> {application.user_id || "N/A"}
         </p>
         <p>
-          <strong>Applied At:</strong>{" "}
+          <strong>Applied At:</strong>
           {new Date(application.applied_at).toLocaleString()}
         </p>
         <p>
           <strong>Status:</strong> {application.status}
         </p>
         <p>
-          <strong>Last Update:</strong>{" "}
+          <strong>Last Update:</strong>
           {new Date(application.updated_at).toLocaleString()}
         </p>
       </div>
@@ -252,18 +253,18 @@ const ApplicationCard = ({
           ) : (
             <div>
               <p>
-                <strong>First Name:</strong>{" "}
+                <strong>First Name:</strong>
                 {userProfile?.data?.first_name || "N/A"}
               </p>
               <p>
-                <strong>Last Name:</strong>{" "}
+                <strong>Last Name:</strong>
                 {userProfile?.data?.last_name || "N/A"}
               </p>
               <p>
                 <strong>Phone:</strong> {userProfile?.data?.phone || "N/A"}
               </p>
               <p>
-                <strong>Location:</strong>{" "}
+                <strong>Location:</strong>
                 {userProfile?.data?.location || "N/A"}
               </p>
               <p>
@@ -372,7 +373,7 @@ const ApplicationCard = ({
 //       {isGetAppliedJobError ? (
 //         <div className="text-red-500">
 //           <h1>
-//             Error fetching applied jobs:{" "}
+//             Error fetching applied jobs:
 //             {getAppliedJobError?.data?.message || "Unknown error"}
 //           </h1>
 //         </div>
@@ -396,25 +397,25 @@ const ApplicationCard = ({
 //                   <strong>Category:</strong> {job.category || "N/A"}
 //                 </p>
 //                 <p>
-//                   <strong>Employment Type:</strong>{" "}
+//                   <strong>Employment Type:</strong>
 //                   {job.employment_type || "N/A"}
 //                 </p>
 //                 <p>
 //                   <strong>Location:</strong> {job.location || "N/A"}
 //                 </p>
 //                 <p>
-//                   <strong>Salary:</strong>{" "}
+//                   <strong>Salary:</strong>
 //                   {job.salary_min
 //                     ? `${job.salary_min} - ${job.salary_max}`
 //                     : "N/A"}
 //                 </p>
 //                 <div className="mt-2">
 //                   <div className="text-pink-500">
-//                     <strong>Total Applications:</strong>{" "}
+//                     <strong>Total Applications:</strong>
 //                     {job.application_count ?? 0}
 //                   </div>
 //                   <div className="text-red-600">
-//                     <strong>Deadline:</strong>{" "}
+//                     <strong>Deadline:</strong>
 //                     {job.application_deadline
 //                       ? new Date(job.application_deadline).toLocaleDateString()
 //                       : "N/A"}
@@ -492,7 +493,7 @@ const ApplicationCard = ({
 //           <strong>User ID:</strong> {application.user_id || "N/A"}
 //         </p>
 //         <p>
-//           <strong>Applied At:</strong>{" "}
+//           <strong>Applied At:</strong>
 //           {new Date(application.applied_at).toLocaleString() || "N/A"}
 //         </p>
 //         <p>
@@ -502,7 +503,7 @@ const ApplicationCard = ({
 //           <strong>Status:</strong> {application.status || "N/A"}
 //         </p>
 //         <p>
-//           <strong>Status Updated At:</strong>{" "}
+//           <strong>Status Updated At:</strong>
 //           {new Date(application.updated_at).toLocaleString() || "N/A"}
 //         </p>
 
@@ -554,24 +555,24 @@ const ApplicationCard = ({
 //               <p>Loading profile...</p>
 //             ) : isProfileError ? (
 //               <p className="text-red-500">
-//                 Error fetching profile:{" "}
+//                 Error fetching profile:
 //                 {profileError?.data?.message || "Unknown error"}
 //               </p>
 //             ) : userProfile?.data ? (
 //               <div>
 //                 <p>
-//                   <strong>First Name:</strong>{" "}
+//                   <strong>First Name:</strong>
 //                   {userProfile.data.first_name || "N/A"}
 //                 </p>
 //                 <p>
-//                   <strong>Last Name:</strong>{" "}
+//                   <strong>Last Name:</strong>
 //                   {userProfile.data.last_name || "N/A"}
 //                 </p>
 //                 <p>
 //                   <strong>Phone:</strong> {userProfile.data.phone || "N/A"}
 //                 </p>
 //                 <p>
-//                   <strong>Location:</strong>{" "}
+//                   <strong>Location:</strong>
 //                   {userProfile.data.location || "N/A"}
 //                 </p>
 //                 <p>
@@ -590,7 +591,7 @@ const ApplicationCard = ({
 //               <p>Loading resume...</p>
 //             ) : isResumeError ? (
 //               <p className="text-red-500">
-//                 Error loading resume:{" "}
+//                 Error loading resume:
 //                 {resumeError?.data?.message || "Unknown error"}
 //               </p>
 //             ) : userResumeResponse ? (
