@@ -7,8 +7,8 @@ import { GoogleLogin } from "@react-oauth/google";
 import { Link } from "react-router-dom";
 
 const SignIn = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("xyz@mail.com");
+  const [password, setPassword] = useState("abc");
   const [formError, setFormError] = useState("");
 
   const emailInputRef = useRef(null);

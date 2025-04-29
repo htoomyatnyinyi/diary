@@ -10,8 +10,8 @@ const SignIn = () => {
   ] = useLoginMutation();
 
   const { isOpen, toggle, close, dropdownRef } = useToggleDropdown();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("xyz@mail.com");
+  const [password, setPassword] = useState("abc");
 
   const handleSubmit = (e) => {
     e.preventDefault();
