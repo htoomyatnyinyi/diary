@@ -28,6 +28,14 @@ const Home = () => {
             with our innovative solutions. Experience the difference and take
             the first step towards a brighter future.
           </p>
+          <p>Job Seeker</p>
+          <p>xyz@mail.com</p>
+          <label>Password </label>
+          <p>abc</p>
+          <h3>For Employer</h3>
+          <p>itland@mail.com</p>
+          <label>Password </label>
+          <p>abc</p>
           {/* Optional Call to Action Button */}
           {/* <button
           onClick={() => setJobId(1)}
