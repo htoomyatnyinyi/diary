@@ -13,6 +13,10 @@ const SignIn = () => {
   const [email, setEmail] = useState("xyz@mail.com");
   const [password, setPassword] = useState("abc");
 
+  if (isLoginError) return <p>Error</p>;
+  if (isLoginLoading) return <p>Loading</p>;
+  if (loginError) return <p>Error login</p>;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // Add your sign-in logic here (e.g., dispatch an auth action)
@@ -72,12 +76,12 @@ const SignIn = () => {
               Sign In
             </button>
           </form>
-          <p className="mt-4 text-sm">
+          {/* <p className="mt-4 text-sm">
             Don't have an account?{" "}
             <Link to="/signup" className="underline" onClick={close}>
               Sign Up
             </Link>
-          </p>
+          </p> */}
         </div>
       </div>
     </div>
