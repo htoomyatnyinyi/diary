@@ -68,6 +68,7 @@ export const authApi = createApi({
         url: "/api/auth/logout",
         method: "POST",
       }),
+      invalidatesTags: ["Auth"],
     }),
   }),
 });

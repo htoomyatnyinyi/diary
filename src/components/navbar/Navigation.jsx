@@ -1,25 +1,35 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaBars, FaTimes } from "react-icons/fa";
-import { AiFillGift, AiFillProject, AiOutlineSearch } from "react-icons/ai";
+
 import ThemeToggle from "./ThemeToggle";
-import logo from "../../assets/utils/1.png";
-import { useAuthMeQuery, useLogoutMutation } from "../../redux/api/authApi";
 import useMobileMenu from "../../hooks/useMobileMenu";
 import MenuProfile from "./MenuProfile";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
+
+import logo from "../../assets/utils/1.png";
+import { FaBars, FaTimes } from "react-icons/fa";
+import { AiFillGift, AiFillProject } from "react-icons/ai";
+
+import { useAuthMeQuery, useLogoutMutation } from "../../redux/api/authApi";
 
 const Navigation = () => {
   const navigate = useNavigate();
   const { isMobileMenuOpen, toggleMobileMenu, closeMobileMenu } =
     useMobileMenu();
 
-  const { data: userData, isLoading: isAuthLoading } = useAuthMeQuery(null);
-  const [logout, { isLoading: isLoggingOut }] = useLogoutMutation();
+  const {
+    data: userData,
+    isLoading: isAuthLoading,
+    isSuccess: isAuthSuccess,
+  } = useAuthMeQuery(null);
+
+  const [logout, { isLoading: isLoggingOut, isSuccess: logoutSuccess }] =
+    useLogoutMutation();
 
   // const isAuthenticated = !!userData?.user;
-  const isAuthenticated = userData?.success;
+  // const isAuthenticated = userData?.success; // replace with authSuccess
+
   const role = userData?.user?.role;
 
   // Manage dropdown states
@@ -32,7 +42,7 @@ const Navigation = () => {
   const closeDropdown = () => setActiveDropdown(null);
 
   // Close dropdown on outside click
-  React.useEffect(() => {
+  useEffect(() => {
     const handleClickOutside = (event) => {
       if (
         profileRef.current &&
@@ -50,7 +60,7 @@ const Navigation = () => {
   }, []);
 
   // Close dropdown on Escape key
-  React.useEffect(() => {
+  useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
         closeDropdown();
@@ -81,7 +91,10 @@ const Navigation = () => {
       await logout().unwrap();
       closeDropdown();
       closeMobileMenu();
-      navigate("/signin");
+      // if (logoutSuccess) {
+      //   navigate("/");
+      // }
+      // // navigate("/");
     } catch (error) {
       console.error("Logout failed:", error);
     }
@@ -130,7 +143,7 @@ const Navigation = () => {
 
           {/* Desktop Right Section */}
           <div className="hidden md:flex items-center space-x-4">
-            {isAuthenticated ? (
+            {isAuthSuccess ? (
               <MenuProfile
                 profileLinks={profileLinks}
                 onLogout={handleLogout}
@@ -156,6 +169,10 @@ const Navigation = () => {
                 />
               </div>
             )}
+            {isAuthLoading && (
+              <div className="text-sm text-gray-500">Loading...</div>
+            )}
+
             <div className="flex items-center">
               <ThemeToggle />
               <Link

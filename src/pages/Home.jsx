@@ -29,13 +29,17 @@ const Home = () => {
             the first step towards a brighter future.
           </p>
           <p>Job Seeker</p>
-          <p>xyz@mail.com</p>
-          <label>Password </label>
-          <p>abc</p>
+          <div className=" text-center bg-cyan-900 text-white">
+            <p>xyz@mail.com</p>
+            <label>Password </label>
+            <p>abc</p>
+          </div>
           <h3>For Employer</h3>
-          <p>itland@mail.com</p>
-          <label>Password </label>
-          <p>abc</p>
+          <div className="bg-cyan-900 text-center text-white">
+            <p>itland@mail.com</p>
+            <label>Password </label>
+            <p>abc</p>
+          </div>
           {/* Optional Call to Action Button */}
           {/* <button
           onClick={() => setJobId(1)}

@@ -6,7 +6,12 @@ import { useLoginMutation } from "../../redux/api/authApi";
 const SignIn = () => {
   const [
     login,
-    { isLoading: isLoginLoading, isError: isLoginError, error: loginError },
+    {
+      isLoading: isLoginLoading,
+      isSuccess: loginSuccess,
+      isError: isLoginError,
+      error: loginError,
+    },
   ] = useLoginMutation();
 
   const { isOpen, toggle, close, dropdownRef } = useToggleDropdown();
@@ -16,7 +21,7 @@ const SignIn = () => {
   if (isLoginError) return <p>Error</p>;
   if (isLoginLoading) return <p>Loading</p>;
   if (loginError) return <p>Error login</p>;
-
+  if (loginSuccess) return <p>Login Success</p>;
   const handleSubmit = (e) => {
     e.preventDefault();
     // Add your sign-in logic here (e.g., dispatch an auth action)
