@@ -29,6 +29,13 @@ const SignIn = () => {
     console.log("Sign In:", { email, password });
     login({ email, password });
     close(); // Close dropdown after submission
+    // if (loginSuccess === true) {
+    //   // Consider navigate to home page automatically after success logout
+    //   console.log(loginSuccess);
+    //   setTimeout(() => {
+    //     navigate("/job");
+    //   }, 1000); // Give user time to see success message
+    // }
   };
 
   return (

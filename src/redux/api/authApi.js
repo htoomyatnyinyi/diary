@@ -21,6 +21,7 @@ export const authApi = createApi({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["Auth"], // haven't test tags logic yet.
     }),
 
     // login: builder.mutation({

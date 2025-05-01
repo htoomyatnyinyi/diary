@@ -1,29 +1,23 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import coverImg from "../../assets/utils/A.png";
 import { useGetJobsQuery, useGetJobByIdQuery } from "../../redux/api/jobApi";
 import { selectJob } from "../../redux/slice/jobSlice";
 import CreateNewJob from "../dashboard/employer/CreateNewJob";
 import JobDetails from "./JobDetails";
 import { useAuthMeQuery } from "../../redux/api/authApi";
+// import coverImg from "../../assets/utils/A.png";ß
 
 const Job = () => {
+  const dispatch = useDispatch();
+  const selectedJobId = useSelector((state) => state.slice.job.selectedJobId);
+
+  // RTK Query hooks for fetching data
   const {
     data: authData,
     isLoading: isAuthLoading,
     error: authError,
   } = useAuthMeQuery(null);
-  // // auth query
-  // // destructuring the object from authme
-  // const {
-  //   user: { role },
-  // } = data || {};
-  // Safely get the role with proper fallbacks
-  const role = authData?.user?.role;
 
-  const dispatch = useDispatch();
-  const selectedJobId = useSelector((state) => state.slice.job.selectedJobId);
-  // RTK Query hooks for fetching data
   const {
     data: jobs = { data: [] },
     isLoading: isJobListLoading,
@@ -54,10 +48,18 @@ const Job = () => {
 
   if (jobListError)
     return (
-      <p className="p-4 text-center text-red-500">
+      <p className="p-4 text-center text-green-500">
         Error loading jobs: {jobListError.toString()}
       </p>
     );
+
+  // // auth query
+  // // destructuring the object from authme
+  // const {
+  //   user: { role },
+  // } = data || {};
+  // Safely get the role with proper fallbacks
+  const role = authData?.user?.role;
 
   return (
     <div className="min-h-screen">
@@ -76,16 +78,6 @@ const Job = () => {
             <CreateNewJob isOpen={isSidebarOpen} onClose={closeSidebar} />
           </div>
         )}
-        {/* <div>
-          <h1 className="text-2xl font-semibold">Job Postings</h1>
-          <button
-            onClick={openSidebar}
-            className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Create New Job
-          </button>
-        </div>
-        <CreateNewJob isOpen={isSidebarOpen} onClose={closeSidebar} /> */}
       </div>
 
       {/* Main Content */}
@@ -121,9 +113,10 @@ const Job = () => {
             </p>
           ) : (
             <JobDetails
-              coverImg={coverImg}
+              // coverImg={coverImg} // directly import form jobdetails
               job={jobDetails?.data}
               onBack={deselectJob} // Pass deselect function for mobile "Back" button
+              role={role}
             />
           )}
         </div>

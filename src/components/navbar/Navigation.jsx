@@ -14,7 +14,7 @@ import { AiFillGift, AiFillProject } from "react-icons/ai";
 import { useAuthMeQuery, useLogoutMutation } from "../../redux/api/authApi";
 
 const Navigation = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const { isMobileMenuOpen, toggleMobileMenu, closeMobileMenu } =
     useMobileMenu();
 
@@ -91,9 +91,14 @@ const Navigation = () => {
       await logout().unwrap();
       closeDropdown();
       closeMobileMenu();
-      // if (logoutSuccess) {
-      //   navigate("/job");
-      // }
+      if (logoutSuccess === true) {
+        // Consider navigate to home page automatically after success logout
+        console.log(logoutSuccess);
+        setTimeout(() => {
+          navigate("/");
+        }, 1000); // Give user time to see success message
+      }
+
       // // navigate("/");
     } catch (error) {
       console.error("Logout failed:", error);

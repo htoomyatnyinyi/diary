@@ -6,35 +6,46 @@ import {
   useGetSavedJobsQuery,
   useGetApplicationsQuery,
 } from "../../redux/api/userApi";
+
 import coverImg from "../../assets/utils/B.png";
 import { toast } from "react-toastify";
 // Typically in App.js or index.js
 import "react-toastify/dist/ReactToastify.css";
+import { useAuthMeQuery } from "../../redux/api/authApi";
 
-const JobDetails = ({ job }) => {
+const JobDetails = ({ job, role }) => {
   const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
   const [selectedResumeId, setSelectedResumeId] = useState(null);
+  const {
+    data: authData, // destructure {user and success} and use only success
+  } = useAuthMeQuery(null);
+  const success = authData?.success;
 
+  // console.log(success, "check auth");
   // RTK Query hooks
   const [saveJob, { isLoading: isSaving, error: saveError }] =
     useSaveJobMutation();
+
   const [jobApplication, { isLoading: isApplying, error: applyError }] =
     useJobApplicationMutation();
+
   const {
     data: resumes,
     isLoading: isResumesLoading,
     error: resumesError,
-  } = useGetResumeQuery();
+  } = useGetResumeQuery(success, { skip: !success });
+
   const {
     data: savedJobs,
     isLoading: isSavedJobsLoading,
     error: savedJobsError,
-  } = useGetSavedJobsQuery();
+  } = useGetSavedJobsQuery(success, { skip: !success });
+
   const {
     data: applications,
     isLoading: isApplicationsLoading,
     error: applicationsError,
-  } = useGetApplicationsQuery();
+  } = useGetApplicationsQuery(success, { skip: !success });
 
   // Debug data structures
   // console.log("Job ID:", job?.id);
@@ -219,28 +230,33 @@ const JobDetails = ({ job }) => {
           </p>
         )}
       </div>
-
-      {/* Action Buttons */}
-      <div className="flex space-x-4 m-4 justify-around ">
-        <button
-          onClick={handleSaveJob}
-          disabled={isSaving || isJobSaved}
-          className={`bg-blue-500 hover:bg-blue-700 w-1/2 text-white font-bold py-2 px-4 rounded ${
-            isSaving || isJobSaved ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-        >
-          {isSaving ? "Saving..." : isJobSaved ? "Saved" : "Save Job"}
-        </button>
-        <button
-          onClick={openResumeModal}
-          disabled={isApplying || isJobApplied}
-          className={`bg-cyan-500 hover:bg-cyan-700 w-1/2 text-white font-bold py-2 px-4 rounded ${
-            isApplying || isJobApplied ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-        >
-          {isApplying ? "Applying..." : isJobApplied ? "Applied" : "Apply Now"}
-        </button>
-      </div>
+      {/*  Then use the role in your conditional rendering for action buttno */}
+      {role === "user" && (
+        <div className="flex space-x-4 m-4 justify-around ">
+          <button
+            onClick={handleSaveJob}
+            disabled={isSaving || isJobSaved}
+            className={`bg-blue-500 hover:bg-blue-700 w-1/2 text-white font-bold py-2 px-4 rounded ${
+              isSaving || isJobSaved ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+          >
+            {isSaving ? "Saving..." : isJobSaved ? "Saved" : "Save Job"}
+          </button>
+          <button
+            onClick={openResumeModal}
+            disabled={isApplying || isJobApplied}
+            className={`bg-cyan-500 hover:bg-cyan-700 w-1/2 text-white font-bold py-2 px-4 rounded ${
+              isApplying || isJobApplied ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+          >
+            {isApplying
+              ? "Applying..."
+              : isJobApplied
+              ? "Applied"
+              : "Apply Now"}
+          </button>
+        </div>
+      )}
 
       <h2 className="text-xl font-semibold p-4 m-2 border-t">Description</h2>
       <p className="text-green-500 p-4 m-2 whitespace-pre-wrap">
