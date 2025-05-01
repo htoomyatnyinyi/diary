@@ -206,7 +206,7 @@ const Navigation = () => {
               >
                 JOB LIST
               </Link>
-              {isAuthenticated ? (
+              {isAuthSuccess ? (
                 <>
                   {profileLinks.map((link) => (
                     <Link
