@@ -36,13 +36,21 @@ const SignUp = () => {
         Sign Up
       </button>
       {isOpen && <div className="fixed inset-0 z-30" onClick={close}></div>}
-      <div
+      {/* <div
         ref={dropdownRef}
         className={`fixed right-0 top-14 shadow-2xl z-40 bg-cyan-900 text-white dark:bg-white dark:text-cyan-900 transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
+      > */}
+      <div
+        ref={dropdownRef}
+        className={`fixed left-2/3 right-0 top-14 shadow-2xl z-30 
+          backdrop-blur-sm p-1
+          transition-transform duration-300 ${
+            isOpen ? "translate-x-0" : "translate-x-full"
+          }`}
       >
-        <div className="p-4 w-64">
+        <div className="p-4 w-64 bg-cyan-900 text-white dark:bg-white dark:text-cyan-900">
           <h3 className="text-lg font-semibold mb-4">Sign Up</h3>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">

@@ -14,7 +14,7 @@ import { AiFillGift, AiFillProject } from "react-icons/ai";
 import { useAuthMeQuery, useLogoutMutation } from "../../redux/api/authApi";
 
 const Navigation = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { isMobileMenuOpen, toggleMobileMenu, closeMobileMenu } =
     useMobileMenu();
 
@@ -92,7 +92,7 @@ const Navigation = () => {
       closeDropdown();
       closeMobileMenu();
       // if (logoutSuccess) {
-      //   navigate("/");
+      //   navigate("/job");
       // }
       // // navigate("/");
     } catch (error) {
