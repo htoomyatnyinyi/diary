@@ -5,11 +5,24 @@ import { useGetJobsQuery, useGetJobByIdQuery } from "../../redux/api/jobApi";
 import { selectJob } from "../../redux/slice/jobSlice";
 import CreateNewJob from "../dashboard/employer/CreateNewJob";
 import JobDetails from "./JobDetails";
+import { useAuthMeQuery } from "../../redux/api/authApi";
 
 const Job = () => {
+  const {
+    data: authData,
+    isLoading: isAuthLoading,
+    error: authError,
+  } = useAuthMeQuery(null);
+  // // auth query
+  // // destructuring the object from authme
+  // const {
+  //   user: { role },
+  // } = data || {};
+  // Safely get the role with proper fallbacks
+  const role = authData?.user?.role;
+
   const dispatch = useDispatch();
   const selectedJobId = useSelector((state) => state.slice.job.selectedJobId);
-
   // RTK Query hooks for fetching data
   const {
     data: jobs = { data: [] },
@@ -50,15 +63,30 @@ const Job = () => {
     <div className="min-h-screen">
       {/* Header Area with Create Button */}
       <div className="p-4 flex justify-between items-center">
-        <h1 className="text-2xl font-semibold">Job Postings</h1>
-        <button
-          onClick={openSidebar}
-          className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Create New Job
-        </button>
+        {/* // Then use the role in your conditional rendering */}
+        {role === "employer" && (
+          <div className="">
+            <h1 className="text-2xl font-semibold">Job Postings</h1>
+            <button
+              onClick={openSidebar}
+              className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
+            >
+              Create New Job
+            </button>
+            <CreateNewJob isOpen={isSidebarOpen} onClose={closeSidebar} />
+          </div>
+        )}
+        {/* <div>
+          <h1 className="text-2xl font-semibold">Job Postings</h1>
+          <button
+            onClick={openSidebar}
+            className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Create New Job
+          </button>
+        </div>
+        <CreateNewJob isOpen={isSidebarOpen} onClose={closeSidebar} /> */}
       </div>
-      <CreateNewJob isOpen={isSidebarOpen} onClose={closeSidebar} />
 
       {/* Main Content */}
       <div className="relative flex flex-col md:grid md:grid-cols-3 min-h-[calc(100vh-80px)]">

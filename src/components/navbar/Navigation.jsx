@@ -83,7 +83,7 @@ const Navigation = () => {
     ...(role === "employer"
       ? [{ name: "MANAGEMENT", path: "/employer/post-job" }]
       : []),
-    { name: "SETTINGS", path: "/settings" },
+    // { name: "SETTINGS", path: "/settings" },
   ];
 
   const handleLogout = async () => {
