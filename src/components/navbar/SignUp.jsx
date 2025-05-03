@@ -107,17 +107,19 @@ const SignUp = () => {
             </div>
             <button
               type="submit"
-              className="w-full p-2 bg-sky-600 text-white hover:bg-sky-700 rounded"
+              className="w-full p-2 bg-white dark:bg-cyan-900 text-cyan-900 dark:text-white hover:border-cyan-500 border-2 rounded"
+
+              // className="w-full p-2 bg-sky-600 text-white hover:bg-sky-700 rounded"
             >
               Sign Up
             </button>
           </form>
-          <p className="mt-4 text-sm">
+          {/* <p className="mt-4 text-sm">
             Already have an account?
             <Link to="/signin" className="underline" onClick={close}>
               Sign In
             </Link>
-          </p>
+          </p> */}
         </div>
       </div>
     </div>

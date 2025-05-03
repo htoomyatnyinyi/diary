@@ -16,12 +16,10 @@ import { useAuthMeQuery } from "../../redux/api/authApi";
 const JobDetails = ({ job, role }) => {
   const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
   const [selectedResumeId, setSelectedResumeId] = useState(null);
-  const {
-    data: authData, // destructure {user and success} and use only success
-  } = useAuthMeQuery(null);
+  const { data: authData } = useAuthMeQuery(null);
+
   const success = authData?.success;
 
-  // console.log(success, "check auth");
   // RTK Query hooks
   const [saveJob, { isLoading: isSaving, error: saveError }] =
     useSaveJobMutation();
