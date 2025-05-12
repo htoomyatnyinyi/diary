@@ -12,7 +12,7 @@ import {
   usePreviewResumeQuery,
   useUploadResumeMutation,
   useCreateProfileMutation,
-  useUpdateProfileMutation,
+  useUpdateProfileMutation, // Import the actual mutation
 } from "../../redux/api/userApi";
 
 import {
@@ -178,20 +178,18 @@ const UserProfile = () => {
   return (
     <div className="min-h-screen p-4 sm:p-6">
       {/* Profile Section */}
-      <div className="max-w-full mx-auto border rounded-xl shadow-lg p-4 sm:p-6 mb-6">
+      <div className="max-w-4xl mx-auto rounded-xl shadow-lg p-4 sm:p-6 mb-6">
         {/* Cover Image */}
-        <div className="h-40  rounded-t-xl">
+        <div className="h-40 bg-gray-200 rounded-t-xl">
           {userGetProfileResponse?.data.cover_image_url ? (
             <img
               src={userGetProfileResponse.data.cover_image_url}
               alt="Cover"
-              className="w-full h-full object-cover rounded-xl"
+              className="w-full h-full object-cover rounded-t-xl"
             />
           ) : (
-            <div className="w-full h-full rounded-xl  flex items-center justify-center ">
-              <div className="text-center">
-                <p>No Cover Image</p>
-              </div>
+            <div className="w-full h-full bg-gray-300 flex items-center justify-center text-gray-500">
+              No Cover Image
             </div>
           )}
         </div>
@@ -288,23 +286,26 @@ const UserProfile = () => {
         </div>
       </div>
       {/* Resume Section */}
-      <div className="max-w-full mx-auto  rounded-xl shadow-lg p-4 sm:p-6 border">
-        <h2 className="text-xl sm:text-2xl font-semibold mb-4">Resume</h2>
+      <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-4 sm:p-6">
+        <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-4">
+          Resume
+        </h2>
         <div className="mb-6">
-          {getResume?.data.length > 0 && (
-            <h3 className="text-lg sm:text-xl font-medium  mb-2">
-              Uploaded Resumes
-            </h3>
-          )}
+          <h3 className="text-lg sm:text-xl font-medium text-gray-700 mb-2">
+            Uploaded Resumes
+          </h3>
           {isGetResumeLoading ? (
             <p className="text-gray-500">Loading resumes...</p>
           ) : (
             <div className="space-y-4">
               {getResume?.data.map((resume) => (
-                <div key={resume.id} className="border rounded-lg p-4 ">
+                <div
+                  key={resume.id}
+                  className="border rounded-lg p-4 bg-gray-50"
+                >
                   <div className="flex flex-col sm:flex-row justify-between items-center gap-2">
                     <div>
-                      <h4 className="text-base sm:text-lg font-medium">
+                      <h4 className="text-base sm:text-lg font-medium text-gray-800">
                         {resume.file_name}
                       </h4>
                       <p className="text-xs sm:text-sm text-gray-500">
@@ -412,7 +413,7 @@ const UserProfile = () => {
             onClick={() => setIsSidebarOpen(false)}
           ></div>
           {/* Sidebar */}
-          <div className="relative w-full max-w-xs sm:max-w-md backdrop-blur-lg shadow-lg p-4 sm:p-6 h-full overflow-y-auto transform transition-transform duration-300 translate-x-0">
+          <div className="relative w-full max-w-xs sm:max-w-md bg-white shadow-lg p-4 sm:p-6 h-full overflow-y-auto transform transition-transform duration-300 translate-x-0">
             <div className="flex justify-between items-center mb-4 sm:mb-6">
               <h2 className="text-xl sm:text-2xl font-semibold text-gray-800">
                 Edit Profile
@@ -546,7 +547,7 @@ const UserProfile = () => {
               </button>
             </div>
             <p className="mt-4 text-xs sm:text-sm text-gray-500">
-              Stay safe: Do not include sensitive personal information such as
+              Stay safe: Don’t include sensitive personal information such as
               identity documents, health, race, religion, or financial data.
             </p>
           </div>

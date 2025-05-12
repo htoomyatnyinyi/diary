@@ -18,8 +18,8 @@ import {
 
 const UserDashboard = () => {
   return (
-    <div className="max-w-7xl mx-auto p-6">
-      <h1 className="text-4xl font-bold text-gray-900 mb-8">User Dashboard</h1>
+    <div className="max-w-full mx-auto p-6">
+      <h1 className="text-4xl font-bold  mb-8">User Dashboard</h1>
       <Status />
     </div>
   );
@@ -91,10 +91,8 @@ const Status = () => {
   return (
     <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
       {/* Analytics Card */}
-      <section className="bg-white rounded-xl shadow-lg p-6">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-          Analytics Overview
-        </h2>
+      <section className=" rounded-xl shadow-lg p-6">
+        <h2 className="text-2xl font-semibold  mb-4">Analytics Overview</h2>
         {isAnalyticLoading ? (
           <p className="text-gray-500">Loading analytics...</p>
         ) : analyticError ? (
@@ -142,10 +140,8 @@ const Status = () => {
       </section>
 
       {/* Saved Jobs Card */}
-      <section className="bg-white rounded-xl shadow-lg p-6">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-          Saved Jobs
-        </h2>
+      <section className=" rounded-xl border shadow-lg p-6">
+        <h2 className="text-2xl font-semibold mb-4">Saved Jobs</h2>
         {isSavedJobsLoading ? (
           <p className="text-gray-500">Loading saved jobs...</p>
         ) : savedJobsError ? (
@@ -157,17 +153,15 @@ const Status = () => {
         ) : (
           <div className="overflow-x-auto">
             <table className="min-w-full text-sm">
-              <thead className="bg-gray-100">
+              <thead className="border-b">
                 <tr>
-                  <th className="text-left py-3 px-4 font-medium text-gray-700">
+                  <th className="text-left py-3 px-4 font-medium ">
                     Job Title
                   </th>
-                  <th className="text-right py-3 px-4 font-medium text-gray-700">
-                    Actions
-                  </th>
+                  <th className="text-right py-3 px-4 font-medium ">Actions</th>
                 </tr>
               </thead>
-              <tbody className="bg-white">
+              <tbody className="">
                 {savedJobs.data.map((job) => (
                   <tr key={job.id} className="hover:bg-gray-50">
                     <td className="py-3 px-4">{job.title}</td>
@@ -189,10 +183,8 @@ const Status = () => {
       </section>
 
       {/* Applications Card */}
-      <section className="bg-white rounded-xl shadow-lg p-6 col-span-1 lg:col-span-2">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-          Applications
-        </h2>
+      <section className=" rounded-xl border shadow-lg p-6 col-span-1 lg:col-span-2">
+        <h2 className="text-2xl font-semibold  mb-4">Applications</h2>
         {isApplicationLoading ? (
           <p className="text-gray-500">Loading applications...</p>
         ) : applicationsError ? (
@@ -204,22 +196,18 @@ const Status = () => {
         ) : (
           <div className="overflow-x-auto">
             <table className="min-w-full text-sm">
-              <thead className="bg-gray-100">
+              <thead className="border-b">
                 <tr>
-                  <th className="text-left py-3 px-4 font-medium text-gray-700">
+                  <th className="text-left py-3 px-4 font-medium ">
                     Job Title
                   </th>
-                  <th className="text-left py-3 px-4 font-medium text-gray-700">
-                    Status
-                  </th>
-                  <th className="text-right py-3 px-4 font-medium text-gray-700">
-                    Actions
-                  </th>
+                  <th className="text-left py-3 px-4 font-medium ">Status</th>
+                  <th className="text-right py-3 px-4 font-medium ">Actions</th>
                 </tr>
               </thead>
-              <tbody className="bg-white">
+              <tbody className="">
                 {applications.data.map((app) => (
-                  <tr key={app.id} className="hover:bg-gray-50">
+                  <tr key={app.id} className="hover:bg-cyan-900">
                     <td className="py-3 px-4">{app.title}</td>
                     <td className="py-3 px-4 text-green-500">{app.status}</td>
                     <td className="py-3 px-4 text-right">

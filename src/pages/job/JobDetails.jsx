@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuthMeQuery } from "../../redux/api/authApi";
 
-const JobDetails = ({ job, role }) => {
+const JobDetails = ({ job, role, onBack }) => {
   const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
   const [selectedResumeId, setSelectedResumeId] = useState(null);
   const { data: authData } = useAuthMeQuery(null);
@@ -194,11 +194,16 @@ const JobDetails = ({ job, role }) => {
           className="w-full h-48 object-cover rounded-md mb-4"
         />
       ) : (
-        <img
-          src={coverImg}
-          alt="Default cover"
-          className="w-full h-48 object-cover object-top rounded-md mb-4 dark:invert-100"
-        />
+        <div>
+          <img
+            src={coverImg}
+            alt="Default cover"
+            className="w-full h-48 object-cover object-top rounded-md mb-4 dark:invert-100"
+          />
+          {/* <button onClick={onBack} className="sm:hidden p-2 m-1 border w-full ">
+            Close
+          </button> */}
+        </div>
       )}
       <div className="p-2 m-1">
         <h1 className="text-3xl font-bold p-2 m-1">{job.title}</h1>
@@ -345,6 +350,9 @@ const JobDetails = ({ job, role }) => {
           </div>
         </div>
       )}
+      <button onClick={onBack} className="sm:hidden w-full p-2 m-1 border">
+        Close
+      </button>
     </div>
   );
 };
