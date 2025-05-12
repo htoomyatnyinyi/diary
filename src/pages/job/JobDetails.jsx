@@ -200,9 +200,9 @@ const JobDetails = ({ job, role, onBack }) => {
             alt="Default cover"
             className="w-full h-48 object-cover object-top rounded-md mb-4 dark:invert-100"
           />
-          {/* <button onClick={onBack} className="sm:hidden p-2 m-1 border w-full ">
+          <button onClick={onBack} className="sm:hidden p-2 m-1 border w-full ">
             Close
-          </button> */}
+          </button>
         </div>
       )}
       <div className="p-2 m-1">
