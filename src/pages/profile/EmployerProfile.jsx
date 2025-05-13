@@ -61,7 +61,7 @@ const EmployerProfileWall = ({
     <div className=" mx-auto  shadow-lg rounded-lg overflow-hidden my-4">
       {/* --- Cover Image Section --- */}
       <div
-        className="h-96 bg-cover bg-center bg-gray-300" // Added placeholder bg color
+        className="h-96 bg-cover bg-center " // Added placeholder bg color
         style={{ backgroundImage: `url(${coverImageUrl})` }}
         role="img" // Accessibility
         aria-label={`${employerName} cover image`}
@@ -81,7 +81,7 @@ const EmployerProfileWall = ({
             src={profileImageUrl}
             alt={`${employerName} profile`}
             // Styling for the profile image: size, circle, border
-            className="h-24 w-24 sm:h-32 sm:w-32 rounded-full border-4 border-white bg-gray-200 shadow-md" // Added placeholder bg and shadow
+            className="h-24 w-24 sm:h-32 sm:w-32 rounded-full border-4 border-white  shadow-md" // Added placeholder bg and shadow
           />
         </div>
         {/* --- Text Content --- */}
@@ -102,7 +102,7 @@ const EmployerProfileWall = ({
           <button className="px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700">
             View Jobs
           </button>
-          <button className="px-4 py-2 bg-gray-200 text-gray-800 text-sm rounded-md hover:bg-gray-300">
+          <button className="px-4 py-2  text-gray-800 text-sm rounded-md hover:bg-gray-300">
             Follow
           </button>
         </div>

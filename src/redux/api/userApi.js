@@ -116,10 +116,18 @@ export const userApi = createApi({
       }),
     }),
 
-    uploadProfileImage: builder.mutation({
+    // uploadProfileImage: builder.mutation({
+    //   query: (imageData) => ({
+    //     url: `/api/upload/img`,
+    //     method: "POST",
+    //     body: imageData,
+    //   }),
+    // }),
+    uploadUserProfileImage: builder.mutation({
       query: (imageData) => ({
-        url: `/api/upload/img`,
-        method: "POST",
+        // url: "/api/user/profile_img",
+        url: "/api/user/profile",
+        method: "PUT",
         body: imageData,
       }),
     }),
@@ -142,5 +150,5 @@ export const {
   useGetApplicationsQuery,
   useJobApplicationMutation,
   useDeleteApplicationMutation,
-  useUploadProfileImageMutation,
+  useUploadUserProfileImageMutation,
 } = userApi;
