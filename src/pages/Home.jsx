@@ -56,7 +56,7 @@ const Home = () => {
           What Our Customers Say
         </h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {["Hnin", "Phyu", "Hnin Phyu"].map((name, i) => (
+          {["Customer_1", "Customer_2", "Customer_3"].map((name, i) => (
             <div
               key={i}
               className="hover:shadow-xl transition p-5 rounded-lg border bg-gradient-to-tl from-slate-900 to-slate-400 text-transparent bg-clip-text"
